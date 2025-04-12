@@ -41,31 +41,31 @@ class AppServiceProvider extends ServiceProvider
             session()->put('lang', 'ro');
         }
 
-        // $categories = Category::all();
+        $categories = Category::all();
 
-        // Config::set('categories', $categories);
+        Config::set('categories', $categories);
         
-        // $siteSettings = SiteSetting::first();
+        $siteSettings = SiteSetting::first();
         
-        // Config::set('logo', asset('/storage/' . $siteSettings->logo));
-        // Config::set('favicon', asset('/storage/' . $siteSettings->favicon));
-        // Config::set('site_title', $siteSettings->title);
-        // Config::set('site_description', $siteSettings->description);
-        // Config::set('site_email', $siteSettings->email);
-        // Config::set('site_phone', $siteSettings->phone);
-        // Config::set('site_address', $siteSettings->city.', '.$siteSettings->country);
-        // Config::set('site_url', $siteSettings->url);
+        Config::set('logo', asset('/storage/' . $siteSettings->logo));
+        Config::set('favicon', asset('/storage/' . $siteSettings->favicon));
+        Config::set('site_title', $siteSettings->title);
+        Config::set('site_description', $siteSettings->description);
+        Config::set('site_email', $siteSettings->email);
+        Config::set('site_phone', $siteSettings->phone);
+        Config::set('site_address', $siteSettings->city.', '.$siteSettings->country);
+        Config::set('site_url', $siteSettings->url);
         
-        // $msgs = Message::where('is_read', false)->orderBy('created_at', 'desc')->limit(5)->get();
-        // $msg_count = Message::where('is_read', false)->count();
-        // Config::set('msg_count', $msg_count);
-        // Config::set('msgs', $msgs);
+        $msgs = Message::where('is_read', false)->orderBy('created_at', 'desc')->limit(5)->get();
+        $msg_count = Message::where('is_read', false)->count();
+        Config::set('msg_count', $msg_count);
+        Config::set('msgs', $msgs);
 
 
-        // Blade::component('schema.organization', Organization::class);
-        // Blade::component('schema.web-page', WebPage::class);
-        // Blade::component('schema.article', Article::class);
-        // Blade::component('schema.product', Product::class);
-        // Blade::component('schema.schema-wrapper', SchemaWrapper::class);
+        Blade::component('schema.organization', Organization::class);
+        Blade::component('schema.web-page', WebPage::class);
+        Blade::component('schema.article', Article::class);
+        Blade::component('schema.product', Product::class);
+        Blade::component('schema.schema-wrapper', SchemaWrapper::class);
     }
 }
