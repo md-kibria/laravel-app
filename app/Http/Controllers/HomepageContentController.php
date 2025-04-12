@@ -34,7 +34,7 @@ class HomepageContentController extends Controller
             }
         }
 
-        if ($data['featured_service']) {
+        if (isset($data['featured_service'])) {
             $data['data'] = json_encode($data['featured_service']);
         }
 
