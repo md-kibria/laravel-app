@@ -1,9 +1,10 @@
 /_helpers
 /.phpunit.cache
 /node_modules
-/public/build
+# /public/build
 /public/hot
 /public/storage
+!/public/storage/cacert.pem
 /storage/*.key
 /storage/pail
 /vendor
