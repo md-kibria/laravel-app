@@ -51,7 +51,7 @@
                                         <p class="">
                                             {{ $header->getTranslation('description', session()->get('lang')) }}</p>
                                         <a href="/services" class="btn btn-success btn-hover mt-4"><i
-                                                class="ph-shopping-cart align-middle me-1"></i> Our Services</a>
+                                                class="ph-shopping-cart align-middle me-1"></i> {{ session()->get('lang') === 'ro' ? 'Serviciile noastre' : 'Our Services' }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -132,8 +132,8 @@
                         </div>
 
                         <div class="mt-4 pt-2 d-flex gap-2">
-                            <a href="/services" class="btn btn-primary w-md btn-hover">Get Service</a>
-                            <a href="/about" class="btn btn-danger w-md btn-hover" aria-label="About Page">Read More</a>
+                            <a href="/services" class="btn btn-primary w-md btn-hover">{{ session()->get('lang') === 'ro' ? 'Obțineți servicii' : 'Get Service' }}</a>
+                            <a href="/about" class="btn btn-danger w-md btn-hover" aria-label="About Page">{{ session()->get('lang') === 'ro' ? 'Citeşte mai mult' : 'Read More' }}</a>
                         </div>
                     </div>
                 </div>
@@ -174,8 +174,8 @@
                         </div>
 
                         <div class="mt-4 pt-2 d-flex gap-2">
-                            <a href="/contact" class="btn btn-primary w-md btn-hover">Contact Now</a>
-                            <a href="/about" class="btn btn-danger w-md btn-hover" aria-label="About Page">Read More</a>
+                            <a href="/contact" class="btn btn-primary w-md btn-hover">{{ session()->get('lang') === 'ro' ? 'Contactați acum' : 'Contact Now' }}</a>
+                            <a href="/about" class="btn btn-danger w-md btn-hover" aria-label="About Page">{{ session()->get('lang') === 'ro' ? 'Citeşte mai mult' : 'Read More' }}</a>
                         </div>
                     </div>
                 </div>
@@ -188,9 +188,8 @@
             <div class="row justify-content-center">
                 <div class="col-lg-7">
                     <div class="text-center">
-                        <h3 class="mb-3">Featured Services</h3>
-                        <p class="text-muted fs-15">What you wear is how you present yourself to the world, especially
-                            today, when human contacts are so quick. Fashion is instant language.</p>
+                        <h3 class="mb-3">{{ session()->get('lang') === 'ro' ? 'Servicii recomandate' : 'Featured Services' }}</h3>
+                        <p class="text-muted fs-15">{{ session()->get('lang') === 'ro' ? 'Ceea ce porți este modul în care te prezinți lumii, mai ales astăzi, când contactele umane sunt atât de rapide. Moda este un limbaj instantaneu.' : 'What you wear is how you present yourself to the world, especially today, when human contacts are so quick. Fashion is instant language.' }}</p>
                     </div>
                 </div>
                 <!--end col-->
@@ -259,9 +258,8 @@
             <div class="row justify-content-center">
                 <div class="col-lg-7">
                     <div class="text-center">
-                        <h3 class="mb-3">What Customers Say About Us</h3>
-                        <p class="text-muted fs-15">A customer is a person or business that buys goods or services from
-                            another business. Customers are crucial because they generate revenue.</p>
+                        <h3 class="mb-3">{{ session()->get('lang') === 'ro' ? 'Ce spun clienții despre noi' : 'What Customers Say About Us' }}</h3>
+                        <p class="text-muted fs-15">{{ session()->get('lang') === 'ro' ? 'Un client este o persoană sau o afacere care cumpără bunuri sau servicii de la o altă afacere. Clienții sunt cruciali deoarece ei generează venituri.' : 'A customer is a person or business that buys goods or services from another business. Customers are crucial because they generate revenue.' }}</p>
                     </div>
                 </div>
                 <!--end col-->
@@ -351,12 +349,8 @@
             <div class="row justify-content-center">
                 <div class="col-lg-7">
                     <div class="text-center">
-                        <h3 class="mb-3">Expert Aesthetic Tips & Trends</h3>
-                        <p class="text-muted fs-15">Explore the latest in beauty, skincare, and aesthetic treatments with
-                            Reshape Clinique. From expert tips on body contouring to the newest trends in non-invasive
-                            procedures, our blog keeps you informed and inspired on your journey to confidence and
-                            well-being.
-                        </p>
+                        <h3 class="mb-3">{{ session()->get('lang') === 'ro' ? 'Sfaturi și tendințe estetice de la experți' : 'Expert Aesthetic Tips & Trends' }}</h3>
+                        <p class="text-muted fs-15">{{ session()->get('lang') === 'ro' ? 'Explorează cele mai noi tratamente de înfrumusețare, îngrijire a pielii și estetică cu Reshape Clinique. De la sfaturi de specialitate despre conturarea corpului până la cele mai noi tendințe în proceduri neinvazive, blogul nostru te ține informat și inspirat în călătoria ta către încredere și bunăstare.' : 'Explore the latest in beauty, skincare, and aesthetic treatments with Reshape Clinique. From expert tips on body contouring to the newest trends in non-invasive procedures, our blog keeps you informed and inspired on your journey to confidence and well-being.' }}</p>
                     </div>
                 </div>
             </div>
@@ -396,7 +390,7 @@
             </div>
 
             <div class="mt-4 text-center">
-                <a href="/blogs" class="btn btn-soft-primary btn-hover">View More Articles <i
+                <a href="/blogs" class="btn btn-soft-primary btn-hover">{{ session()->get('lang') === 'ro' ? 'Vezi mai multe articole' : 'View More Articles' }} <i
                         class="bi bi-arrow-right ms-2"></i></a>
             </div>
         </div>
@@ -409,9 +403,8 @@
             <div class="row justify-content-center g-0">
                 <div class="col-lg-7">
                     <div class="text-center">
-                        <h3 class="mb-3">Follow Us In Instagram</h3>
-                        <p class="text-muted fs-15">The most common approach that peoples use to say follow me on Instagram
-                            is by sending a direct message.</p>
+                        <h3 class="mb-3">{{ session()->get('lang') === 'ro' ? 'Urmăriți-ne pe Instagram' : 'Follow Us In Instagram' }}</h3>
+                        <p class="text-muted fs-15">{{ session()->get('lang') === 'ro' ? 'Cea mai comună metodă pe care oamenii o folosesc pentru a spune „urmărește-mă” pe Instagram este trimiterea unui mesaj direct.' : 'The most common approach that peoples use to say follow me on Instagram is by sending a direct message.' }}</p>
                     </div>
                 </div>
             </div>

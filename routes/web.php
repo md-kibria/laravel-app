@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\AuthController;
@@ -30,13 +28,7 @@ Route::get('/contact', [PageController::class, 'contact']);
 Route::get('/refund-policy', [PageController::class, 'refundPolicy']);
 
 
-Route::get('/change', function (Request $request) {
-
-    App::setLocale($request->lang);
-    session()->put('lang', $request->lang);
-
-    return redirect()->back();
-});
+Route::get('/change', [PageController::class, 'changeLang']);
 
 Route::post('/subscribe', [SubscriberController::class, 'store'])->name('subscribe');
 
@@ -73,13 +65,15 @@ Route::post('/comment/visible/{comment}', [CommentController::class, 'update']);
 Route::get('/invoice', [InvoiceController::class, 'createInvoice']);
 Route::get('/test-invoice', [InvoiceController::class, 'test']);
 
-Route::get('/services', [PageController::class, 'services']);
-Route::post('/review/{service}/store', [ReviewController::class, 'store']);
-Route::get('/{service:slug}', [PageController::class, 'service']);
-// Route::get('/{post:slug}', [PageController::class, 'post'])->name('blogs.post');
+// Route::get('/services', [PageController::class, 'services']);
+// Route::post('/review/{service}/store', [ReviewController::class, 'store']);
+// Route::get('/{service:slug}', [PageController::class, 'service']);
+// // Route::get('/{post:slug}', [PageController::class, 'post'])->name('blogs.post');
 
 
 Route::prefix('/admin')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/', [AdminPageController::class, 'index']);
+
     Route::get('/dashboard', [AdminPageController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/users', [AdminPageController::class, 'users'])->name('admin.users');
     Route::put('/users/{user}', [AdminPageController::class, 'updateUser']);
@@ -148,3 +142,7 @@ Route::prefix('/admin')->middleware(['auth', 'admin'])->group(function () {
 });
 
 
+Route::get('/services', [PageController::class, 'services']);
+Route::post('/review/{service}/store', [ReviewController::class, 'store']);
+Route::get('/{service:slug}', [PageController::class, 'service']);
+// Route::get('/{post:slug}', [PageController::class, 'post'])->name('blogs.post');

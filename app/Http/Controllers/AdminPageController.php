@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Storage;
 class AdminPageController extends Controller
 {
 
+    public function index() {
+        return redirect('/admin/dashboard');
+    }
+
     /**
      * Show the admin dashboard.
      *

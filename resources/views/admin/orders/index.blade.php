@@ -48,8 +48,8 @@
                                     </th>
                                     <td class="id"><a href="/admin/orders/{{ $order->id }}"
                                             class="fw-medium link-primary">#{{$order->id}}</a></td>
-                                    <td class="customer_name">{{$order->name ?? $order->user->name}}</td>
-                                    <td class="product_name">{{$order->email ?? $order->user->email}}</td>
+                                    <td class="customer_name">{{$order->name ?? $order->user?->name}}</td>
+                                    <td class="product_name">{{$order->email ?? $order->user?->email}}</td>
                                     <td class="amount">${{$order->total}}</td>
                                     <td class="order_date">{{\Carbon\Carbon::parse($order->created_at)->toFormattedDateString()}}</td>
                                     <td class="status">

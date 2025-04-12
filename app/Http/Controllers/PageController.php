@@ -5,21 +5,30 @@ namespace App\Http\Controllers;
 use App\Models\Faq;
 use App\Models\Page;
 use App\Models\Post;
+use App\Models\View;
 use App\Models\Review;
 use App\Models\Service;
 use App\Models\Category;
-use Illuminate\Http\Request;
-use App\Models\HomepageContent;
+use App\ViewLoggerTrait;
 use App\Models\SiteSetting;
 use App\Models\SocialMedia;
-use App\Models\View;
-use App\ViewLoggerTrait;
+use Illuminate\Http\Request;
+use App\Models\HomepageContent;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\DependencyInjection\ServicesResetter;
 
 class PageController extends Controller
 {
     use ViewLoggerTrait;
+
+    public function changeLang(Request $request)
+    {
+        App::setLocale($request->lang);
+        session()->put('lang', $request->lang);
+
+        return redirect()->back();
+    }
 
     public function home()
     {
@@ -117,7 +126,7 @@ class PageController extends Controller
         $keywords = $site_settings->keywords;
         $datePublished = $site_settings->created_at->format('Y-m-d\TH:i:sP');
         $description = $site_settings->description;
-        
+
         return view('pages.services', compact('services', 'categories', 'keyword', 'categoryName', 'keywords', 'datePublished', 'description'));
     }
 
@@ -205,7 +214,7 @@ class PageController extends Controller
         $datePublished = $site_settings->created_at->format('Y-m-d\TH:i:sP');
         $dateModified = $site_settings->updated_at->format('Y-m-d\TH:i:sP');
 
-        return view('pages.contact', compact('keywords', 'datePublished','dateModified'));
+        return view('pages.contact', compact('keywords', 'datePublished', 'dateModified'));
     }
 
     public function refundPolicy()

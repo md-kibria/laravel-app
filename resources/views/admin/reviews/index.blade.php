@@ -15,7 +15,7 @@
                     <div class="card-body">
                         <div class="d-flex mb-4 align-items-center">
                             <div class="flex-shrink-0">
-                                <img src="{{ $review->user->image ? asset('/storage/' . $review->user->image) : URL::asset('img/default.png') }}"
+                                <img src="{{ $review->user?->image ? asset('/storage/' . $review->user->image) : URL::asset('img/default.png') }}"
                                     alt="" class="avatar-sm rounded-circle">
                             </div>
                             <div class="flex-grow-1 ms-2">
