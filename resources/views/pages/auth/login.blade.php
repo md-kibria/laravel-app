@@ -55,7 +55,7 @@
                                             <label for="email" class="form-label">Email</label>
                                             <input type="email" name="email"
                                                 class="form-control @error('email') is-invalid @enderror" id="email"
-                                                placeholder="Enter email address" value="{{ old('email') ?? 'admin@example.com' }}">
+                                                placeholder="Enter email address" value="{{ old('email') }}">
                                             @error('email')
                                                 <div class="invalid-feedback text-danger">
                                                     {{ $message }}
@@ -70,11 +70,11 @@
                                                     class="form-control pe-5 password-input @error('password') is-invalid @enderror"
                                                     onpaste="return false" placeholder="Enter password" id="password-input"
                                                     aria-describedby="passwordInput"
-                                                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" value="pass1234">
+                                                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" value="">
                                                 <button
                                                     class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
                                                     type="button" id="password-addon"><i
-                                                        class="ri-eye-fill align-middle"></i></button>
+                                                        class="bi bi-eye align-middle"></i></button>
                                                 @error('password')
                                                     <div class="invalid-feedback text-danger">
                                                         {{ $message }}

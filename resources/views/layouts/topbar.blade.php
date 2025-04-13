@@ -20,46 +20,31 @@
                         <img src="{{ config('logo') }}" alt="{{ config('site_title') }}" height="25" class="card-logo-light mx-auto">
                     </a>
                 </li>
+
+                @foreach (config('categories') as $category)
                 <li class="nav-item dropdown dropdown-hover">
-                    <a class="nav-link dropdown-toggle" data-key="t-pages" href="/services" role="button" aria-expanded="false">
-                        {{ session()->get('lang') === 'ro' ? 'Servicii' : 'Services' }}
-                    </a>
+                    <a class="nav-link dropdown-toggle" data-key="t-demos" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ $category->getTranslation('title', session()->get('lang')) }}</a>
                     <ul class="dropdown-menu dropdown-menu-md dropdown-menu-center dropdown-menu-list submenu">
-                        @foreach (config('categories') as $category)
-                        <li class="nav-item dropdown dropdown-hover">
-                            <a href="/services/?category={{ $category->id }}" class="nav-link dropdown-toggle"  aria-expanded="false" data-key="t-multi-level">{{ $category->getTranslation('title', session()->get('lang')) }}</a>
-                            <ul class="dropdown-menu submenu">
-                                @foreach ($category->services as $service)
-                                <li>
-                                    <a class="nav-link" href="{{ $service->slug }}" data-key="t-level-1.1">{{ $service->getTranslation('name', session()->get('lang')) }}</a>
-                                </li>
-                                @endforeach
-                            </ul>
-                        </li>
-                        @endforeach
-                    </ul>
-                </li>
-                <li class="nav-item dropdown dropdown-hover">
-                    <a class="nav-link dropdown-toggle" data-key="t-demos" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ session()->get('lang') === 'ro' ? 'Categorii' : 'Categories' }}
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-md dropdown-menu-center dropdown-menu-list submenu">
-                        @foreach (config('categories') as $category)
+                        @foreach ($category->services as $service)
                         <li class="nav-item">
-                            <a href="/services/?category={{ $category->id }}" class="nav-link" data-key="t-main-layout">{{ $category->getTranslation('title', session()->get('lang')) }}</a>
+                            <a href="/{{ $service->slug }}" class="nav-link" data-key="t-main-layout">{{ $service->getTranslation('name', session()->get('lang')) }}</a>
                         </li>
                         @endforeach
                     </ul>
                 </li>
-                
+                @endforeach
+
                 <li class="nav-item">
-                    <a class="nav-link" href="blogs" data-key="t-blogs">{{ session()->get('lang') === 'ro' ? 'Bloguri' : 'Blogs' }}</a>
+                    <a class="nav-link" href="/services" data-key="t-blogs">{{ session()->get('lang') === 'ro' ? 'Servicii' : 'Services' }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="about" data-key="t-about">{{ session()->get('lang') === 'ro' ? 'Despre' : 'About' }}</a>
+                    <a class="nav-link" href="/blogs" data-key="t-blogs">{{ session()->get('lang') === 'ro' ? 'Bloguri' : 'Blogs' }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="contact" data-key="t-contact">{{ session()->get('lang') === 'ro' ? 'Contact' : 'Contact' }}</a>
+                    <a class="nav-link" href="/about" data-key="t-about">{{ session()->get('lang') === 'ro' ? 'Despre' : 'About' }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact" data-key="t-contact">{{ session()->get('lang') === 'ro' ? 'Contact' : 'Contact' }}</a>
                 </li>
             </ul>
         </div>
@@ -94,9 +79,10 @@
 
                     @auth
                         
+                    <a class="dropdown-item" href="/account"><i class="mdi mdi-account text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Account</span></a>
                     <a class="dropdown-item" href="/contact"><i class="mdi mdi-lifebuoy text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Help</span></a>
                     <a class="dropdown-item" href="/account"><span class="badge bg-success-subtle text-success mt-1 float-end">New</span><i class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Settings</span></a>
-                    <a class="dropdown-item" href="{{ url('logout') }}"><i class="bi bi-box-arrow-right text-muted fs-16 align-middle me-1"></i> <span class="align-middle" data-key="t-logout">{{ __('t-logout') }}</span></a>
+                    <a class="dropdown-item" href="{{ url('logout') }}"><i class="bi bi-box-arrow-right text-muted fs-16 align-middle me-1"></i> <span class="align-middle" data-key="t-logout">{{ __('Logout') }}</span></a>
                     @endauth
 
                     @guest

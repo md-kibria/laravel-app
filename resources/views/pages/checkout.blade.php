@@ -30,13 +30,15 @@
     <section class="section">
         <div class="container">
             <div class="row">
+                @guest    
                 <div class="col-lg-12">
                     <div class="alert alert-danger alert-modern alert-dismissible fade show" role="alert">
                         <i class="bi bi-box-arrow-in-right icons"></i>{{ session()->get('lang') === 'ro' ? 'Client care revine?' : 'Returning customer?' }}<a href="/login"
-                            class="link-danger"><strong> {{ session()->get('lang') === 'ro' ? 'Faceți clic aici pentru a vă autentifica' : 'Click here to login' }}</strong>.</a>
+                        class="link-danger"><strong> {{ session()->get('lang') === 'ro' ? 'Faceți clic aici pentru a vă autentifica' : 'Click here to login' }}</strong>.</a>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 </div>
+                @endguest
                 <!--end col-->
             </div>
             <!--end row-->

@@ -36,7 +36,7 @@
                                                 <button
                                                     class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
                                                     type="button" id="password-addon"><i
-                                                        class="ri-eye-fill align-middle"></i></button>
+                                                        class="bi bi-eye align-middle"></i></button>
                                                 @error('old-password')
                                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                                 @enderror
@@ -52,7 +52,7 @@
                                                 <button
                                                     class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
                                                     type="button" id="password-addon"><i
-                                                        class="ri-eye-fill align-middle"></i></button>
+                                                        class="bi bi-eye align-middle"></i></button>
                                                 @error('password')
                                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                                 @enderror
@@ -63,13 +63,13 @@
                                             <label class="form-label" for="confirm-password">Confirm Password</label>
                                             <div class="position-relative auth-pass-inputgroup mb-3">
                                                 <input type="password"
-                                                    class="form-control pe-5 @error('password') is-invalid @enderror"
+                                                    class="form-control pe-5 password-input @error('password') is-invalid @enderror"
                                                     placeholder="Confirm password"
                                                     id="confirm-password" name="password_confirmation">
                                                 <button
                                                     class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
                                                     type="button" id="confirm-password"><i
-                                                        class="ri-eye-fill align-middle"></i></button>
+                                                        class="bi bi-eye align-middle"></i></button>
                                                 @error('password')
                                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
                                                 @enderror

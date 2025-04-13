@@ -157,7 +157,7 @@
                                                     <i class="ri-error-warning-line"></i>
                                                 </div> --}}
                                             </div>
-                                            <a href="{{ $service->slug }}">
+                                            <a href="/{{ $service->slug }}">
                                                 <h6 class="text-capitalize fs-15 lh-base text-truncate mb-0">
                                                     {{ $service->getTranslation('name', session()->get('lang')) }}</h6>
                                             </a>

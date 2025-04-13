@@ -393,16 +393,16 @@ class AdminPageController extends Controller
 
     public function socialMediaUpdate(Request $request) {
         $request->validate([
-            'facebook' => 'required',
-            'instagram' => 'required',
-            'twitter' => 'required',
-            'youtube' => 'required',
+            'facebook' => '',
+            'instagram' => '',
+            'twitter' => '',
+            'youtube' => '',
         ]);
 
         $data = $request->except(['_token', '_method']);
-
+        
         foreach ($data as $key => $value) {
-            $socialMedia = SocialMedia::where('name', $value)->first();
+            $socialMedia = SocialMedia::where('name', $key)->first();
             if ($socialMedia) {
                 $socialMedia->update([
                     'url' => $value,

@@ -86,7 +86,7 @@
                                                 <button
                                                     class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
                                                     type="button" id="password-addon"><i
-                                                        class="ri-eye-fill align-middle"></i></button>
+                                                        class="bi bi-eye align-middle"></i></button>
                                                 @error('password')
                                                     <div class="invalid-feedback text-danger">
                                                         {{ $message }}
@@ -106,7 +106,7 @@
                                                 <button
                                                     class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
                                                     type="button" id="password-addon"><i
-                                                        class="ri-eye-fill align-middle"></i></button>
+                                                        class="bi bi-eye align-middle"></i></button>
                                                 @error('password')
                                                     <div class="invalid-feedback text-danger">
                                                         {{ $message }}
@@ -116,10 +116,8 @@
                                         </div>
 
                                         <div class="mb-4">
-                                            <p class="mb-0 fs-12 text-muted fst-italic">By registering you agree to the
-                                                Toner <a href="#"
-                                                    class="text-primary text-decoration-underline fst-normal fw-medium">Terms
-                                                    of Use</a></p>
+                                            <p class="mb-0 fs-12 text-muted fst-italic">By registering you agree to our <a href="/terms-conditions"
+                                                    class="text-primary text-decoration-underline fst-normal fw-medium">Terms of Use</a></p>
                                         </div>
 
                                         <div id="password-contain" class="p-3 bg-light mb-2 rounded">

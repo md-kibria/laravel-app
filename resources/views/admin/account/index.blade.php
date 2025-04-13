@@ -186,13 +186,19 @@
                             <div class="col-lg-4">
                                 <div>
                                     <label for="oldpasswordInput" class="form-label">Old Password</label>
+                                    <div class="position-relative auth-pass-inputgroup">
                                     <input type="password"
-                                        class="form-control @error('old-password') is-invalid @enderror"
+                                        class="form-control password-input @error('old-password') is-invalid @enderror"
                                         id="oldpasswordInput" placeholder="Enter current password" name="old-password"
                                         value="{{ old('old-password') }}">
                                     @error('old-password')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
+                                    <button
+                                        class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
+                                        type="button" id="password-addon"><i
+                                            class="ri-eye-fill align-middle"></i></button>
+                                    </div>
                                 </div>
                             </div>
                             <!--end col-->
@@ -260,6 +266,7 @@
 @section('scripts')
     <!-- nouisliderribute js -->
     <script src="{{ URL::asset('build/libs/nouislider/nouislider.min.js') }}"></script>
+    <script src="{{ URL::asset('build/js/pages/passowrd-create.init.js') }}"></script>
 
     <!-- App js -->
     <script src="{{ URL::asset('build/js/app.js') }}"></script>

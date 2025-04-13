@@ -69,7 +69,7 @@
         </div>
         <div class="row g-2">
             <div class="col-12">
-                <a href="/checkout" target="_blank" class="btn btn-info w-100">{{ session()->get('lang') === 'ro' ? 'Continuați la Checkout' : 'Continue to Checkout' }}</a>
+                <a href="/checkout" class="btn btn-info w-100">{{ session()->get('lang') === 'ro' ? 'Continuați la Checkout' : 'Continue to Checkout' }}</a>
             </div>
         </div>
     </div>

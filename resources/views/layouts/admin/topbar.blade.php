@@ -132,7 +132,7 @@
                         <a class="dropdown-item" href="/admin/posts"><i class="mdi mdi-file-sign text-muted fs-15 align-middle me-1"></i> <span class="align-middle">Blog Posts</span></a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/admin/settings/general"><i class="bi bi-gear text-muted fs-15 align-middle me-1"></i> <span class="align-middle">Settings</span></a>
-                        <a class="dropdown-item" href="{{ url('logout') }}"><i class="bi bi-box-arrow-right text-muted fs-15 align-middle me-1"></i> <span class="align-middle" data-key="t-logout">{{ __('t-logout') }}</span></a>
+                        <a class="dropdown-item" href="{{ url('logout') }}"><i class="bi bi-box-arrow-right text-muted fs-15 align-middle me-1"></i> <span class="align-middle" data-key="t-logout">{{ __('Logout') }}</span></a>
                     </div>
                 </div>
             </div>
