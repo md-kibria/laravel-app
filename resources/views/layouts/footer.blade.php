@@ -21,25 +21,25 @@
                             @foreach ($socialMedias as $item)
                                 @if ($item->name === 'facebook' && $item->url !== null)
                                     <li class="list-inline-item">
-                                        <a href="{{ $item->url }}" class="text-reset" aria-label="facebook"><i
+                                        <a href="{{ $item->url }}" class="text-reset" target="_blank" aria-label="facebook"><i
                                                 class="mdi mdi-facebook"></i></a>
                                     </li>
                                 @endif
                                 @if ($item->name === 'instagram' && $item->url !== null)
                                     <li class="list-inline-item">
-                                        <a href="{{ $item->url }}" class="text-reset" aria-label="instagram"><i
+                                        <a href="{{ $item->url }}" class="text-reset" target="_blank" aria-label="instagram"><i
                                                 class="mdi mdi-instagram"></i></a>
                                     </li>
                                 @endif
                                 @if ($item->name === 'twitter' && $item->url !== null)
                                     <li class="list-inline-item">
-                                        <a href="{{ $item->url }}" class="text-reset" aria-label="twitter"><i
+                                        <a href="{{ $item->url }}" class="text-reset" target="_blank" aria-label="twitter"><i
                                                 class="mdi mdi-twitter"></i></a>
                                     </li>
                                 @endif
                                 @if ($item->name === 'youtube' && $item->url !== null)
                                     <li class="list-inline-item">
-                                        <a href="{{ $item->url }}" class="text-reset" aria-label="youtube"><i
+                                        <a href="{{ $item->url }}" class="text-reset" target="_blank" aria-label="youtube"><i
                                                 class="mdi mdi-youtube"></i></a>
                                     </li>
                                 @endif

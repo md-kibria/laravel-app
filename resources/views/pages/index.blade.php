@@ -410,7 +410,7 @@
             </div>
         </div>
 
-        <div class="position-relative">
+        <div class="position-relative" style="min-height: 150px;">
             <div class="row g-0 mt-5">
                 @foreach ($instas as $item)
                     <div class="col">
@@ -425,8 +425,8 @@
                 @endforeach
             </div>
 
-            <div class="insta-lable text-center">
-                <a href="{{ $instaLink }}" target="_blank" class="btn btn-primary btn-hover">
+            <div class="insta-lable text-center mx-auto" style="width: fit-content;z-index: 10">
+                <a href="{{ $instaLink->url }}" target="_blank" class="btn btn-primary btn-hover">
                     <i class="ph-instagram-logo align-middle me-1"></i> Follow In Instagram
                 </a>
             </div>

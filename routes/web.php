@@ -139,6 +139,10 @@ Route::prefix('/admin')->middleware(['auth', 'admin'])->group(function () {
     
     Route::get('/settings/subscription', [AdminPageController::class, 'subscription'])->name('admin.settings.subscription');
     Route::post('/settings/subscription', [AdminPageController::class, 'subs_update'])->name('admin.settings.subscription.update');
+
+    Route::fallback(function () {
+        return view('errors.404-admin');
+    });
 });
 
 
@@ -146,3 +150,7 @@ Route::get('/services', [PageController::class, 'services']);
 Route::post('/review/{service}/store', [ReviewController::class, 'store']);
 Route::get('/{service:slug}', [PageController::class, 'service']);
 // Route::get('/{post:slug}', [PageController::class, 'post'])->name('blogs.post');
+
+Route::fallback(function () {
+    abort(404);
+});

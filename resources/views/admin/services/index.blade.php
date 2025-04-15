@@ -100,6 +100,9 @@
                                         <a href="/admin/services/{{ $service->id }}/edit" class="btn btn-sm btn-primary">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
+                                        <a href="/admin/services/{{ $service->id }}/faq" class="btn btn-sm btn-secondary">
+                                            <i class="bi bi-question-octagon"></i>
+                                        </a>
                                         <a href="#delteModal-{{$service->id}}" data-bs-toggle="modal" class="btn btn-sm btn-danger">
                                             <i class="bi bi-trash"></i>
                                         </a>

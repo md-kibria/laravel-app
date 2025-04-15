@@ -35,9 +35,6 @@
                 @endforeach
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/services" data-key="t-blogs">{{ session()->get('lang') === 'ro' ? 'Servicii' : 'Services' }}</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="/blogs" data-key="t-blogs">{{ session()->get('lang') === 'ro' ? 'Bloguri' : 'Blogs' }}</a>
                 </li>
                 <li class="nav-item">

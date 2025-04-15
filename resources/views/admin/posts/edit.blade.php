@@ -137,8 +137,7 @@
                     <div class="card-body">
                         <div class="hstack gap-3 align-items-start">
                             <div class="flex-grow-1">
-                                <input class="form-control @error('slug') is-invalid @enderror" data-choices
-                                    data-choices-multiple-remove="true" placeholder="Enter slug" type="text"
+                                <input class="form-control @error('slug') is-invalid @enderror" placeholder="Enter slug" type="text"
                                     value="{{ old('slug') ?? $post->slug }}" name="slug">
                                 @error('slug')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -186,10 +185,9 @@
                     </div>
                     <div class="card-body">
                         <div class="mb-3">
-                            <label for="choices-publish-status-input" class="form-label">Status</label>
+                            <label for="status" class="form-label">Status</label>
 
-                            <select class="form-select" id="choices-publish-status-input" data-choices
-                                data-choices-search-false name="status">
+                            <select class="form-select" id="status" name="status">
                                 <option value="published" @selected($post->status == 'published')>Published</option>
                                 <option value="draft" @selected($post->status == 'draft')>Draft</option>
                             </select>
@@ -207,7 +205,7 @@
                         <div class="mb-3">
                             <div class="flex-grow-1">
                                 <label for="seo-keywords" class="form-label">Keywords</label>
-                                <input class="form-control" data-choices placeholder="Enter seo keywords" type="text"
+                                <input class="form-control" placeholder="Enter seo keywords" type="text"
                                     value="{{ old('seo_keywords') ?? $post->seo_keywords }}" name="seo_keywords">
                             </div>
                         </div>

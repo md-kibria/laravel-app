@@ -219,18 +219,18 @@
                             </div>
 
                             <div class="col-lg-4">
-                                <label class="form-label" for="confirm-password-input">Confirm Password</label>
+                                <label class="form-label" for="confirm-password">Confirm Password</label>
                                 <div class="position-relative auth-pass-inputgroup">
                                     <input type="password"
                                         class="form-control pe-5 password-input @error('password') is-invalid @enderror"
-                                        placeholder="Confirm password" id="confirm-password-input"
+                                        placeholder="Confirm password" id="confirm-password"
                                         name="password_confirmation">
                                     @error('password')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                     <button
                                         class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
-                                        type="button" id="confirm-password-input"><i
+                                        type="button" id="confirm-password"><i
                                             class="ri-eye-fill align-middle"></i></button>
                                 </div>
                             </div>

@@ -20,10 +20,9 @@
                                 <div class="mt-4 text-center pt-3">
                                     <div class="position-relative">
                                         <h4 class="fs-18 error-subtitle text-uppercase mb-0">Internal Server Error</h4>
-                                        <p class="fs-15 text-muted mt-3">It will be as simple as Occidental in fact, it will
-                                            Occidental to an English person</p>
+                                        <p class="fs-15 text-muted mt-3">Something went wrong on our end. Please try again later.</p>
                                         <div class="mt-4">
-                                            <a href="index" class="btn btn-primary"><i
+                                            <a href="/" class="btn btn-primary"><i
                                                     class="mdi mdi-home me-1"></i>Back to home</a>
                                         </div>
                                     </div>
@@ -37,22 +36,5 @@
             <!--end row-->
         </div>
         <!--end container-->
-
-        <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="text-center">
-                            <p class="mb-0 text-muted">©
-                                <script>
-                                    document.write(new Date().getFullYear())
-                                </script> Toner. Crafted with <i class="mdi mdi-heart text-danger"></i> by
-                                Themesbrand
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
     </div>
 @endsection

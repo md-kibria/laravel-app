@@ -112,4 +112,9 @@
 
 @endsection
 @section('scripts')
+<!-- nouisliderribute js -->
+<script src="{{ URL::asset('build/libs/nouislider/nouislider.min.js') }}"></script>
+
+<!-- App js -->
+<script src="{{ URL::asset('build/js/app.js') }}"></script>
 @endsection

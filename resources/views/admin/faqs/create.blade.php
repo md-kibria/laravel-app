@@ -97,7 +97,7 @@
                     <div class="card-body">
                         <div class="">
                             <h6>{{ $service->name }}</h6>
-                            <p>{!! $service->description !!}</p>
+                            <p>{!! substr($service->description, 0, 450) !!}...</p>
                         </div>
                     </div>
                     <!-- end card body -->
@@ -166,4 +166,9 @@
      @endforeach
 @endsection
 @section('scripts')
+<!-- nouisliderribute js -->
+<script src="{{ URL::asset('build/libs/nouislider/nouislider.min.js') }}"></script>
+
+<!-- App js -->
+<script src="{{ URL::asset('build/js/app.js') }}"></script>
 @endsection

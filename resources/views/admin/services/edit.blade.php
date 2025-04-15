@@ -77,7 +77,7 @@
                                 </div>
                             </div>
                             <div>
-                                <select class="form-select @error('category_id') is-invalid @enderror" id="choices-category-input" name="category_id">
+                                <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" name="category_id">
                                     <option value="">Select service category</option>
                                     @foreach ($categories as $cat)
                                         <option value="{{ $cat->id }}" @selected($service->category_id == $cat->id)>{{ $cat->title }}
@@ -267,58 +267,6 @@
                 </div>
                 <!-- end card -->
 
-                {{-- <div class="card">
-                    <div class="card-header d-flex justify-content-between">
-                        <div class="d-flex">
-                            <div class="flex-shrink-0 me-3">
-                                <div class="avatar-sm">
-                                    <div class="avatar-title rounded-circle bg-light text-primary fs-20">
-                                        <i class="bi bi-question"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex-grow-1">
-                                <h5 class="card-title mb-1">FAQ</h5>
-                                <p class="text-muted mb-0">Fill all information below.</p>
-                            </div>
-                        </div>
-                        <div class="">
-                            <button type="button" class="btn btn-primary">Add</button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row ">
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="manufacturer-name-input">FAQ-1 Question (En)</label>
-                                    <input type="text" class="form-control" id="manufacturer-name-input"
-                                        placeholder="Enter question in english">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="manufacturer-brand-input">FAQ-1 Question (Ro)</label>
-                                    <input type="text" class="form-control" id="manufacturer-brand-input"
-                                        placeholder="Enter question in romanian">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="manufacturer-name-input">FAQ-1 Answer (En)</label>
-                                    <textarea class="form-control" id="manufacturer-name-input" placeholder="Enter answer in english" rows="4"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="manufacturer-brand-input">FAQ-1 Answer (Ro)</label>
-                                    <textarea class="form-control" id="manufacturer-brand-input" placeholder="Enter answer in romanian" rows="4"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end row -->
-
-                    </div>
-                </div> --}}
                 <!-- end card -->
                 <div class="text-end mb-3">
                     <button type="submit" class="btn btn-success w-sm">Submit</button>
@@ -335,8 +283,7 @@
                     <div class="card-body">
                         <div class="hstack gap-3 align-items-start">
                             <div class="flex-grow-1">
-                                <input class="form-control @error('slug') is-invalid @enderror" data-choices
-                                    data-choices-multiple-remove="true" placeholder="Enter slug" type="text"
+                                <input class="form-control @error('slug') is-invalid @enderror" placeholder="Enter slug" type="text"
                                     value="{{ old('slug') ?? $service->slug }}" name="slug">
                                 @error('slug')
                                     <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -378,10 +325,9 @@
                     </div>
                     <div class="card-body">
                         <div class="mb-3">
-                            <label for="choices-publish-status-input" class="form-label">Status</label>
+                            <label for="status" class="form-label">Status</label>
 
-                            <select class="form-select" id="choices-publish-status-input" data-choices
-                                data-choices-search-false name="status">
+                            <select class="form-select" id="status" name="status">
                                 <option value="published" @selected($service->status == 'published')>Published</option>
                                 <option value="draft" @selected($service->status == 'draft')>Draft</option>
                             </select>
@@ -400,14 +346,14 @@
                         <div class="mb-3">
                             <div class="flex-grow-1">
                                 <label for="seo-title" class="form-label">Title</label>
-                                <input class="form-control" data-choices placeholder="Enter seo title" type="text"
+                                <input class="form-control" placeholder="Enter seo title" type="text"
                                     value="{{ old('seo_title') ?? $service->seo_title }}" name="seo_title">
                             </div>
                         </div>
                         <div class="mb-3">
                             <div class="flex-grow-1">
                                 <label for="seo-keywords" class="form-label">Keywords</label>
-                                <input class="form-control" data-choices placeholder="Enter seo keywords" type="text"
+                                <input class="form-control" placeholder="Enter seo keywords" type="text"
                                     value="{{ old('seo_keywords') ?? $service->seo_keywords }}" name="seo_keywords">
                             </div>
                         </div>

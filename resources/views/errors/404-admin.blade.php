@@ -1,4 +1,4 @@
-@extends('layouts.master-auth')
+@extends('layouts.admin.master')
 @section('title')
     404
 @endsection
@@ -19,11 +19,11 @@
                                 </div>
                                 <div class="mt-4 text-center pt-3">
                                     <div class="position-relative">
-                                        <h4 class="fs-18 error-subtitle text-uppercase mb-0">{{ session()->get('lang') === 'ro' ? 'Ups, pagina nu a fost găsită' : 'Opps, page not found' }}!</h4>
-                                        <p class="fs-15 text-muted mt-3">{{ session()->get('lang') === 'ro' ? 'Pagina pe care o căutați nu există sau a fost mutată.' : 'The page you\'re looking for doesn\'t exist or has been moved.' }}</p>
+                                        <h4 class="fs-18 error-subtitle text-uppercase mb-0">Opps, page not found!</h4>
+                                        <p class="fs-15 text-muted mt-3">The page you're looking for doesn't exist or has been moved.</p>
                                         <div class="mt-4">
-                                            <a href="/" class="btn btn-primary"><i
-                                                    class="mdi mdi-home me-1"></i>Back to home</a>
+                                            <a href="/admin/dashboard" class="btn btn-primary"><i
+                                                    class="mdi mdi-home me-1"></i>Back to Dashboard</a>
                                         </div>
                                     </div>
                                 </div>
