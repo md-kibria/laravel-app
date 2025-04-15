@@ -20,28 +20,12 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <p class="text-muted fs-15">Your new password must be different from previous used password.
-                                </p>
+                                {{-- <p class="text-muted fs-15">Your new password must be different from previous used password.</p> --}}
 
                                 <div class="p-2">
-                                    <form action="/account/update-pass" method="POST">
+                                    <form action="/password/update" method="POST">
                                         @method('POST')
                                         @csrf
-                                        <div class="mb-3">
-                                            <label class="form-label" for="password">Old Password</label>
-                                            <div class="position-relative auth-pass-inputgroup">
-                                                <input type="password"
-                                                    class="form-control pe-5 password-input @error('old-password') is-invalid @enderror"
-                                                    name="old-password" placeholder="Enter old password">
-                                                <button
-                                                    class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
-                                                    type="button" id="password-addon"><i
-                                                        class="bi bi-eye align-middle"></i></button>
-                                                @error('old-password')
-                                                    <div class="invalid-feedback text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
                                         <div class="mb-3">
                                             <label class="form-label" for="password-input">Password</label>
                                             <div class="position-relative auth-pass-inputgroup">
@@ -76,6 +60,7 @@
                                             </div>
                                         </div>
 
+                                        <input type="hidden" name="token" value="{{ $token }}">
                                         <input type="hidden" name="source" value="client">
 
                                         <div id="password-contain" class="p-3 bg-light mb-2 rounded">
@@ -95,7 +80,7 @@
                                     </form>
                                 </div>
                                 <div class="mt-4 text-center">
-                                    <p class="mb-0">Wait, I want to keep my current password... <a href="/account"
+                                    <p class="mb-0">Wait, I remember my password... <a href="/account"
                                             class="fw-semibold text-primary text-decoration-underline"> Click here </a> </p>
                                 </div>
                             </div>
@@ -112,4 +97,6 @@
 @section('scripts')
     <!-- password-addon init -->
     <script src="{{ URL::asset('build/js/pages/passowrd-create.init.js') }}"></script>
+    <script src="{{ URL::asset('build/js/pages/password-match.init.js') }}"></script>
+    <script src="{{ URL::asset('build/js/pages/password-addon.init.js') }}"></script>
 @endsection

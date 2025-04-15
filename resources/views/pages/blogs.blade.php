@@ -67,7 +67,9 @@
                 @foreach ($posts as $post)
                     <div class="col-lg-4">
                         <div class="card overflow-hidden">
-                            <img src="{{ asset('/storage/' . $post->thumbnail) }}" class="img-fluid" alt="">
+                            <div class="bg-dark-subtle"  style="min-height: 200px;">
+                                <img src="{{ asset('/storage/' . $post->thumbnail) }}" class="img-fluid" alt="">
+                            </div>
                             <div class="card-body">
                                 <div class="entry-meta">
                                     <span class="text-muted">{{ (int) $post->views }} <i class="mdi mdi-like"></i>

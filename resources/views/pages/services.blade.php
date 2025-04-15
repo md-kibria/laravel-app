@@ -136,7 +136,7 @@
                         @foreach ($services as $service)
                             <div class="col-xxl-4 col-lg-4 col-md-6">
                                 <div class="card ecommerce-product-widgets border-0 rounded-0 shadow-none overflow-hidden">
-                                    <div class="bg-light bg-opacity-50 rounded py-4 position-relative">
+                                    <div class="bg-light bg-dark-subtle bg-opacity-50 rounded py-4 position-relative" style="min-height: 200px;">
                                         <picture>
                                             <source srcset="{{ asset('/storage/' . $service->thumbnail) }}" type="image/webp">
                                         <img src="{{ asset('/storage/' . $service->thumbnail) }}"
@@ -152,11 +152,11 @@
                                     </div>
                                     <div class="pt-4">
                                         <div>
-                                            <div class="avatar-xxs mb-3">
-                                                {{-- <div class="avatar-title bg-light text-muted rounded cursor-pointer">
+                                            {{-- <div class="avatar-xxs mb-3">
+                                                <div class="avatar-title bg-light text-muted rounded cursor-pointer">
                                                     <i class="ri-error-warning-line"></i>
-                                                </div> --}}
-                                            </div>
+                                                </div>
+                                            </div> --}}
                                             <a href="/{{ $service->slug }}">
                                                 <h6 class="text-capitalize fs-15 lh-base text-truncate mb-0">
                                                     {{ $service->getTranslation('name', session()->get('lang')) }}</h6>
@@ -166,13 +166,13 @@
                                                         class="bi bi-star-fill text-warning align-bottom"></i></span>
                                                 @if ($service->discounted_price > 0)
                                                     <h5 class="text-secondary mb-0">
-                                                        ${{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }}
+                                                        {{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }} lei
                                                         <span
-                                                            class="text-muted fs-12"><del>${{ number_format($service->price, 2) }}</del></span>
+                                                            class="text-muted fs-12"><del>{{ number_format($service->price, 2) }} lei</del></span>
                                                     </h5>
                                                 @else
                                                     <h5 class="text-secondary mb-0">
-                                                        ${{ number_format($service->price, 2) }}</h5>
+                                                        {{ number_format($service->price, 2) }} lei</h5>
                                                 @endif
                                             </div>
                                             <div class="tn mt-3">

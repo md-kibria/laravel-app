@@ -78,12 +78,12 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    ${{ $service->curr_price }}
+                                                    {{ number_format($service->curr_price, 2) }} lei
                                                 </td>
                                                 <td>
                                                     {{ $service->quantity }}
                                                 </td>
-                                                <td class="text-end">${{ $service->curr_price * $service->quantity }}</td>
+                                                <td class="text-end">{{ number_format($service->curr_price * $service->quantity, 2) }} lei</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -109,17 +109,17 @@
                                             <tr>
                                                 <td>Sub Total :</td>
                                                 <td class="text-end cart-subtotal">
-                                                    ${{ number_format($total, 2) }}
+                                                    {{ number_format($total, 2) }} lei
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>{{ session()->get('lang') === 'ro' ? 'Reducere' : 'Discount ' }} <span class="text-muted">{{-- (Toner15) --}}</span>:</td>
-                                                <td class="text-end cart-discount">$00.00</td>
+                                                <td class="text-end cart-discount">00.00 lei</td>
                                             </tr>
                                             <tr class="table-active">
                                                 <th>Total (RON) :</th>
                                                 <td class="text-end">
-                                                    <span class="fw-semibold cart-total">${{ number_format($total, 2) }}</span>
+                                                    <span class="fw-semibold cart-total">{{ number_format($total, 2) }} lei</span>
                                                 </td>
                                             </tr>
                                         </tbody>

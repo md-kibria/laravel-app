@@ -97,7 +97,8 @@
                     <div class="card-body">
                         <div class="">
                             <h6>{{ $service->name }}</h6>
-                            <p>{!! substr($service->description, 0, 450) !!}...</p>
+                            {{-- <p>{!! substr($service->description, 0, 450) !!}...</p> --}}
+                            <p>{{ substr(html_entity_decode(strip_tags($service->description)), 0, 450) }}...</p>
                         </div>
                     </div>
                     <!-- end card body -->

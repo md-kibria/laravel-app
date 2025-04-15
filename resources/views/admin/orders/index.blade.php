@@ -50,7 +50,7 @@
                                             class="fw-medium link-primary">#{{$order->id}}</a></td>
                                     <td class="customer_name">{{$order->name ?? $order->user?->name}}</td>
                                     <td class="product_name">{{$order->email ?? $order->user?->email}}</td>
-                                    <td class="amount">${{$order->total}}</td>
+                                    <td class="amount">{{number_format($order->total, 2)}} lei</td>
                                     <td class="order_date">{{\Carbon\Carbon::parse($order->created_at)->toFormattedDateString()}}</td>
                                     <td class="status">
                                         <span class="badge @if($order->status == 'paid') bg-success-subtle text-success @else bg-danger-subtle text-danger @endif text-uppercase">{{$order->status}}</span>

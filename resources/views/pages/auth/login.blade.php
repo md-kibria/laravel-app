@@ -64,6 +64,9 @@
                                         </div>
 
                                         <div class="mb-3">
+                                            <div class="float-end">
+                                                <a href="{{ route('password.reset') }}" class="text-muted">Forgot password?</a>
+                                            </div>
                                             <label class="form-label" for="password-input">Password</label>
                                             <div class="position-relative auth-pass-inputgroup">
                                                 <input type="password" name="password"

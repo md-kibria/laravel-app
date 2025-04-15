@@ -23,7 +23,7 @@
     @stack('schema')
     
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ URL::asset('build/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ config('favicon') }}">
 
     <!-- head css -->
     @include('layouts.head-css')
@@ -49,6 +49,9 @@
 
     <!-- live-wire scripts -->
     @livewireScripts
+
+    {{-- Alert --}}
+    <x-flash-message />
 
     <script>
         document.addEventListener('livewire:initialized', () => {

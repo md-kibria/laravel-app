@@ -340,7 +340,7 @@
                                         </td>
                                         <td>{{ $order->email ?? $order->user->email }}</td>
                                         <td>
-                                            ${{ $order->total }}
+                                            {{ number_format($order->total, 2) }} lei
                                         </td>
                                         <td>{{ \Carbon\Carbon::parse($order->created_at)->toFormattedDateString() }}</td>
                                         <td><span

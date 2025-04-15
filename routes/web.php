@@ -41,21 +41,26 @@ Route::post('/checkout/netopia', [NetopiaController::class, 'checkout']);
 
 // Route::get('/cart', [OrderController::class, 'cart']);
 
-Route::middleware('guest')->group(function() {
+Route::middleware('guest')->group(function () {
     Route::get('/signup', [AuthController::class, 'signup'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/auth', [AuthController::class, 'auth']);
+    Route::get('/password/reset', [AuthController::class, 'resetPassword'])->name('password.reset');
+    Route::post('/password/email', [AuthController::class, 'resetPasswordEmail'])->name('password.email');
+    Route::get('/reset-password', [AuthController::class, 'resetPasswordGet']);
+    Route::post('/password/update', [AuthController::class, 'resetPasswordUpdate']);
 });
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware('auth')->group(function() {
+Route::middleware('auth')->group(function () {
     Route::get('/account', [UserController::class, 'account']);
     Route::post('/account/update', [UserController::class, 'update']);
     Route::post('/account/update-pass', [UserController::class, 'update_pass']);
     Route::get('/account/password', [UserController::class, 'password']);
 });
+
 
 Route::get('/blogs', [PageController::class, 'blogs']);
 Route::get('/blogs/{post:slug}', [PageController::class, 'post'])->name('blogs.post');
@@ -112,7 +117,7 @@ Route::prefix('/admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/terms-conditions-page', [PageAdminController::class, 'termsConditions']);
     Route::get('/refund-policy', [PageAdminController::class, 'refundPolicy']);
     Route::post('/store-page', [PageAdminController::class, 'store_page']);
-    
+
     Route::get('/posts', [PostController::class, 'index']);
     Route::get('/posts/create', [PostController::class, 'create'])->name('admin.posts.create');
     Route::post('/posts/store', [PostController::class, 'store']);
@@ -124,11 +129,11 @@ Route::prefix('/admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/messages', [MessageController::class, 'index']);
     Route::get('/messages/{message}', [MessageController::class, 'show']);
     Route::delete('/messages/{message}', [MessageController::class, 'destroy']);
-    
+
     Route::get('/views', [AdminPageController::class, 'views']);
     Route::get('/subscribers', [AdminPageController::class, 'subscribers']);
     Route::delete('/subscribers/{subscriber}', [AdminPageController::class, 'subscriberDelete']);
-    
+
     Route::get('/settings/general', [AdminPageController::class, 'general'])->name('admin.settings.general');
     Route::post('/settings/general/basic', [AdminPageController::class, 'basic'])->name('admin.settings.general.basic');
     Route::post('/settings/general/contact', [AdminPageController::class, 'contact'])->name('admin.settings.general.contact');
@@ -136,7 +141,7 @@ Route::prefix('/admin')->middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/settings/social-media', [AdminPageController::class, 'socialMedia'])->name('admin.settings.social-media');
     Route::post('/settings/social-media', [AdminPageController::class, 'socialMediaUpdate'])->name('admin.settings.social-media.update');
-    
+
     Route::get('/settings/subscription', [AdminPageController::class, 'subscription'])->name('admin.settings.subscription');
     Route::post('/settings/subscription', [AdminPageController::class, 'subs_update'])->name('admin.settings.subscription.update');
 

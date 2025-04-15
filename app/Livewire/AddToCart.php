@@ -9,45 +9,13 @@ use Illuminate\Support\Facades\Cookie;
 class AddToCart extends Component
 {
     public $service;
+    public $quantity = 1;
 
-    public function mount($service)
+    public function mount($service, $quantity = 1)
     {
         $this->service = $service;
+        $this->quantity = $quantity;
     }
-
-    // public function addToCart()
-    // {
-    //     $cart = Session::get('cart', []);
-
-    //     $exists = false;
-
-    //     foreach ($cart as &$item) {
-    //         if ($item['id'] === $this->service->id) {
-    //             $item['quantity'] += 1; // Increase quantity
-    //             $exists = true;
-    //             break;
-    //         }
-    //     }
-
-    //     if (!$exists) {
-    //         // Add new item to cart
-    //         $cart[] = [
-    //             'id' => $this->service->id,
-    //             'name' => $this->service->name,
-    //             'price' => $this->service->discounted_price 
-    //                 ? $this->service->price - ($this->service->price * $this->service->discounted_price) / 100 
-    //                 : $this->service->price,
-    //             'thumbnail' => $this->service->thumbnail,
-    //             'quantity' => 1,
-    //         ];
-    //     }
-
-    //     Session::put('cart', $cart);
-
-    //     // Notify the cart component to update
-    //     $this->dispatch('cartUpdated');
-    //     $this->dispatch('cartCountUpdated', count($cart)); // Add this line
-    // }
 
     // New system with cookie
     public function addToCart()
@@ -58,7 +26,7 @@ class AddToCart extends Component
 
         foreach ($cart as &$item) {
             if ($item['id'] === $this->service->id) {
-                $item['quantity'] += 1;
+                $item['quantity'] += $this->quantity;
                 $exists = true;
                 break;
             }
@@ -72,7 +40,7 @@ class AddToCart extends Component
                     ? $this->service->price - ($this->service->price * $this->service->discounted_price) / 100
                     : $this->service->price,
                 'thumbnail' => $this->service->thumbnail,
-                'quantity' => 1,
+                'quantity' => $this->quantity,
             ];
         }
 
@@ -82,6 +50,16 @@ class AddToCart extends Component
         $this->dispatch('cartCountUpdated', count($cart));
     }
 
+    public function updateQuantity($newQuantity)
+    {
+        $this->quantity = $newQuantity;
+    }
+
+    public function addToCartWithQuantity($quantity)
+{
+    $this->quantity = (int) $quantity;
+    $this->addToCart();
+}
 
     public function render()
     {

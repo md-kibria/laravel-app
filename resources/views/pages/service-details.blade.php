@@ -1,62 +1,62 @@
 @extends('layouts.master')
 
-@section('title', $service->seo_title)
-@section('keywords', $service->seo_keywords)
-@section('description', $service->seo_description)
+@section('title', $service->seo_title ?? '')
+@section('keywords', $service->seo_keywords ?? '')
+@section('description', $service->seo_description ?? '')
 @section('thumbnail', asset('/storage/' . $service->thumbnail))
 
 @push('schema')
-<x-schema.schema-wrapper>
-    <x-schema.organization />
-    
-    <x-schema.web-page :page="[
-        'url' => route('blogs.post', $service->slug),
-        'name' => $service->getTranslation('name', session()->get('lang')),
-        'datePublished' => $service->created_at->toIso8601String(),
-        'dateModified' => $service->updated_at->toIso8601String(),
-        'description' => $service->seo_description
-    ]" :image="[
-        'url' => asset('/storage/' . $service->thumbnail),
-        'width' => '687',
-        'height' => '429',
-        'caption' => $service->seo_title
-    ]" :breadcrumb="[
-        [
-            '@type' => 'ListItem',
-            'position' => '1',
-            'item' => [
-                '@id' => url('/'),
-                'name' => 'Home'
-            ]
-        ],
-        [
-            '@type' => 'ListItem',
-            'position' => '2',
-            'item' => [
-                '@id' => url('/services'),
-                'name' => 'Services'
-            ]
-        ],
-        [
-            '@type' => 'ListItem',
-            'position' => '3',
-            'item' => [
-                '@id' => url('/{{$service->slug}}'),
-                'name' => $service->getTranslation('name', session()->get('lang'))
-            ]
-        ]
-    ]" />
+    <x-schema.schema-wrapper>
+        <x-schema.organization />
 
-    <x-schema.article :article="[
-        'headline' => $service->getTranslation('name', session()->get('lang')),
-        'keywords' => $service->seo_keywords,
-        'datePublished' => $service->created_at->toIso8601String(),
-        'dateModified' => $service->updated_at->toIso8601String(),
-        'url' => url('/{{$service->slug}}'),
-        'description' => $service->seo_description,
-        'image' => asset('/storage/' . $service->thumbnail)
-    ]"/>
-</x-schema.schema-wrapper>
+        <x-schema.web-page :page="[
+            'url' => route('blogs.post', $service->slug),
+            'name' => $service->getTranslation('name', session()->get('lang')),
+            'datePublished' => $service->created_at->toIso8601String(),
+            'dateModified' => $service->updated_at->toIso8601String(),
+            'description' => $service->seo_description,
+        ]" :image="[
+            'url' => asset('/storage/' . $service->thumbnail),
+            'width' => '687',
+            'height' => '429',
+            'caption' => $service->seo_title,
+        ]" :breadcrumb="[
+            [
+                '@type' => 'ListItem',
+                'position' => '1',
+                'item' => [
+                    '@id' => url('/'),
+                    'name' => 'Home',
+                ],
+            ],
+            [
+                '@type' => 'ListItem',
+                'position' => '2',
+                'item' => [
+                    '@id' => url('/services'),
+                    'name' => 'Services',
+                ],
+            ],
+            [
+                '@type' => 'ListItem',
+                'position' => '3',
+                'item' => [
+                    '@id' => url('/{{ $service->slug }}'),
+                    'name' => $service->getTranslation('name', session()->get('lang')),
+                ],
+            ],
+        ]" />
+
+        <x-schema.article :article="[
+            'headline' => $service->getTranslation('name', session()->get('lang')),
+            'keywords' => $service->seo_keywords,
+            'datePublished' => $service->created_at->toIso8601String(),
+            'dateModified' => $service->updated_at->toIso8601String(),
+            'url' => url('/{{ $service->slug }}'),
+            'description' => $service->seo_description,
+            'image' => asset('/storage/' . $service->thumbnail),
+        ]" />
+    </x-schema.schema-wrapper>
 @endpush
 
 @section('css')
@@ -106,32 +106,14 @@
                                 </div>
                                 <div class="swiper productSwiper2">
                                     <div class="swiper-wrapper">
-                                        <div class="swiper-slide ">
-                                            <img src="{{ asset('/storage/' . $service->thumbnail) }}" alt="" class="img-fluid" />
+                                        <div class="swiper-slide" style="min-height: 350px;">
+                                            <img src="{{ asset('/storage/' . $service->thumbnail) }}" alt=""
+                                                class="img-fluid" />
                                         </div>
                                     </div>
-                                    {{-- <div class="swiper-button-next bg-transparent"></div>
-                                    <div class="swiper-button-prev bg-transparent"></div> --}}
                                 </div>
                             </div>
                         </div>
-                        <!--end col-->
-                        {{-- <div class="col-lg-12">
-                            <div class="mt-3">
-                                <div class="hstack gap-2">
-                                    <button type="button" class="btn btn-success btn-hover w-100">
-                                        <i class="bi bi-basket2 me-2"></i> Add To Cart
-                                    </button>
-                                    <button type="button" class="btn btn-primary btn-hover w-100">
-                                        <i class="bi bi-cart2 me-2"></i> Buy Now
-                                    </button>
-                                    <button class="btn btn-soft-danger custom-toggle btn-hover" data-bs-toggle="button"
-                                        aria-pressed="true"> <span class="icon-on"><i class="ri-heart-line"></i></span>
-                                        <span class="icon-off"><i class="ri-heart-fill"></i></span> </button>
-                                </div>
-                            </div>
-                        </div> --}}
-                        <!--end col-->
                     </div>
                     <!--end row-->
                 </div>
@@ -141,8 +123,12 @@
                         <div class="mb-4">
                             <div class="d-flex gap-3 mb-2">
                                 <div class="fs-15 text-warning">
+                                    @if ($averageRating === 0)
+                                        <i class="align-bottom bi bi-star text-warning"></i>
+                                    @endif
                                     @for ($i = 1; $i <= 5; $i++)
-                                        <i class="align-bottom bi bi-star-{{ $i <= floor($averageRating) ? 'fill' : ($i - $averageRating < 1 ? 'half' : '') }} text-warning"></i>
+                                        <i
+                                            class="align-bottom bi bi-star-{{ $i <= floor($averageRating) ? 'fill' : ($i - $averageRating < 1 ? 'half' : '') }} text-warning"></i>
                                     @endfor
                                 </div>
                                 <span class="fw-medium"> ({{ $totalReviews }} Review)</span>
@@ -153,13 +139,13 @@
 
                             @if ($service->discounted_price > 0)
                                 <h5 class="fs-24 mb-4">
-                                    ${{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }}
+                                    {{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }} lei
                                     <span
-                                        class="text-muted fs-14"><del>${{ number_format($service->price, 2) }}</del></span>
+                                        class="text-muted fs-14"><del>{{ number_format($service->price, 2) }} lei</del></span>
                                     <span class="fs-14 ms-2 text-danger"> ({{ $service->discounted_price }}% off)</span>
                                 </h5>
                             @else
-                                <h5 class="fs-24 mb-4">${{ number_format($service->price, 2) }}</h5>
+                                <h5 class="fs-24 mb-4">{{ number_format($service->price, 2) }} lei</h5>
                             @endif
 
                             <ul class="list-unstyled vstack gap-2">
@@ -226,16 +212,16 @@
                         <div class="d-flex align-items-center mb-4">
                             <h5 class="fs-15 mb-0">Quantity:</h5>
                             <div class="input-step ms-2">
-                                <button type="button" class="minus">–</button>
-                                <input type="number" class="product-quantity1" value="1" min="0" max="100"
-                                    readonly="">
-                                <button type="button" class="plus">+</button>
+                                <button type="button" class="minus" id="minus">–</button>
+                                <input type="number" class="product-quantity1" id="quantity" value="1" min="0"
+                                    max="100" readonly="">
+                                <button type="button" class="plus" id="plus">+</button>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="mt-3">
                                 <div class="hstack gap-2">
-                                    <livewire:add-to-cart :service="$service" />
+                                    <livewire:add-to-cart :service="$service" :quantity="1" />
                                     <a href="/payment?id={{ $service->id }}" class="btn btn-success btn-hover w-100">
                                         <i
                                             class="bi bi-basket2 me-2"></i>{{ session()->get('lang') === 'ro' ? 'Cumpărați acum' : 'Buy Now' }}
@@ -397,43 +383,45 @@
                                 </div>
                                 <div class="mt-4" data-simplebar style="max-height: 350px">
                                     @foreach ($service->reviews as $review)
-                                    @if($review->is_approved)
-                                        <div class="d-flex p-3 border-bottom border-bottom-dashed">
-                                            <div class="flex-shrink-0 me-3">
-                                                <img class="avatar-xs rounded-circle" src="{{ $review->user?->image ? asset('/storage/' . $review->user->image) : URL::asset('img/default.png') }}" alt="">
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <div class="d-flex mb-3">
-                                                    <div class="flex-grow-1">
-                                                        <div>
-                                                            <div class="mb-2 fs-12">
-                                                                @for ($i = 1; $i <= 5; $i++)
-                                                                    @if ($i <= $review->rating)
-                                                                        <span><i
-                                                                                class="bi bi-star-fill text-warning align-bottom"></i></span>
-                                                                    @else
-                                                                        <span><i
-                                                                                class="bi bi-star text-warning align-bottom"></i></span>
-                                                                    @endif
-                                                                @endfor
-                                                            </div>
+                                        @if ($review->is_approved)
+                                            <div class="d-flex p-3 border-bottom border-bottom-dashed">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <img class="avatar-xs rounded-circle"
+                                                        src="{{ $review->user?->image ? asset('/storage/' . $review->user->image) : URL::asset('img/default.png') }}"
+                                                        alt="">
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <div class="d-flex mb-3">
+                                                        <div class="flex-grow-1">
+                                                            <div>
+                                                                <div class="mb-2 fs-12">
+                                                                    @for ($i = 1; $i <= 5; $i++)
+                                                                        @if ($i <= $review->rating)
+                                                                            <span><i
+                                                                                    class="bi bi-star-fill text-warning align-bottom"></i></span>
+                                                                        @else
+                                                                            <span><i
+                                                                                    class="bi bi-star text-warning align-bottom"></i></span>
+                                                                        @endif
+                                                                    @endfor
+                                                                </div>
 
-                                                            <h6 class="mb-0">{{ $review->name }}</h6>
+                                                                <h6 class="mb-0">{{ $review->name }}</h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex-shrink-0">
+                                                            <p class="mb-0 text-muted"><i
+                                                                    class="bi bi-calendar3 me-2 align-middle"></i>{{ \Carbon\Carbon::parse($review->created_at)->toFormattedDateString() }}
+                                                            </p>
                                                         </div>
                                                     </div>
-                                                    <div class="flex-shrink-0">
-                                                        <p class="mb-0 text-muted"><i
-                                                                class="bi bi-calendar3 me-2 align-middle"></i>{{ \Carbon\Carbon::parse($review->created_at)->toFormattedDateString() }}
+                                                    <div>
+                                                        <p class="mb-0">
+                                                            {{ $review->comment }}
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <div>
-                                                    <p class="mb-0">
-                                                        {{ $review->comment }}
-                                                    </p>
-                                                </div>
                                             </div>
-                                        </div>
                                         @endif
                                     @endforeach
                                 </div>
@@ -507,7 +495,8 @@
 
                                             <div class="text-end">
                                                 <button class="btn btn-primary btn-hover" type="submit"
-                                                    value="Submit"><i class="bi bi-send align-bottom ms-1"></i> {{ session()->get('lang') === 'ro' ? 'Trimite recenzie' : 'Send Review' }}</button>
+                                                    value="Submit"><i class="bi bi-send align-bottom ms-1"></i>
+                                                    {{ session()->get('lang') === 'ro' ? 'Trimite recenzie' : 'Send Review' }}</button>
                                             </div>
                                         </form>
                                     </div>
@@ -544,7 +533,9 @@
                     <div class="col-xxl-4 col-lg-4 col-md-6">
                         <div class="card ecommerce-product-widgets border-0 rounded-0 shadow-none overflow-hidden">
                             <div class="bg-light bg-opacity-50 rounded py-4 position-relative">
-                                <img src="{{ asset('/storage/' . $service->thumbnail) }}" alt="{{ $service->getTranslation('name', session()->get('lang')) }}" style="max-height: 200px;max-width: 100%;" class="mx-auto d-block rounded-2">
+                                <img src="{{ asset('/storage/' . $service->thumbnail) }}"
+                                    alt="{{ $service->getTranslation('name', session()->get('lang')) }}"
+                                    style="max-height: 200px;max-width: 100%;" class="mx-auto d-block rounded-2">
                                 @if ($service->discounted_price > 0)
                                     <div class="avatar-xs label">
                                         <div class="avatar-title bg-danger rounded-circle fs-11">
@@ -568,13 +559,13 @@
                                                 class="bi bi-star-fill text-warning align-bottom"></i></span>
                                         @if ($service->discounted_price > 0)
                                             <h5 class="text-secondary mb-0">
-                                                ${{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }}
+                                                {{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }} lei
                                                 <span
-                                                    class="text-muted fs-12"><del>${{ number_format($service->price, 2) }}</del></span>
+                                                    class="text-muted fs-12"><del>{{ number_format($service->price, 2) }} lei</del></span>
                                             </h5>
                                         @else
                                             <h5 class="text-secondary mb-0">
-                                                ${{ number_format($service->price, 2) }}</h5>
+                                                {{ number_format($service->price, 2) }} lei</h5>
                                         @endif
                                     </div>
                                     <div class="tn mt-3">
@@ -621,6 +612,48 @@
                 });
             });
         });
+
+        
+        // At the top of your JavaScript
+let productQuantity = 1;
+
+const quantity = document.getElementById('quantity');
+const plus = document.getElementById('plus');
+const minus = document.getElementById('minus');
+
+// Update the input initially
+quantity.value = productQuantity;
+
+plus.addEventListener('click', function() {
+    productQuantity++;
+    quantity.value = productQuantity;
+    console.log('JavaScript quantity now:', productQuantity);
+});
+
+minus.addEventListener('click', function() {
+    if (productQuantity > 1) {
+        productQuantity--;
+        quantity.value = productQuantity;
+        console.log('JavaScript quantity now:', productQuantity);
+    }
+});
+
+// Find and modify the add to cart button click behavior
+document.addEventListener('click', function(e) {
+    // Check if the clicked element is the add to cart button or contains it
+    const addBtn = e.target.closest('.add-btn');
+    if (addBtn && addBtn.hasAttribute('wire:id')) {
+        // Prevent the default Livewire action
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const componentId = addBtn.getAttribute('wire:id');
+        console.log('Adding to cart with quantity:', productQuantity);
+        
+        // Call a method that accepts the quantity parameter
+        Livewire.find(componentId).call('addToCartWithQuantity', productQuantity);
+    }
+});
     </script>
 
     <!--Swiper slider js-->

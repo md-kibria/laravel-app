@@ -162,7 +162,8 @@ class PageController extends Controller
         $averageRating = $totalReviews > 0 ? round($totalRatingSum / $totalReviews, 1) : 0;
 
         $this->storeViewData(null, 'service', $service->id);
-
+        $service->quantity = 1;
+        
         return view('pages.service-details', compact('service', 'faqs', 'similerServices', 'ratings', 'totalReviews', 'averageRating', 'ratingsData'));
     }
 

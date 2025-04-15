@@ -206,7 +206,7 @@
                                 <div class="swiper-slide">
                                     <div class="card overflow-hidden">
                                         <div class="bg-dark-subtle rounded-top py-4">
-                                            <div class="gallery-product">
+                                            <div class="gallery-product" style="min-height: 150px;">
                                                 <img src="@if ($service->thumbnail) {{ asset('/storage/' . $service->thumbnail) }} @else '' @endif"
                                                     alt="{{ $service->getTranslation('name', session()->get('lang')) }}"
                                                     style="max-height: 215px;max-width: 100%;" class="mx-auto d-block"
@@ -215,7 +215,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div>
-                                                <a href="product-details">
+                                                <a href="/{{ $service->slug }}">
                                                     <h6 class="fs-15 lh-base text-truncate mb-0">
                                                         {{ $service->getTranslation('name', session()->get('lang')) }}</h6>
                                                 </a>
@@ -225,13 +225,13 @@
                                                         <i class="bi bi-star-fill text-warning align-bottom"></i></span>
                                                     @if ($service->discounted_price > 0)
                                                         <h5 class="mb-0">
-                                                            ${{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }}
+                                                            {{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }} lei
                                                             <span
-                                                                class="text-muted fs-12"><del>${{ number_format($service->price, 2) }}</del></span>
+                                                                class="text-muted fs-12"><del>{{ number_format($service->price, 2) }} lei</del></span>
                                                         </h5>
                                                     @else
                                                         <h5 class="mb-0">
-                                                            ${{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }}
+                                                            {{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }} lei
                                                         </h5>
                                                     @endif
                                                 </div>
@@ -297,49 +297,6 @@
                 </div>
             </div>
 
-            {{-- <div
-                class="row row-cols-lg-5 row-cols-md-3 row-cols-1 text-center justify-content-center align-items-center g-3 mt-5 pt-lg-5">
-                <div class="col">
-                    <div class="client-images">
-                        <a href="#!">
-                            <img src="{{ URL::asset('build/images/clients/paypal.svg') }}" alt="client-img"
-                                class="mx-auto img-fluid d-block">
-                        </a>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="client-images">
-                        <a href="#!">
-                            <img src="{{ URL::asset('build/images/clients/walmart.svg') }}" alt="client-img"
-                                class="mx-auto img-fluid d-block">
-                        </a>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="client-images">
-                        <a href="#!">
-                            <img src="{{ URL::asset('build/images/clients/spotify.svg') }}" alt="client-img"
-                                class="mx-auto img-fluid d-block">
-                        </a>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="client-images">
-                        <a href="#!">
-                            <img src="{{ URL::asset('build/images/clients/shopify.svg') }}" alt="client-img"
-                                class="mx-auto img-fluid d-block">
-                        </a>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="client-images">
-                        <a href="#!">
-                            <img src="{{ URL::asset('build/images/clients/lenovo.svg') }}" alt="client-img"
-                                class="mx-auto img-fluid d-block">
-                        </a>
-                    </div>
-                </div>
-            </div> --}}
         </div>
     </section>
 
@@ -359,7 +316,9 @@
                 @foreach ($blogs as $post)
                     <div class="col-lg-4">
                         <div class="card overflow-hidden">
-                            <img src="{{ asset('/storage/' . $post->thumbnail) }}" class="img-fluid" alt="">
+                            <div class="bg-dark-subtle"  style="min-height: 200px;">
+                                <img src="{{ asset('/storage/' . $post->thumbnail) }}" class="img-fluid" alt="">
+                            </div>
                             <div class="card-body">
                                 <div class="entry-meta">
                                     <span class="text-muted">{{ (int) $post->views }} <i class="mdi mdi-like"></i>

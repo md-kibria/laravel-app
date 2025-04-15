@@ -176,7 +176,7 @@
                                                         @endforeach
                                                     </td>
                                                     <td><span class="text-muted">{{ \Carbon\Carbon::parse($order->created_at)->toFormattedDateString() }}</span></td>
-                                                    <td class="fw-medium">${{ number_format($order->total, 2) }}</td>
+                                                    <td class="fw-medium">{{ number_format($order->total, 2) }} lei</td>
                                                     <td>
                                                         <span class="badge @if($order->status == 'paid') bg-success-subtle text-success @else bg-danger-subtle text-danger @endif text-uppercase">{{$order->status}}</span>
                                                     </td>

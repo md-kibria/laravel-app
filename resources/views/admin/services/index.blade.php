@@ -82,10 +82,10 @@
                                     class="ri-star-fill text-warning align-bottom"></i></td>
                                 <td class="align-middle">
                                     @if ($service->discounted_price)
-                                        ${{ $service->price - ($service->price * $service->discounted_price) / 100 }}
-                                        <p class="mb-0 text-body-secondary"><del>${{ $service->price }}</del></p>
+                                        {{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }} lei
+                                        <p class="mb-0 text-body-secondary"><del>{{ number_format($service->price, 2) }} lei</del></p>
                                     @else
-                                        ${{ $service->price }}
+                                        {{ number_format($service->price, 2) }} lei
                                     @endif
                                 </td>
                                 <td class="align-middle">{{ (int) $service->discounted_price }}%</td>

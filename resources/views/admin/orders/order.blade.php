@@ -24,9 +24,9 @@
                     <div class="d-flex gap-3">
                         <div class="flex-grow-1">
                             <h6 class="fs-18 mb-3">Customer Info</h6>
-                            <p class="mb-0 fw-medium">{{$order->name ?? $order->user->name}}</p>
-                            <p class="mb-1">{{$order->email ?? $order->user->email}}</p>
-                            <p class="mb-0">{{$order->phone ?? $order->user->phone}}</p>
+                            <p class="mb-0 fw-medium">{{$order->name ?? $order->user?->name}}</p>
+                            <p class="mb-1">{{$order->email ?? $order->user?->email}}</p>
+                            <p class="mb-0">{{$order->phone ?? $order->user?->phone}}</p>
                         </div>
                         <div class="avatar-sm flex-shrink-0">
                             <div class="avatar-title bg-success-subtle text-success rounded fs-3">
@@ -71,11 +71,11 @@
                                     </td>
 
                                     <td>
-                                        <span class="text-secondary">${{ number_format($item->price, 2) }}</span>
+                                        <span class="text-secondary">{{ number_format($item->price, 2) }} lei</span>
                                     </td>
 
                                     <td>{{ $item->quantity }}</td>
-                                    <td class="text-end">${{ number_format($item->price * $item->quantity, 2) }}</td>
+                                    <td class="text-end">{{ number_format($item->price * $item->quantity, 2) }} lei</td>
                                 </tr>
                                 @endforeach
 
@@ -92,15 +92,15 @@
                                             <tbody>
                                                 <tr>
                                                     <td>Sub Total:</td>
-                                                    <td class="text-end">${{ number_format($total, 2) }}</td>
+                                                    <td class="text-end">{{ number_format($total, 2) }} lei</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Discount:</td>
-                                                    <td class="text-end">$00.00</td>
+                                                    <td class="text-end">00.00 lei</td>
                                                 </tr>
                                                 <tr class="border-top">
                                                     <th>Total (RON) :</th>
-                                                    <th class="text-end">${{ number_format($total, 2) }}</th>
+                                                    <th class="text-end">{{ number_format($total, 2) }} lei</th>
                                                 </tr>
                                             </tbody>
                                         </table>

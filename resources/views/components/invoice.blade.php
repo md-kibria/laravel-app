@@ -82,15 +82,15 @@
                     <div class="row g-3">
                         <div class="col-6">
                             <h6 class="text-muted text-uppercase fw-semibold fs-14 mb-3">Billing Address</h6>
-                            <p class="fw-medium mb-2 fs-16" id="billing-name">{{ $order->name ?? $order->user->name }}
+                            <p class="fw-medium mb-2 fs-16" id="billing-name">{{ $order->name ?? $order->user?->name }}
                             </p>
                             <p class="text-muted mb-1" id="billing-address-line-1">
-                                {{ $order->city ?? $order->user->city }}
-                                {{ $order->country ?? ', ' . $order->user->country }}</p>
+                                {{ $order->city ?? $order->user?->city }}
+                                {{ $order->country ?? ', ' . $order->user?->country }}</p>
                             <p class="text-muted mb-1"><span>Phone: +</span><span
-                                    id="billing-phone-no">{{ $order->phone ?? $order->user->phone }}</span></p>
+                                    id="billing-phone-no">{{ $order->phone ?? $order->user?->phone }}</span></p>
                             <p class="text-muted mb-0"><span>Email: </span><span
-                                    id="billing-tax-no">{{ $order->email ?? $order->user->email }}</span>
+                                    id="billing-tax-no">{{ $order->email ?? $order->user?->email }}</span>
                             </p>
                         </div>
                         <!--end col-->
@@ -118,9 +118,9 @@
                                     <tr>
                                         <th scope="row">#{{ $item->service->id }}</th>
                                         <td class="text-start">{{ $item->service->name }}</td>
-                                        <td>RON{{ number_format($item->price, 2) }}</td>
+                                        <td>{{ number_format($item->price, 2) }} lei</td>
                                         <td>{{ $item->quantity }}</td>
-                                        <td class="text-end">RON {{ number_format($item->price * $item->quantity, 2) }}
+                                        <td class="text-end">{{ number_format($item->price * $item->quantity, 2) }} lei
                                         </td>
                                     </tr>
                                 @endforeach
@@ -134,8 +134,8 @@
                             <tbody>
                                 <tr>
                                     <td>Sub Total</td>
-                                    <td class="text-end">RON <span
-                                            id="total-amount">{{ number_format($order->total, 2) }}
+                                    <td class="text-end"><span
+                                            id="total-amount">{{ number_format($order->total, 2) }} lei
                                     </td>
                                 </tr>
                                 <tr>
@@ -144,8 +144,8 @@
                                 </tr>
                                 <tr class="border-top border-top-dashed fs-15">
                                     <th scope="row">Total Amount</th>
-                                    <th class="text-end">RON <span
-                                            id="total-amount">{{ number_format($order->total, 2) }}
+                                    <th class="text-end"><span
+                                            id="total-amount">{{ number_format($order->total, 2) }} lei
                                     </th>
                                 </tr>
                             </tbody>

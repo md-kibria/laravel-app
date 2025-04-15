@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title', $post->getTranslation('title', session()->get('lang')))
-@section('keywords', $post->seo_keywords)
+@section('keywords', $post->seo_keywords ?? '')
 @section('description', $post->getTranslation('excerpt', session()->get('lang')))
 @section('thumbnail', asset('/storage/' . $post->thumbnail))
 
@@ -78,7 +78,9 @@
                 {{-- @foreach ($posts as $post) --}}
                 <div class="col-lg-9 mx-auto">
                     <div class="card overflow-hidden">
-                        <img src="{{ asset('/storage/' . $post->thumbnail) }}" class="img-fluid" alt="">
+                        <div class="w-100"  style="min-height: 200px;">
+                            <img src="{{ asset('/storage/' . $post->thumbnail) }}" class="img-fluid bg-dark-subtle w-100" alt="">
+                        </div>
                         <div class="card-body">
                             <div class="entry-meta">
                                 <span class="text-muted">{{ $post->views }} <i class="mdi mdi-like"></i>

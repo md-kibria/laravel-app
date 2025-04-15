@@ -27,7 +27,7 @@
                                     <h5 class="fs-15">{{ $item['name'] }}</h5>
                                 </a>
                                 <div class="d-flex mb-3 gap-2">
-                                    <div class="text-muted fw-medium mb-0">$<span class="product-price">{{ $item['price'] }}</span>
+                                    <div class="text-muted fw-medium mb-0"><span class="product-price">{{ number_format($item['price'], 2) }} lei</span>
                                     </div>
                                     <div class="vr"></div>
                                     {{-- <span class="text-success fw-medium">In Stock</span> --}}
@@ -40,10 +40,10 @@
                                 </div>
                             </div>
                             <div class="flex-shrink-0 d-flex flex-column justify-content-between align-items-end">
-                                <button type="button" class="btn btn-icon btn-sm btn-ghost-secondary remove-item-btn"
+                                <button type="button" class="btn btn-icon btn-sm btn-ghost-danger remove-item-btn"
                                     data-bs-toggle="modal" data-bs-target="#removeItemModal-{{$item['id']}}" aria-label="Close"><i
-                                        class="ri-close-fill fs-16"></i></button>
-                                <div class="fw-medium mb-0 fs-16">$<span class="product-line-price">{{(int)$item['price'] * $item['quantity'] }}</span></div>
+                                        class="bi bi-trash-fill fs-16"></i></button>
+                                <div class="fw-medium mb-0 fs-16"><span class="product-line-price">{{number_format((int)$item['price'] * $item['quantity'], 2) }}</span> lei</div>
                             </div>
                         </div>
                     </li>
@@ -63,7 +63,7 @@
                             $total += (int)$item['price'] * $item['quantity'];    
                         }
                     @endphp
-                    ${{ number_format($total, 2) }}
+                    {{ number_format($total, 2) }} lei
                 </h6>
             </div>
         </div>
