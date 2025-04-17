@@ -161,7 +161,9 @@
                                     </li>
                                 @endif
                             </ul>
-                            @if ($service->label1_title || $service->label2_title)
+
+                            {{-- Previous variation system --}}
+                            {{-- @if ($service->label1_title || $service->label2_title)
                                 <h6 class="fs-14 text-muted mb-3">
                                     {{ session()->get('lang') === 'ro' ? 'Informații suplimentare' : 'Additional Info' }} :
                                 </h6>
@@ -207,7 +209,101 @@
                                         </div>
                                     </li>
                                 </ul>
-                            @endif
+                            @endif --}}
+                            {{-- New variation system --}}
+                            
+                            
+                            
+                                <h6 class="fs-14 text-muted mb-3">
+                                    {{ session()->get('lang') === 'ro' ? 'Informații suplimentare' : 'Additional Info' }} :
+                                </h6>
+                                <ul class="list-unstyled vstack gap-2 mb-0">
+                                    @foreach ($service->variationTypes as $variationType)
+                                        <li>
+                                            <div class="d-flex gap-3">
+                                                <div class="flex-shrink-0">
+                                                    <i class="bi bi-tag-fill text-success align-middle fs-15"></i>
+                                                </div>
+                                                <div class="flex-grow-1 d-flex">
+                                                    <b
+                                                        style="margin-right: 5px;">{{ $variationType->getTranslation('name', session()->get('lang')) }}:</b>
+                                                    <ul class="clothe-size list-unstyled hstack gap-2 mb-0 flex-wrap">
+                                                        @foreach ($variationType->variations as $variation)
+                                                            <li> 
+                                                                <input
+                                                                    type="radio"
+                                                                    name="variation_{{ $variationType->id }}"
+                                                                    id="variation_{{ $variation->id }}"
+                                                                    class="variation-option"
+                                                                    data-type="{{ strtolower($variationType->type === 'number' ? 'number' : 'text') }}"
+                                                                    data-price="{{ $variationType->type === 'number' ? $variation->getTranslation('name', 'en') : $variation->price  }}"
+                                                                    value="{{ $variation->id }}"
+                                                                >
+                                                                <label
+                                                                class="btn btn-soft-primary px-1 py-0 fs-12 d-flex align-items-center justify-content-center"
+                                                                for="variation_{{ $variation->id }}"
+                                                            >
+                                                                {{ $variation->getTranslation('name', session()->get('lang')) }}
+                                                            </label>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                </ul>
+
+
+                                <h5 class="mt-3">
+                                    <strong>Total Price: </strong> <span id="total-price" class="fw-normal">{{ number_format($service->price, 2) }} </span> <span class="fw-normal">lei</span>
+                                </h5>
+
+
+
+                                    
+                                    
+                                    
+                            
+                            
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                            const variationInputs = document.querySelectorAll('.variation-option');
+                                            const totalPriceSpan = document.getElementById('total-price');
+                                    
+                                            let selected = {
+                                                area: null,
+                                                session: 1
+                                            };
+                                    
+                                            variationInputs.forEach(input => {
+                                                input.addEventListener('change', function () {
+                                                    const type = this.dataset.type;
+                                                    const price = parseFloat(this.dataset.price);
+                                    
+                                                    if (type === 'text') {
+                                                        selected.area = price;
+                                                    } else if (type === 'number') {
+                                                        selected.session = price;
+                                                    }
+                                    
+                                                    updateTotal();
+                                                });
+                                            });
+                                    
+                                            function updateTotal() {
+                                                const area = selected.area ?? 0;
+                                                const session = selected.session ?? 1;
+                                                const total = area * session;
+                                                totalPriceSpan.textContent = total.toFixed(2);
+                                            }
+                                        });
+                                    </script>
+                                    
+                            
+                            
+                            
+                            {{-- New variation system --}}
                         </div>
                         <div class="d-flex align-items-center mb-4">
                             <h5 class="fs-15 mb-0">Quantity:</h5>

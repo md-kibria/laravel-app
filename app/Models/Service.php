@@ -31,4 +31,8 @@ class Service extends Model
     public function orders() {
         return $this->hasMany(OrderItem::class);
     }
+
+    public function variationTypes() {
+        return $this->hasMany(VariationType::class);
+    }
 }

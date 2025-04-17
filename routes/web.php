@@ -20,6 +20,7 @@ use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\HomepageContentController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\VariationController;
 
 Route::get('/', [PageController::class, 'home']);
 Route::post('/message', [MessageController::class, 'store']);
@@ -88,6 +89,16 @@ Route::prefix('/admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/account', [AdminPageController::class, 'account']);
 
     Route::resource('services', ServiceController::class);
+
+    Route::get('/services/{service}/variation-types', [VariationController::class, 'variation_types']);
+    Route::post('/services/{service}/variation-types', [VariationController::class, 'variation_types_store']);
+    Route::get('/services/variation-types/{variation_type}/edit', [VariationController::class, 'variation_types_edit']);
+    Route::put('/services/variation-types/{variation_type}/update', [VariationController::class, 'variation_types_update']);
+    Route::delete('/services/variation-types/{variation_type}/delete', [VariationController::class, 'variation_types_destroy']);
+
+    Route::get('/services/variation-types/{variation_type}/variations', [VariationController::class, 'variations']);
+    Route::post('/services/variation-types/{variation_type}/variations', [VariationController::class, 'variations_store']);
+    Route::delete('/services/variation-types/variations/{variation}/delete', [VariationController::class, 'variations_destroy']);
 
     Route::get('/services/{service}/faq', [FaqController::class, 'create']);
     Route::post('/services/faq/', [FaqController::class, 'store']);
