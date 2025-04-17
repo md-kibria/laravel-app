@@ -327,7 +327,7 @@
                         <div class="mb-3">
                             <label for="status" class="form-label">Status</label>
 
-                            <select class="form-select" id="status" name="status">
+                            <select class="form-select" id="" name="status">
                                 <option value="published" @selected($service->status == 'published')>Published</option>
                                 <option value="draft" @selected($service->status == 'draft')>Draft</option>
                             </select>

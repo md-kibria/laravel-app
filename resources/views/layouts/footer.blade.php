@@ -58,7 +58,7 @@
                             <ul class="list-unstyled footer-link mt-3 ">
                                 <li>
                                     <a href="tel:{{ config('site_phone') }}"
-                                        class="text-white text-decoration-none fw-normal">
+                                        class="text-white text-decoration-none fw-normal lh-sm lh-lg-md">
                                         @if (config('site_phone'))
                                             <i class="bi bi-telephone-outbound align-middle me-2"></i>
                                             {{ config('site_phone') }}
@@ -67,16 +67,23 @@
                                 </li>
                                 <li>
                                     <a href="mailto:{{ config('site_email') }}"
-                                        class="text-white text-decoration-none">
+                                        class="text-white text-decoration-none lh-sm lh-lg-md">
                                         <i class="bi bi-envelope align-middle me-2"></i> {{ config('site_email') }}
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="text-white">
-                                        <i class="bi bi-geo-alt align-middle me-2"></i> {{ config('site_address') }}
+                                    <a class="text-white text-decoration-none lh-sm lh-lg-md">
+                                        <i class="bi bi-geo-alt align-middle me-2"></i> {{ config('site_address_street') }}
                                     </a>
                                 </li>
                             </ul>
+                           
+                            <ul class="list-unstyled mb-0 text-white">
+                                <li><i class="bi bi-chevron-double-right me-1"></i> <strong>{{ session()->get('lang') === 'ro' ? 'Luni' : 'Monday' }}:</strong> <span class="text-muted">12:00 – 20:00</span></li>
+                                <li><i class="bi bi-chevron-double-right me-1"></i> <strong>{{ session()->get('lang') === 'ro' ? 'Marți – Vineri' : 'Tuesday – Friday' }}:</strong> <span class="text-muted">09:00 – 20:00</span></li>
+                                <li><i class="bi bi-chevron-double-right me-1"></i> <strong>{{ session()->get('lang') === 'ro' ? 'Sâmbătă' : 'Saturday' }}:</strong> <span class="text-muted">09:00 – 17:00</span></li>
+                                <li><i class="bi bi-chevron-double-right me-1"></i> <strong>{{ session()->get('lang') === 'ro' ? 'Duminică' : 'Sunday' }}:</strong> <span class="text-danger">{{ session()->get('lang') === 'ro' ? 'Închis' : 'Closed' }}</span></li>
+                              </ul>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3">

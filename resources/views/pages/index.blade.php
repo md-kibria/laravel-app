@@ -86,14 +86,14 @@
 
     <section class="section pt-0">
         <div class="container">
-            <div class="row">
-                @foreach ($featured_promotion as $item)
+            <div class="row justify-content-center">
+                @foreach ($promotions as $item)
                     @if ($item->status === 'show')
-                        <div class="col-lg-6">
-                            <a href="#!"
-                                class="product-banner-1 mt-4 mt-lg-0 rounded overflow-hidden position-relative d-block">
+                        <div class="col-lg-6 my-2">
+                            <a href="{{ $item->link }}" aria-label="Promotion Link"
+                                class="product-banner-1 mt-4 mt-lg-0 rounded overflow-hidden position-relative d-block h-100" style="min-height: 300px;">
                                 <img src="{{ $item->image ? asset('/storage/' . $item->image) : '' }}"
-                                    class="img-fluid rounded" alt="">
+                                    class="img-fluid rounded h-100" alt="">
                                 <div class="bg-overlay blue"></div>
                                 <div class="product-content p-4">
                                     <p class="text-uppercase text-white mb-2">

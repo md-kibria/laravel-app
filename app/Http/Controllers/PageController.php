@@ -10,6 +10,7 @@ use App\Models\Review;
 use App\Models\Service;
 use App\Models\Category;
 use App\ViewLoggerTrait;
+use App\Models\Promotion;
 use App\Models\SiteSetting;
 use App\Models\SocialMedia;
 use Illuminate\Http\Request;
@@ -37,8 +38,8 @@ class PageController extends Controller
         $why_choose_us = HomepageContent::where('section', 'why_choose_us')->first();
 
         $key_features = HomepageContent::where('type', 'key_features')->get();
-        $featured_promotion = HomepageContent::where('type', 'featured_promotion')->get();
-
+        $promotions = Promotion::orderBy('id', 'desc')->get();
+        
         $reviews = Review::where('is_approved', true)->get();
         $blogs = Post::where('status', 'published')->orderBy('id', 'desc')->limit(3)->get();
 
@@ -69,7 +70,7 @@ class PageController extends Controller
             'overview',
             'why_choose_us',
             'key_features',
-            'featured_promotion',
+            'promotions',
             'reviews',
             'blogs',
             'featured_services',

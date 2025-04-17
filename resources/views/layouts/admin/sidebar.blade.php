@@ -132,19 +132,22 @@
                     <div class="collapse menu-dropdown" id="sidebarPages">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="/admin/home-page" class="nav-link" data-key="t-level-1.1"> {{ __('Home Page') }} </a>
+                                <a href="/admin/home-page" class="nav-link" data-key="home"> {{ __('Home Page') }} </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/admin/home-insta" class="nav-link" data-key="t-level-1.1"> {{ __('Instagram Images') }} </a>
+                                <a href="/admin/promotions" class="nav-link" data-key="promotions"> {{ __('Promotions') }} </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/admin/about-page" class="nav-link" data-key="t-level-1.1"> {{ __('About Page') }} </a>
+                                <a href="/admin/home-insta" class="nav-link" data-key="instagram"> {{ __('Instagram Images') }} </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/admin/terms-conditions-page" class="nav-link" data-key="t-level-1.1"> {{ __('Terms & Conditions') }} </a>
+                                <a href="/admin/about-page" class="nav-link" data-key="about"> {{ __('About Page') }} </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/admin/refund-policy" class="nav-link" data-key="t-level-1.1"> {{ __('Refund Policy') }} </a>
+                                <a href="/admin/terms-conditions-page" class="nav-link" data-key="terms"> {{ __('Terms & Conditions') }} </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/refund-policy" class="nav-link" data-key="refund"> {{ __('Refund Policy') }} </a>
                             </li>
                         </ul>
                     </div>

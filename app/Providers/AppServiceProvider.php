@@ -54,6 +54,7 @@ class AppServiceProvider extends ServiceProvider
         Config::set('site_email', $siteSettings->email);
         Config::set('site_phone', $siteSettings->phone);
         Config::set('site_address', $siteSettings->city.', '.$siteSettings->country);
+        Config::set('site_address_street', $siteSettings->street.', '. $siteSettings->city.', '.$siteSettings->country);
         Config::set('site_url', $siteSettings->url);
         
         $msgs = Message::where('is_read', false)->orderBy('created_at', 'desc')->limit(5)->get();

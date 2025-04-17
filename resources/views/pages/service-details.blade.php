@@ -519,7 +519,7 @@
                         <h4 class="flex-grow-1 mb-0">
                             {{ session()->get('lang') === 'ro' ? 'Servicii similare' : 'Similar Services' }}</h4>
                         <div class="flex-shrink-0">
-                            <a href="product-grid-defualt"
+                            <a href="/services"
                                 class="link-effect link-secondary">{{ session()->get('lang') === 'ro' ? 'Toate Serviciile' : 'All Services' }}
                                 <i class="bi bi-arrow-right align-bottom"></i></a>
                         </div>

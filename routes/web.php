@@ -19,6 +19,7 @@ use App\Http\Controllers\PageAdminController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\HomepageContentController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\PromotionController;
 
 Route::get('/', [PageController::class, 'home']);
 Route::post('/message', [MessageController::class, 'store']);
@@ -110,6 +111,11 @@ Route::prefix('/admin')->middleware(['auth', 'admin'])->group(function () {
     // Route::post('/sliders/store', [PageAdminController::class, 'sliderStore']);
     Route::get('/home-page', [PageAdminController::class, 'home']);
     Route::get('/home-insta', [PageAdminController::class, 'insta']);
+    Route::get('/promotions', [PromotionController::class, 'create']);
+    Route::post('/promotions', [PromotionController::class, 'store']);
+    Route::get('/promotions/{promotion}/edit', [PromotionController::class, 'edit']);
+    Route::put('/promotions/{promotion}/update', [PromotionController::class, 'update']);
+    Route::delete('/promotions/{promotion}', [PromotionController::class, 'destroy']);
     Route::post('/home-page', [HomepageContentController::class, 'update']);
     Route::post('/home-insta', [HomepageContentController::class, 'insta_update']);
     Route::delete('/home-insta/{id}', [HomepageContentController::class, 'insta_delete']);
