@@ -66,8 +66,9 @@ class VariationController extends Controller
     public function variations_store(Request $request, VariationType $variation_type)
     {
         $request->validate([
-            'name.en' => 'required|string',
-            'name.ro' => 'required|string',
+            'name' => 'required|string',
+            // 'name.en' => 'required|string',
+            // 'name.ro' => 'required|string',
             'price' => 'nullable|numeric',
             'type' => 'nullable|string',
         ]);
@@ -87,8 +88,9 @@ class VariationController extends Controller
     public function variations_update(Request $request, Variation $variation)
     {
         $request->validate([
-            'name.en' => 'required|string',
-            'name.ro' => 'required|string',
+            'name' => 'required|string',
+            // 'name.en' => 'required|string',
+            // 'name.ro' => 'required|string',
             'price' => 'nullable|numeric',
             'type' => 'nullable|string',
         ]);

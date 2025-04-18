@@ -7,9 +7,9 @@ use Spatie\Translatable\HasTranslations;
 
 class Variation extends Model
 {
-    use HasTranslations;
+    // use HasTranslations;
 
-    public $translatable = ['name'];
+    // public $translatable = ['name'];
 
     protected $fillable = ['name', 'type', 'price', 'variation_type_id'];
 

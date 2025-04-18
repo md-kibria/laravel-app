@@ -23,20 +23,26 @@
                                 </div>
                             </div>
                             <div class="flex-grow-1">
-                                <a href="#!">
+                                {{-- <a href="{{ $item['slug'] }}"> --}}
                                     <h5 class="fs-15">{{ $item['name'] }}</h5>
-                                </a>
-                                <div class="d-flex mb-3 gap-2">
-                                    <div class="text-muted fw-medium mb-0"><span class="product-price">{{ number_format($item['price'], 2) }} lei</span>
+                                {{-- </a> --}}
+                                <div class="d-flex flex-column mb-1 gap-1">
+                                    <div class="">
+                                        @foreach($item['variations'] as $variation)
+                                            <span class="d-block" style="font-size: 12px;">{{ $variation['type'] }}: <span class="badge bg-primary-subtle text-primary">{{ $variation['name'] }}</span></span>
+                                        @endforeach
                                     </div>
-                                    <div class="vr"></div>
+                                    <div class="text-muted fw-medium mb-0">
+                                        <span class="product-price">{{ number_format($item['price'], 2) }} lei</span>
+                                    </div>
+                                    {{-- <div class="vr"></div> --}}
                                     {{-- <span class="text-success fw-medium">In Stock</span> --}}
                                 </div>
                                 <div class="input-step">
-                                    <button type="button" class="minus" wire:click="decreaseQuantity({{ $item['id'] }})">–</button>
+                                    <button type="button" class="minus" wire:click="decreaseQuantity({{ $item['cart_id'] }})">–</button>
                                     <input type="number" class="product-quantity" value="{{$item['quantity']}}" min="0"
                                         max="100" readonly>
-                                    <button type="button" class="plus" wire:click="increaseQuantity({{ $item['id'] }})">+</button>
+                                    <button type="button" class="plus" wire:click="increaseQuantity({{ $item['cart_id'] }})">+</button>
                                 </div>
                             </div>
                             <div class="flex-shrink-0 d-flex flex-column justify-content-between align-items-end">

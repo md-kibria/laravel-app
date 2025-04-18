@@ -23,25 +23,36 @@
                                 </div>
                             </div>
                             <div class="flex-grow-1">
-                                <h5 class="card-title mb-1">Variation</h5>
+                                <h5 class="card-title mb-1">Variation ({{ $variation_type->getTranslation('name', 'en') }})</h5>
                                 <p class="text-muted mb-0">Fill all information below.</p>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="row ">
-                            <div class="col-lg-6">
+                            <div class="@if($variation_type->type == 'text') col-lg-6 @else col-lg-12 @endif">
+                                <div class="mb-3">
+                                    <label class="form-label" for="manufacturer-name-input">Variation Name (for {{ $variation_type->getTranslation('name', 'en') }})</label>
+                                    <input type="text" class="form-control @error('name.en') is-invalid @enderror"
+                                        id="manufacturer-name-input" placeholder="Enter variation name"
+                                        name="name" value="{{ old('name') }}">
+                                    @error('name')
+                                        <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            {{-- <div class="col-lg-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="manufacturer-name-input">Variation Name (En)</label>
-                                    <input type="text" class="form-control @error('name.en') is-invalid @enderror"
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
                                         id="manufacturer-name-input" placeholder="Enter variation name in english"
                                         name="name[en]" value="{{ old('name.en') }}">
                                     @error('name.en')
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
+                            </div> --}}
+                            {{-- <div class="col-lg-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="manufacturer-brand-input">Variation Name (Ro)</label>
                                     <input type="text" class="form-control @error('name.ro') is-invalid @enderror"
@@ -51,11 +62,11 @@
                                         <div class="invalid-feedback text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div>
-                            
-                            <div class="col-lg-12">
+                            </div> --}}
+                            @if($variation_type->type == 'text')
+                            <div class="col-lg-6">
                                 <div class="mb-3">
-                                    <label class="form-label" for="manufacturer-brand-input">Price (If applicable)</label>
+                                    <label class="form-label" for="manufacturer-brand-input">Price</label>
                                     <input type="text" class="form-control @error('price') is-invalid @enderror"
                                         id="manufacturer-brand-input" placeholder="Enter variation price"
                                         name="price" value="{{ old('price') }}">
@@ -64,6 +75,7 @@
                                     @enderror
                                 </div>
                             </div>
+                            @endif
 
                             {{-- <div class="col-lg-6">
                                 <div class="mb-3">
@@ -102,20 +114,21 @@
             <thead class="table-light">
                 <tr>
                     <th scope="col">Id</th>
-                    <th scope="col">Name (EN)</th>
-                    <th scope="col">Name (RO)</th>
+                    <th scope="col">Name</th>
                     <th scope="col">Price</th>
-                    <th scope="col">Action</th>
+                    <th scope="col"><span class="text-center d-block">
+                        Action
+                    </span>
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($variations as $variation)
                 <tr>
                     <td><a class="fw-semibold">#{{$variation->id}}</a></td>
-                    <td>{{ $variation->getTranslation('name', 'en') }}</td>
-                    <td>{{ $variation->getTranslation('name', 'ro') }}</td>
+                    <td>{{ $variation->name }}</td>
                     <td>{{ $variation->price }} @if($variation->price) lei @else — @endif</td>
-                    <td>
+                    <td class="text-center">
                         <a href="#delteModal-{{$variation->id}}" data-bs-toggle="modal" class="btn btn-sm btn-danger">Delete</a>
                     </td>
                 </tr>

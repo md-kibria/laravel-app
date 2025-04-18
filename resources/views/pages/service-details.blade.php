@@ -139,9 +139,10 @@
 
                             @if ($service->discounted_price > 0)
                                 <h5 class="fs-24 mb-4">
-                                    {{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }} lei
-                                    <span
-                                        class="text-muted fs-14"><del>{{ number_format($service->price, 2) }} lei</del></span>
+                                    {{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }}
+                                    lei
+                                    <span class="text-muted fs-14"><del>{{ number_format($service->price, 2) }}
+                                            lei</del></span>
                                     <span class="fs-14 ms-2 text-danger"> ({{ $service->discounted_price }}% off)</span>
                                 </h5>
                             @else
@@ -211,62 +212,64 @@
                                 </ul>
                             @endif --}}
                             {{-- New variation system --}}
-                            
-                            
-                            
-                                <h6 class="fs-14 text-muted mb-3">
-                                    {{ session()->get('lang') === 'ro' ? 'Informații suplimentare' : 'Additional Info' }} :
-                                </h6>
-                                <ul class="list-unstyled vstack gap-2 mb-0">
-                                    @foreach ($service->variationTypes as $variationType)
-                                        <li>
-                                            <div class="d-flex gap-3">
-                                                <div class="flex-shrink-0">
-                                                    <i class="bi bi-tag-fill text-success align-middle fs-15"></i>
-                                                </div>
-                                                <div class="flex-grow-1 d-flex">
-                                                    <b
-                                                        style="margin-right: 5px;">{{ $variationType->getTranslation('name', session()->get('lang')) }}:</b>
-                                                    <ul class="clothe-size list-unstyled hstack gap-2 mb-0 flex-wrap">
-                                                        @foreach ($variationType->variations as $variation)
-                                                            <li> 
-                                                                <input
-                                                                    type="radio"
-                                                                    name="variation_{{ $variationType->id }}"
-                                                                    id="variation_{{ $variation->id }}"
-                                                                    class="variation-option"
-                                                                    data-type="{{ strtolower($variationType->type === 'number' ? 'number' : 'text') }}"
-                                                                    data-price="{{ $variationType->type === 'number' ? $variation->getTranslation('name', 'en') : $variation->price  }}"
-                                                                    value="{{ $variation->id }}"
-                                                                >
-                                                                <label
-                                                                class="btn btn-soft-primary px-1 py-0 fs-12 d-flex align-items-center justify-content-center"
-                                                                for="variation_{{ $variation->id }}"
-                                                            >
-                                                                {{ $variation->getTranslation('name', session()->get('lang')) }}
-                                                            </label>
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
+
+
+
+                            <h6 class="fs-14 text-muted mb-3">
+                                {{ session()->get('lang') === 'ro' ? 'Informații suplimentare' : 'Additional Info' }} :
+                            </h6>
+                            <ul class="list-unstyled vstack gap-2 mb-0">
+                                @foreach ($service->variationTypes as $variationType)
+                                    <li>
+                                        <div class="d-flex gap-3">
+                                            <div class="flex-shrink-0">
+                                                <i class="bi bi-tag-fill text-success align-middle fs-15"></i>
                                             </div>
-                                        </li>
-                                    @endforeach
-                                </ul>
+                                            <div class="flex-grow-1 d-flex">
+                                                <b
+                                                    style="margin-right: 5px;">{{ $variationType->getTranslation('name', session()->get('lang')) }}:</b>
+                                                <ul class="clothe-size list-unstyled hstack gap-2 mb-0 flex-wrap">
+                                                    @foreach ($variationType->variations as $variation)
+                                                        <li>
+                                                            <input type="radio" name="variation_{{ $variationType->id }}"
+                                                                id="variation_{{ $variation->id }}"
+                                                                class="variation-option"
+                                                                data-typeid="{{ $variationType->id }}"
+                                                                data-typename="{{ $variationType->getTranslation('name', session()->get('lang')) }}"
+                                                                data-name="{{ $variation->name }}"
+                                                                data-type="{{ strtolower($variationType->type === 'number' ? 'number' : 'text') }}"
+                                                                {{-- data-price="{{ $variationType->type === 'number' ? $variation->getTranslation('name', 'en') : $variation->price  }}" --}} --}} {{-- data-type="{{ strtolower($variationType->getTranslation('name', session()->get('lang'))) }}" --}}
+                                                                data-price="{{ $variationType->type === 'number' ? $variation->name : $variation->price }}"
+                                                                value="{{ $variation->id }}">
+                                                            <label
+                                                                class="btn btn-soft-primary px-1 py-0 fs-12 d-flex align-items-center justify-content-center"
+                                                                for="variation_{{ $variation->id }}">
+                                                                {{ $variation->name }}
+                                                            </label>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
 
 
-                                <h5 class="mt-3">
-                                    <strong>Total Price: </strong> <span id="total-price" class="fw-normal">{{ number_format($service->price, 2) }} </span> <span class="fw-normal">lei</span>
-                                </h5>
+                            <h5 class="mt-3">
+                                <strong>Total Price: </strong> <span id="total-price"
+                                    class="fw-normal">{{ number_format($service->price, 2) }} </span> <span
+                                    class="fw-normal">lei</span>
+                            </h5>
 
 
 
-                                    
-                                    
-                                    
-                            
-                            
-                                    <script>
+
+
+
+
+
+                            {{-- <script>
                                         document.addEventListener('DOMContentLoaded', function () {
                                             const variationInputs = document.querySelectorAll('.variation-option');
                                             const totalPriceSpan = document.getElementById('total-price');
@@ -298,11 +301,81 @@
                                                 totalPriceSpan.textContent = total.toFixed(2);
                                             }
                                         });
-                                    </script>
-                                    
-                            
-                            
-                            
+                                    </script> --}}
+
+
+                            <input type="hidden" wire:model="selectedVariations" id="selected-variations">
+                            <input type="hidden" wire:model="calculatedPrice" id="calculated-price">
+
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const variationInputs = document.querySelectorAll('.variation-option');
+                                    const totalPriceSpan = document.getElementById('total-price');
+                                    const cartBtn = document.getElementById('cart-btn');
+
+                                    cartBtn.classList.add('disabled');
+                                    cartBtn.setAttribute('aria-disabled', 'true');
+                                    cartBtn.setAttribute('tabindex', '-1');
+
+                                    let selected = {
+                                        area: null,
+                                        session: 0
+                                    };
+
+                                    function updateTotal() {
+                                        const area = selected.area ?? 0;
+                                        const session = selected.session ?? 1;
+                                        const total = area * session;
+                                        totalPriceSpan.textContent = total.toFixed(2);
+
+                                        // Update hidden fields for Livewire
+                                        const selectedVariations = [];
+                                        variationInputs.forEach(input => {
+                                            if (input.checked) {
+                                                selectedVariations.push({
+                                                    id: input.value,
+                                                    typeId: input.dataset.typeid,
+                                                    type: input.dataset.typename,
+                                                    price: parseFloat(input.dataset.price),
+                                                    name: input.labels[0]?.innerText.trim()
+                                                });
+                                            }
+                                        });
+
+                                        document.getElementById('selected-variations').value = JSON.stringify(selectedVariations);
+                                        document.getElementById('calculated-price').value = total.toFixed(2);
+
+                                        if (total > 0) {
+                                            cartBtn.classList.remove('disabled');
+                                            cartBtn.removeAttribute('aria-disabled');
+                                            cartBtn.removeAttribute('tabindex');
+                                        } else {
+                                            cartBtn.classList.add('disabled');
+                                            cartBtn.setAttribute('aria-disabled', 'true');
+                                            cartBtn.setAttribute('tabindex', '-1');
+                                        }
+                                    }
+
+                                    variationInputs.forEach(input => {
+                                        input.addEventListener('change', function() {
+                                            const type = this.dataset.type;
+                                            const price = parseFloat(this.dataset.price);
+
+                                            if (type === 'text') {
+                                                selected.area = price;
+                                            } else if (type === 'number') {
+                                                selected.session = price;
+                                            }
+
+                                            updateTotal();
+                                        });
+                                    });
+                                });
+                            </script>
+
+
+
                             {{-- New variation system --}}
                         </div>
                         <div class="d-flex align-items-center mb-4">
@@ -322,9 +395,6 @@
                                         <i
                                             class="bi bi-basket2 me-2"></i>{{ session()->get('lang') === 'ro' ? 'Cumpărați acum' : 'Buy Now' }}
                                     </a>
-                                    {{-- <button class="btn btn-soft-danger custom-toggle btn-hover" data-bs-toggle="button"
-                                        aria-pressed="true"> <span class="icon-on"><i class="ri-heart-line"></i></span>
-                                        <span class="icon-off"><i class="ri-heart-fill"></i></span> </button> --}}
                                 </div>
                             </div>
                         </div>
@@ -655,9 +725,10 @@
                                                 class="bi bi-star-fill text-warning align-bottom"></i></span>
                                         @if ($service->discounted_price > 0)
                                             <h5 class="text-secondary mb-0">
-                                                {{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }} lei
-                                                <span
-                                                    class="text-muted fs-12"><del>{{ number_format($service->price, 2) }} lei</del></span>
+                                                {{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }}
+                                                lei
+                                                <span class="text-muted fs-12"><del>{{ number_format($service->price, 2) }}
+                                                        lei</del></span>
                                             </h5>
                                         @else
                                             <h5 class="text-secondary mb-0">
@@ -709,47 +780,62 @@
             });
         });
 
-        
+
         // At the top of your JavaScript
-let productQuantity = 1;
+        let productQuantity = 1;
 
-const quantity = document.getElementById('quantity');
-const plus = document.getElementById('plus');
-const minus = document.getElementById('minus');
+        const quantity = document.getElementById('quantity');
+        const plus = document.getElementById('plus');
+        const minus = document.getElementById('minus');
 
-// Update the input initially
-quantity.value = productQuantity;
-
-plus.addEventListener('click', function() {
-    productQuantity++;
-    quantity.value = productQuantity;
-    console.log('JavaScript quantity now:', productQuantity);
-});
-
-minus.addEventListener('click', function() {
-    if (productQuantity > 1) {
-        productQuantity--;
+        // Update the input initially
         quantity.value = productQuantity;
-        console.log('JavaScript quantity now:', productQuantity);
-    }
-});
 
-// Find and modify the add to cart button click behavior
-document.addEventListener('click', function(e) {
-    // Check if the clicked element is the add to cart button or contains it
-    const addBtn = e.target.closest('.add-btn');
-    if (addBtn && addBtn.hasAttribute('wire:id')) {
-        // Prevent the default Livewire action
-        e.preventDefault();
-        e.stopPropagation();
-        
-        const componentId = addBtn.getAttribute('wire:id');
-        console.log('Adding to cart with quantity:', productQuantity);
-        
-        // Call a method that accepts the quantity parameter
-        Livewire.find(componentId).call('addToCartWithQuantity', productQuantity);
-    }
-});
+        plus.addEventListener('click', function() {
+            productQuantity++;
+            quantity.value = productQuantity;
+            console.log('JavaScript quantity now:', productQuantity);
+        });
+
+        minus.addEventListener('click', function() {
+            if (productQuantity > 1) {
+                productQuantity--;
+                quantity.value = productQuantity;
+                console.log('JavaScript quantity now:', productQuantity);
+            }
+        });
+
+        function getSelectedVariations() {
+            let selected = [];
+            document.querySelectorAll('.variation-option:checked').forEach(el => {
+                selected.push({
+                    id: parseInt(el.value),
+                    typeId: parseInt(el.getAttribute('data-typeid')),
+                    type: el.getAttribute('data-typename'),
+                    name: el.getAttribute('data-name'),
+                    // type: el.getAttribute('data-type'),
+                    price: parseFloat(el.getAttribute('data-price')),
+                });
+            });
+            return selected;
+        }
+
+        // Find and modify the add to cart button click behavior
+        document.addEventListener('click', function(e) {
+            // Check if the clicked element is the add to cart button or contains it
+            const addBtn = e.target.closest('.add-btn');
+            if (addBtn && addBtn.hasAttribute('wire:id')) {
+                // Prevent the default Livewire action
+                e.preventDefault();
+                e.stopPropagation();
+
+                const componentId = addBtn.getAttribute('wire:id');
+
+                // Call a method that accepts the quantity parameter
+                Livewire.find(componentId).call('addToCartWithVariations', getSelectedVariations(), parseInt(
+                    productQuantity));
+            }
+        });
     </script>
 
     <!--Swiper slider js-->

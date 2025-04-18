@@ -17,10 +17,6 @@ class Cart extends Component
         $this->loadCart();
     }
 
-    // public function loadCart()
-    // {
-    //     $this->cart = Session::get('cart', []);
-    // }
 
     // New system with cookie
     public function loadCart()
@@ -28,57 +24,6 @@ class Cart extends Component
         $this->cart = json_decode(Cookie::get('cart', '[]'), true);
     }
 
-    // public function removeFromCart($index)
-    // {
-    //     $cart = Session::get('cart', []);
-
-    //     if (isset($cart[$index])) {
-    //         unset($cart[$index]);
-    //         Session::put('cart', array_values($cart)); // Re-index array
-    //     }
-
-    //     $this->loadCart(); // Refresh cart items
-    //     $this->dispatch('cartCountUpdated', count($cart)); // Add this line
-    // }
-
-    // public function increaseQuantity($id)
-    // {
-    //     $cart = Session::get('cart', []);
-
-    //     foreach ($cart as &$item) {
-    //         if ($item['id'] === $id) {
-    //             $item['quantity'] += 1; // Increase quantity
-    //             break;
-    //         }
-    //     }
-
-    //     Session::put('cart', $cart);
-    //     $this->dispatch('cartUpdated'); // Notify the cart component
-    //     $this->dispatch('modalStayOpen');
-    //     $this->dispatch('cartCountUpdated', count($cart)); // Add this line
-    // }
-
-    // public function decreaseQuantity($id)
-    // {
-    //     $cart = Session::get('cart', []);
-
-    //     foreach ($cart as &$item) {
-    //         if ($item['id'] === $id) {
-    //             if ($item['quantity'] > 1) {
-    //                 $item['quantity'] -= 1; // Decrease quantity
-    //             } else {
-    //                 // Remove item if quantity is 1
-    //                 $cart = array_filter($cart, fn($i) => $i['id'] !== $id);
-    //             }
-    //             break;
-    //         }
-    //     }
-
-    //     Session::put('cart', array_values($cart)); // Reset indexes
-    //     $this->dispatch('cartUpdated'); // Notify the cart component
-    //     $this->dispatch('openModal');
-    //     $this->dispatch('cartCountUpdated', count($cart)); // Add this line
-    // }
 
     // With cookie
     public function removeFromCart($index)
@@ -99,9 +44,9 @@ class Cart extends Component
     public function increaseQuantity($id)
     {
         $cart = json_decode(Cookie::get('cart', '[]'), true);
-
+        
         foreach ($cart as &$item) {
-            if ($item['id'] === $id) {
+            if ($item['cart_id'] == $id) {
                 $item['quantity'] += 1; // Increase quantity
                 break;
             }
@@ -118,7 +63,7 @@ class Cart extends Component
         $cart = json_decode(Cookie::get('cart', '[]'), true);
 
         foreach ($cart as &$item) {
-            if ($item['id'] === $id) {
+            if ($item['cart_id'] == $id) {
                 if ($item['quantity'] > 1) {
                     $item['quantity'] -= 1; // Decrease quantity
                 } else {

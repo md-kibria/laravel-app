@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Cookie;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PageController;
@@ -10,17 +11,17 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NetopiaController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AdminPageController;
 use App\Http\Controllers\PageAdminController;
-use App\Http\Controllers\SubscriberController;
-use App\Http\Controllers\HomepageContentController;
-use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\VariationController;
+use App\Http\Controllers\SubscriberController;
+use App\Http\Controllers\HomepageContentController;
 
 Route::get('/', [PageController::class, 'home']);
 Route::post('/message', [MessageController::class, 'store']);
@@ -63,6 +64,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/account/password', [UserController::class, 'password']);
 });
 
+Route::get('/test', function () {
+    return json_decode(Cookie::get('cart', '[]'), true);
+});
 
 Route::get('/blogs', [PageController::class, 'blogs']);
 Route::get('/blogs/{post:slug}', [PageController::class, 'post'])->name('blogs.post');
