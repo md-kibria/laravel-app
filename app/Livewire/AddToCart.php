@@ -19,39 +19,6 @@ class AddToCart extends Component
         $this->quantity = $quantity;
     }
 
-    // New system with cookie
-    // public function addToCart()
-    // {
-    //     $cart = json_decode(Cookie::get('cart', '[]'), true);
-
-    //     $exists = false;
-
-    //     foreach ($cart as &$item) {
-    //         if ($item['id'] === $this->service->id) {
-    //             $item['quantity'] += $this->quantity;
-    //             $exists = true;
-    //             break;
-    //         }
-    //     }
-
-    //     if (!$exists) {
-    //         $cart[] = [
-    //             'id' => $this->service->id,
-    //             'name' => $this->service->name,
-    //             'price' => $this->service->discounted_price
-    //                 ? $this->service->price - ($this->service->price * $this->service->discounted_price) / 100
-    //                 : $this->service->price,
-    //             'thumbnail' => $this->service->thumbnail,
-    //             'quantity' => $this->quantity,
-    //         ];
-    //     }
-
-    //     Cookie::queue('cart', json_encode($cart), 60 * 24 * 7); // Store for 7 days
-
-    //     $this->dispatch('cartUpdated');
-    //     $this->dispatch('cartCountUpdated', count($cart));
-    // }
-
     public function updateQuantity($newQuantity)
     {
         $this->quantity = $newQuantity;
@@ -63,8 +30,8 @@ class AddToCart extends Component
     //     $this->addToCart();
     // }
 
-    public function addToCartWithVariations($selectedVariations, $quantity = 1)
-    {
+    public function addToCartWithVariations($selectedVariations, $calculatedPrice, $quantity = 1)
+    {   
         $variationIds = collect($selectedVariations)->pluck('id')->sort()->values()->all();
         $cart = json_decode(Cookie::get('cart', '[]'), true);
         $exists = false;
@@ -93,13 +60,13 @@ class AddToCart extends Component
             //     $price = collect($selectedVariations)->sum('price'); // fallback
             // }
 
-            foreach ($selectedVariations as $value) {
-                if($price == 0) {
-                    $price = $value['price'];
-                } else {
-                    $price *= $value['price'];
-                }
-            }
+            // foreach ($selectedVariations as $value) {
+            //     if($price == 0) {
+            //         $price = $value['price'];
+            //     } else {
+            //         $price *= $value['price'];
+            //     }
+            // }
 
             $cart[] = [
                 'cart_id' => (string)$this->service->id . implode('', $variationIds),
@@ -108,7 +75,7 @@ class AddToCart extends Component
                 'name' => $this->service->name,
                 'thumbnail' => $this->service->thumbnail,
                 'quantity' => $quantity,
-                'price' => $price,
+                'price' => $calculatedPrice,
                 'variation_ids' => $variationIds,
                 'variations' => $selectedVariations,
             ];

@@ -49,6 +49,7 @@
                                 <tr>
                                     <th scope="col">Product ID</th>
                                     <th scope="col">Product Name</th>
+                                    <th scope="col">Variations</th>
                                     <th scope="col">Amount</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col" class="text-end">Total</th>
@@ -56,6 +57,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($order->items as $item)
+                                {{-- {{dd(json_decode($item->price)->price)}} --}}
                                 <tr>
                                     <td>
                                         <a href="#!" class="fw-medium link-primary">#{{ $item->service->id }}</a>
@@ -69,21 +71,33 @@
                                             <div class="flex-grow-1">{{ $item->service->name }}</div>
                                         </div>
                                     </td>
-
+                                    <td class="text-start">
+                                        @foreach (json_decode($item->variations) as $va)
+                                            <span class="d-block"
+                                                style="font-size: 12px;">{{ $va->type }}: <span
+                                                    class="badge text-primary">{{ $va->name }}</span></span>
+                                        @endforeach
+                                    </td>
                                     <td>
-                                        <span class="text-secondary">{{ number_format($item->price, 2) }} lei</span>
+                                        <span class="text-secondary">{{ number_format(json_decode($item->price)->price, 2) }} lei</span>
                                     </td>
 
                                     <td>{{ $item->quantity }}</td>
-                                    <td class="text-end">{{ number_format($item->price * $item->quantity, 2) }} lei</td>
+                                    <td class="text-end">{{ number_format(json_decode($item->price)->price * $item->quantity, 2) }} lei</td>
                                 </tr>
                                 @endforeach
 
                                 @php
                                     $total = 0;
+                                    $discount = 0;
                                     foreach ($order->items as $item) {
-                                        $total += $item->price * $item->quantity;
+                                        $total += json_decode($item->price)->price * $item->quantity;
                                     }
+                                    foreach ($order->items as $item) {
+                                        $discount += json_decode($item->price)->mainPrice * $item->quantity;
+                                    }
+
+                                    $discount = $discount - $total;
                                 @endphp
                                 <tr>
                                     <td colspan="3"></td>
@@ -96,7 +110,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>Discount:</td>
-                                                    <td class="text-end">00.00 lei</td>
+                                                    <td class="text-end">({{ number_format($discount, 2) }}) lei</td>
                                                 </tr>
                                                 <tr class="border-top">
                                                     <th>Total (RON) :</th>

@@ -87,7 +87,7 @@
                             <p class="text-muted mb-1" id="billing-address-line-1">
                                 {{ $order->city ?? $order->user?->city }}
                                 {{ $order->country ?? ', ' . $order->user?->country }}</p>
-                            <p class="text-muted mb-1"><span>Phone: +</span><span
+                            <p class="text-muted mb-1"><span>Phone: </span><span
                                     id="billing-phone-no">{{ $order->phone ?? $order->user?->phone }}</span></p>
                             <p class="text-muted mb-0"><span>Email: </span><span
                                     id="billing-tax-no">{{ $order->email ?? $order->user?->email }}</span>
@@ -107,7 +107,8 @@
                             <thead>
                                 <tr class="table-active">
                                     <th scope="col" style="width: 50px;">#</th>
-                                    <th scope="col">Product Details</th>
+                                    <th scope="col text-start">Product Details</th>
+                                    <th scope="col text-start">Variations</th>
                                     <th scope="col">Rate</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col" class="text-end">Amount</th>
@@ -118,9 +119,21 @@
                                     <tr>
                                         <th scope="row">#{{ $item->service->id }}</th>
                                         <td class="text-start">{{ $item->service->name }}</td>
-                                        <td>{{ number_format($item->price, 2) }} lei</td>
+                                        <td class="text-start">
+                                            {{-- {{dd(json_decode($item->variations))}} --}}
+                                            @if($item->variations)
+                                            @foreach (json_decode($item->variations) as $va)
+                                                <span class="d-block"
+                                                    style="font-size: 12px;">{{ $va->type }}: <span
+                                                        class="badge text-primary">{{ $va->name }}</span></span>
+                                            @endforeach
+                                            @endif
+                                        </td>
+                                        <td>{{ number_format(json_decode($item->price)->price, 2) }} lei</td>
                                         <td>{{ $item->quantity }}</td>
-                                        <td class="text-end">{{ number_format($item->price * $item->quantity, 2) }} lei
+                                        <td class="text-end">
+                                            {{ number_format(json_decode($item->price)->price * $item->quantity, 2) }}
+                                            lei
                                         </td>
                                     </tr>
                                 @endforeach
@@ -128,24 +141,32 @@
                         </table>
                         <!--end table-->
                     </div>
+                    @php
+                        $discount = 0;
+                        foreach ($order->items as $item) {
+                            $discount += json_decode($item->price)->mainPrice * $item->quantity;
+                        }
+
+                        $discount = $discount - $order->total;
+                    @endphp
                     <div class="border-top border-top-dashed mt-2">
                         <table class="table table-borderless table-nowrap align-middle mb-0 ms-auto"
                             style="width:250px">
                             <tbody>
                                 <tr>
                                     <td>Sub Total</td>
-                                    <td class="text-end"><span
-                                            id="total-amount">{{ number_format($order->total, 2) }} lei
+                                    <td class="text-end"><span id="total-amount">{{ number_format($order->total, 2) }}
+                                            lei
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Discount <small class="text-muted"></small></td>
-                                    <td class="text-end">- 00.00</td>
+                                    <td class="text-end">({{ number_format($discount, 2) }})</td>
                                 </tr>
                                 <tr class="border-top border-top-dashed fs-15">
                                     <th scope="row">Total Amount</th>
-                                    <th class="text-end"><span
-                                            id="total-amount">{{ number_format($order->total, 2) }} lei
+                                    <th class="text-end"><span id="total-amount">{{ number_format($order->total, 2) }}
+                                            lei
                                     </th>
                                 </tr>
                             </tbody>

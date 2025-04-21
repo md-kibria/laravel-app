@@ -6,6 +6,7 @@ use Stripe\Stripe;
 use App\Models\Order;
 use App\Models\Service;
 use App\Models\OrderItem;
+use App\Models\Variation;
 use App\Models\SiteSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +37,7 @@ class StripeController extends Controller
 
         Stripe::setApiKey($settings->stripe_key);
 
+        // currently this is not using
         if ($request->input('service_id')) {
             $service = Service::findOrFail($request->input('service_id'));
             $total = $service->discounted_price ? $service->price - ($service->price * $service->discounted_price) / 100 : $service->price;
@@ -43,6 +45,8 @@ class StripeController extends Controller
             $order = Order::create([
                 'user_id' => Auth::check() ? Auth::id() : null,
                 'total' => $total,
+                // mainPrice
+                // method
                 'status' => 'unpaid',
                 'name' => $request->input('s-name') ?? Auth::user()->name,
                 'address' => $request->input('s-address'),
@@ -55,6 +59,8 @@ class StripeController extends Controller
                 'service_id' => $service->id,
                 'quantity' => 1,
                 'price' => $total,
+                // price
+                // variations => like cart section
             ]);
 
 
@@ -84,47 +90,99 @@ class StripeController extends Controller
         if (!$cart) {
             $services = [];
             $total = 0;
-            return view('pages.checkout', compact('services', 'total'));
+            $mainTotal = 0;
+            return view('pages.checkout', compact('services', 'total', 'mainTotal'));
         }
 
-        // Extract IDs from cart items
-        $cartId = array_map(function ($c) {
-            return $c['id'];
-        }, $cart);
-
-        // Get services based on cart IDs
-        $services = Service::whereIn('id', $cartId)->get();
-
-        $total = 0;
+    
         // Add quantity and price as curr_price to the services
-        foreach ($services as $service) {
-            foreach ($cart as $cartItem) {
-                if ($service->id == $cartItem['id']) {
-                    $service->quantity = $cartItem['quantity'];
-                    $service->curr_price = $cartItem['price'];
-                    break;
+        /* -------------------- */
+        function calculatePrice($variations) {
+            $price = null;
+            $mainPrice = 0;
+            $mainQuantity = 0;
+            $quantity = 0;
+            $fixedDiscount = 0;
+
+            foreach ($variations as $variation) {
+                $variationData = Variation::find($variation['id']);
+                if($variation['dataType'] == 'text') {
+                    $mainPrice = $variationData->price;
+                    if($variation['discountType'] == 'percentage') {
+                        $price = (int) ($variationData->price * (1 - ((int) ($variationData->discountRule?->value ?? 0) / 100)));
+                    } else {
+                        $price = (int)$variationData->price - (int)$variationData->discountRule?->value;
+                    }
+                } elseif($variation['dataType'] == 'number') {
+                    $mainQuantity = (int) $variationData->name;
+                    if($variation['discountType'] == 'percentage') {
+                        $quantity = (int) ($variationData->name * (1 - ((int) ($variationData->discountRule?->value ?? 0) / 100)));
+                    } else {
+                        $quantity = (int) $variationData->name;
+                        $fixedDiscount =  (int)$variationData->discountRule?->value;
+                    }
                 }
             }
-            $total += (int) $service['curr_price'] * (int)$service['quantity'];
+            
+            if($quantity === 0 && $mainQuantity === 0) {
+                return [
+                    'price' => $price,
+                    'mainPrice' => $mainPrice
+                ];
+            }
+
+            $totalMainPrice = $mainPrice * $mainQuantity;
+            $totalPrice = $price * $quantity;
+            if($fixedDiscount > 0) {
+                $totalPrice = $totalPrice - $fixedDiscount;
+            }
+
+            return [
+                'price' => $totalPrice,
+                'mainPrice' => $totalMainPrice
+            ];
         }
+        
+        $services = [];
+
+        foreach ($cart as $cartItem) {
+            $service = Service::find($cartItem['id']);
+            $service->quantity = $cartItem['quantity'];
+            $service->variations = $cartItem['variations'];
+            $service->price = calculatePrice($cartItem['variations']);
+            
+            $services[] = $service;
+        }
+
+        $total = 0;
+        $mainTotal = 0;
+
+        foreach ($services as $service) {
+            $total += (int) $service->price['price'] * (int)$service->quantity;
+            $mainTotal += (int) $service->price['mainPrice'] * (int)$service->quantity;
+        }
+
+        /* -------------------- */
 
         $order = Order::create([
             'user_id' => Auth::check() ? Auth::id() : null,
             'total' => $total,
+            'mainPrice' => $mainTotal, // this line added
             'status' => 'unpaid',
+            'method' => 'stripe',
             'name' => $request->input('s-name') ?? Auth::user()->name,
             'address' => $request->input('s-address'),
             'email' => $request->input('s-email') ?? Auth::user()->email,
             'phone' => $request->input('s-phone') ?? Auth::user()->phone,
         ]);
-
         // Save order items
         foreach ($services as $item) {
             OrderItem::create([
                 'order_id' => $order->id,
                 'service_id' => $item['id'],
                 'quantity' => $item['quantity'],
-                'price' => $item['curr_price'],
+                'variations' => json_encode($item['variations']),
+                'price' => json_encode($item['price']),
             ]);
         }
 
@@ -142,7 +200,7 @@ class StripeController extends Controller
                             url($item['thumbnail'])
                         ],
                     ],
-                    'unit_amount' => $item['curr_price'] * 100, // Price in cents
+                    'unit_amount' => $item['price']['price'] * 100, // Price in cents
                 ],
                 'quantity' => $item['quantity'],
             ];

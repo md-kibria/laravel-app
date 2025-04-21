@@ -14,7 +14,9 @@
                         <h4 class="text-white mb-0">Checkout</h4>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb breadcrumb-light justify-content-center mb-0 fs-15">
-                                <li class="breadcrumb-item"><a href="/services">{{ session()->get('lang') === 'ro' ? 'Servicii' : 'Services' }}</a></li>
+                                <li class="breadcrumb-item"><a
+                                        href="/services">{{ session()->get('lang') === 'ro' ? 'Servicii' : 'Services' }}</a>
+                                </li>
                                 <li class="breadcrumb-item active" aria-current="page">Checkout</li>
                             </ol>
                         </nav>
@@ -30,14 +32,16 @@
     <section class="section">
         <div class="container">
             <div class="row">
-                @guest    
-                <div class="col-lg-12">
-                    <div class="alert alert-danger alert-modern alert-dismissible fade show" role="alert">
-                        <i class="bi bi-box-arrow-in-right icons"></i>{{ session()->get('lang') === 'ro' ? 'Client care revine?' : 'Returning customer?' }}<a href="/login"
-                        class="link-danger"><strong> {{ session()->get('lang') === 'ro' ? 'Faceți clic aici pentru a vă autentifica' : 'Click here to login' }}</strong>.</a>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                @guest
+                    <div class="col-lg-12">
+                        <div class="alert alert-danger alert-modern alert-dismissible fade show" role="alert">
+                            <i
+                                class="bi bi-box-arrow-in-right icons"></i>{{ session()->get('lang') === 'ro' ? 'Client care revine?' : 'Returning customer?' }}<a
+                                href="/login" class="link-danger"><strong>
+                                    {{ session()->get('lang') === 'ro' ? 'Faceți clic aici pentru a vă autentifica' : 'Click here to login' }}</strong>.</a>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     </div>
-                </div>
                 @endguest
                 <!--end col-->
             </div>
@@ -50,7 +54,8 @@
                                 <table class="table align-middle table-borderless table-nowrap text-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Product</th>
+                                            <th scope="col" class="text-start">Product</th>
+                                            <th scope="col" class="text-start">Variations</th>
                                             <th scope="col">Rate</th>
                                             <th scope="col">Quantity</th>
                                             <th scope="col">Price</th>
@@ -63,7 +68,7 @@
                                                     <div class="d-flex align-items-center gap-2">
                                                         <div class="avatar-sm flex-shrink-0">
                                                             <div class="avatar-title bg-success-subtle rounded-3">
-                                                                <img src="{{ asset('/storage/' . $service->thumbnail) }}"
+                                                                <img src="{{ asset('/storage/' . $service['thumbnail']) }}"
                                                                     alt="" class="avatar-xs">
                                                             </div>
                                                         </div>
@@ -77,13 +82,25 @@
                                                         </div>
                                                     </div>
                                                 </td>
+                                                <td class="text-start">
+                                                    @foreach ($service['variations'] as $variation)
+                                                    {{-- {{dd($variation)}} --}}
+                                                        <span class="d-block"
+                                                            style="font-size: 12px;">{{ $variation['type'] }}: <span
+                                                                class="badge text-primary">{{ $variation['name'] }}</span></span>
+                                                    @endforeach
+                                                </td>
                                                 <td>
-                                                    {{ number_format($service->curr_price, 2) }} lei
+                                                    <p class="m-0">{{ number_format($service->price['price'], 2) }} lei</p>
+                                                    <p class="m-0 fs-12 text-decoration-line-through">{{ number_format($service->price['mainPrice'], 2) }} lei</p>
                                                 </td>
                                                 <td>
                                                     {{ $service->quantity }}
                                                 </td>
-                                                <td class="text-end">{{ number_format($service->curr_price * $service->quantity, 2) }} lei</td>
+                                                <td class="text-center">
+                                                    <p class="m-0">{{ number_format($service->price['price'] * $service->quantity, 2) }} lei</p>
+                                                    <p class="m-0 fs-12 text-decoration-line-through">{{ number_format($service->price['mainPrice'] * $service->quantity, 2) }} lei</p>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -100,7 +117,8 @@
 
                         <div class="card overflow-hidden">
                             <div class="card-header border-bottom-dashed">
-                                <h5 class="card-title mb-0 fs-15">{{ session()->get('lang') === 'ro' ? 'Rezumatul comenzii' : 'Order Summary' }}</h5>
+                                <h5 class="card-title mb-0 fs-15">
+                                    {{ session()->get('lang') === 'ro' ? 'Rezumatul comenzii' : 'Order Summary' }}</h5>
                             </div>
                             <div class="card-body pt-4">
                                 <div class="table-responsive table-card">
@@ -109,17 +127,19 @@
                                             <tr>
                                                 <td>Sub Total :</td>
                                                 <td class="text-end cart-subtotal">
-                                                    {{ number_format($total, 2) }} lei
+                                                    {{ number_format($mainTotal, 2) }} lei
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>{{ session()->get('lang') === 'ro' ? 'Reducere' : 'Discount ' }} <span class="text-muted">{{-- (Toner15) --}}</span>:</td>
-                                                <td class="text-end cart-discount">00.00 lei</td>
+                                                <td>{{ session()->get('lang') === 'ro' ? 'Reducere totală' : 'Total Discount ' }} <span
+                                                        class="text-muted">{{-- (Toner15) --}}</span>:</td>
+                                                <td class="text-end cart-discount">-{{ number_format($mainTotal - $total, 2) }} lei</td>
                                             </tr>
                                             <tr class="table-active">
                                                 <th>Total (RON) :</th>
                                                 <td class="text-end">
-                                                    <span class="fw-semibold cart-total">{{ number_format($total, 2) }} lei</span>
+                                                    <span class="fw-semibold cart-total">{{ number_format($total, 2) }}
+                                                        lei</span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -129,9 +149,11 @@
                             </div>
                         </div>
                         <div class="hstack gap-2 justify-content-between justify-content-end">
-                            <a href="/services" class="btn btn-hover btn-soft-info w-100">{{ session()->get('lang') === 'ro' ? 'Înapoi la Servicii' : 'Back To Services' }} <i
-                                    class="ri-arrow-right-line label-icon align-middle ms-1"></i></a>
-                            <a href="payment" class="btn btn-hover btn-primary w-100">{{ session()->get('lang') === 'ro' ? 'Continuați plata' : 'Continue Payment' }}</a>
+                            <a href="/services"
+                                class="btn btn-hover btn-soft-info w-100">{{ session()->get('lang') === 'ro' ? 'Înapoi la Servicii' : 'Back To Services' }}
+                                <i class="ri-arrow-right-line label-icon align-middle ms-1"></i></a>
+                            <a href="payment"
+                                class="btn btn-hover btn-primary w-100">{{ session()->get('lang') === 'ro' ? 'Continuați plata' : 'Continue Payment' }}</a>
                         </div>
 
                     </div>

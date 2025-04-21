@@ -17,6 +17,7 @@ use App\Http\Controllers\NetopiaController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AdminPageController;
+use App\Http\Controllers\DiscountRuleController;
 use App\Http\Controllers\PageAdminController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\VariationController;
@@ -118,6 +119,10 @@ Route::prefix('/admin')->middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/orders', [OrderController::class, 'orders']);
     Route::get('/orders/{order}', [OrderController::class, 'order']);
+
+    Route::get('/discounts', [DiscountRuleController::class, 'index']);
+    Route::post('/discounts', [DiscountRuleController::class, 'store']);
+    Route::delete('/discounts/{discount}', [DiscountRuleController::class, 'destroy']);
 
     Route::get('/reviews-ratings', [ReviewController::class, 'index']);
     Route::post('/review/visible/{review}', [ReviewController::class, 'update']);

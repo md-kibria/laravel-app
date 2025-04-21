@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('total');
+            $table->string('mainPrice')->nullable();
             $table->enum('status', ['paid', 'unpaid'])->default('unpaid');
+            $table->string('method')->nullable();
             $table->string('name')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();

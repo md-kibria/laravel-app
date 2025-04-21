@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use App\Mail\OrderPlacedMail;
+use App\Models\Variation;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
@@ -21,34 +22,80 @@ class OrderController extends Controller
     {
         $cart = json_decode(Cookie::get('cart', '[]'), true);
 
-        if(!$cart) {
+        // Check if cart is empty    
+        if (!$cart) {
             $services = [];
             $total = 0;
+            $mainTotal = 0;
             return view('pages.checkout', compact('services', 'total'));
         }
 
-        // Extract IDs from cart items
-        $cartId = array_map(function ($c) {
-            return $c['id'];
-        }, $cart);
+        function calculatePrice($variations) {
+            $price = null;
+            $mainPrice = 0;
+            $mainQuantity = 0;
+            $quantity = 0;
+            $fixedDiscount = 0;
 
-        // Get services based on cart IDs
-        $services = Service::whereIn('id', $cartId)->get();
-
-        $total = 0;
-        // Add quantity and price as curr_price to the services
-        foreach ($services as $service) {
-            foreach ($cart as $cartItem) {
-                if ($service->id == $cartItem['id']) {
-                    $service->quantity = $cartItem['quantity'];
-                    $service->curr_price = $cartItem['price'];
-                    break;
+            foreach ($variations as $variation) {
+                $variationData = Variation::find($variation['id']);
+                if($variation['dataType'] == 'text') {
+                    $mainPrice = $variationData->price;
+                    if($variation['discountType'] == 'percentage') {
+                        $price = (int) ($variationData->price * (1 - ((int) ($variationData->discountRule?->value ?? 0) / 100)));
+                    } else {
+                        $price = (int)$variationData->price - (int)$variationData->discountRule?->value;
+                    }
+                } elseif($variation['dataType'] == 'number') {
+                    $mainQuantity = (int) $variationData->name;
+                    if($variation['discountType'] == 'percentage') {
+                        $quantity = (int) ($variationData->name * (1 - ((int) ($variationData->discountRule?->value ?? 0) / 100)));
+                    } else {
+                        $quantity = (int) $variationData->name;
+                        $fixedDiscount =  (int)$variationData->discountRule?->value;
+                    }
                 }
             }
-            $total += (int) $service['curr_price'] * (int)$service['quantity'];
+            
+            if($quantity === 0 && $mainQuantity === 0) {
+                return [
+                    'price' => $price,
+                    'mainPrice' => $mainPrice
+                ];
+            }
+
+            $totalMainPrice = $mainPrice * $mainQuantity;
+            $totalPrice = $price * $quantity;
+            if($fixedDiscount > 0) {
+                $totalPrice = $totalPrice - $fixedDiscount;
+            }
+
+            return [
+                'price' => $totalPrice,
+                'mainPrice' => $totalMainPrice
+            ];
+        }
+        
+        $services = [];
+
+        foreach ($cart as $cartItem) {
+            $service = Service::find($cartItem['id']);
+            $service->quantity = $cartItem['quantity'];
+            $service->variations = $cartItem['variations'];
+            $service->price = calculatePrice($cartItem['variations']);
+            
+            $services[] = $service;
         }
 
-        return view('pages.checkout', compact('services', 'total'));
+        $total = 0;
+        $mainTotal = 0;
+
+        foreach ($services as $service) {
+            $total += (int) $service->price['price'] * (int)$service->quantity;
+            $mainTotal += (int) $service->price['mainPrice'] * (int)$service->quantity;
+        }
+        
+        return view('pages.checkout', compact('services', 'total', 'mainTotal'));
     }
 
     public function payment()
@@ -78,13 +125,15 @@ class OrderController extends Controller
         return view('pages.success', compact('order'));
     }
 
-    public function orders() {
+    public function orders()
+    {
         $orders = Order::orderBy('id', 'desc')->paginate(10);
 
         return view('admin.orders.index', compact('orders'));
     }
 
-    public function order(Order $order) {
+    public function order(Order $order)
+    {
         return view('admin.orders.order', compact('order'));
     }
 }

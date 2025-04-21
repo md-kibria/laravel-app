@@ -32,6 +32,7 @@
                                     <th class="sort fw-medium" data-sort="customer_name">Customer</th>
                                     <th class="sort fw-medium" data-sort="product_name">Email</th>
                                     <th class="sort fw-medium" data-sort="amount">Amount</th>
+                                    <th class="sort fw-medium" data-sort="method">Method</th>
                                     <th class="sort fw-medium" data-sort="order_date">Order Date</th>
                                     <th class="sort fw-medium" data-sort="status">Payment Status</th>
                                     <th class="fw-medium" data-sort="action">Action</th>
@@ -51,6 +52,7 @@
                                     <td class="customer_name">{{$order->name ?? $order->user?->name}}</td>
                                     <td class="product_name">{{$order->email ?? $order->user?->email}}</td>
                                     <td class="amount">{{number_format($order->total, 2)}} lei</td>
+                                    <td class="method text-uppercase">{{ $order->method }}</td>
                                     <td class="order_date">{{\Carbon\Carbon::parse($order->created_at)->toFormattedDateString()}}</td>
                                     <td class="status">
                                         <span class="badge @if($order->status == 'paid') bg-success-subtle text-success @else bg-danger-subtle text-danger @endif text-uppercase">{{$order->status}}</span>

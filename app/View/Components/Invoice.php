@@ -27,7 +27,7 @@ class Invoice extends Component
         $settings = SiteSetting::first();
         $order = Order::findOrFail($this->orderId);
         $orderItems = $order->items;
-
+        // dd($orderItems);
         return view('components.invoice', compact('settings', 'order', 'orderItems'));
     }
 }

@@ -215,93 +215,67 @@
 
 
 
-                            <h6 class="fs-14 text-muted mb-3">
-                                {{ session()->get('lang') === 'ro' ? 'Informații suplimentare' : 'Additional Info' }} :
-                            </h6>
-                            <ul class="list-unstyled vstack gap-2 mb-0">
-                                @foreach ($service->variationTypes as $variationType)
-                                    <li>
-                                        <div class="d-flex gap-3">
-                                            <div class="flex-shrink-0">
-                                                <i class="bi bi-tag-fill text-success align-middle fs-15"></i>
+                            @if (count($service->variationTypes) !== 0)
+                                <h6 class="fs-14 text-muted mb-3">
+                                    {{ session()->get('lang') === 'ro' ? 'Informații suplimentare' : 'Additional Info' }} :
+                                </h6>
+                                <ul class="list-unstyled vstack gap-2 mb-0">
+                                    @foreach ($service->variationTypes as $variationType)
+                                        <li>
+                                            <div class="d-flex gap-3">
+                                                <div class="flex-shrink-0">
+                                                    <i class="bi bi-tag-fill text-success align-middle fs-15"></i>
+                                                </div>
+                                                <div class="flex-grow-1 d-flex">
+                                                    <b
+                                                        style="margin-right: 5px;">{{ $variationType->getTranslation('name', session()->get('lang')) }}:</b>
+                                                    <ul class="clothe-size list-unstyled hstack gap-2 mb-0 flex-wrap">
+                                                        @foreach ($variationType->variations as $variation)
+                                                            <li>
+                                                                <input type="radio"
+                                                                    name="variation_{{ $variationType->id }}"
+                                                                    id="variation_{{ $variation->id }}"
+                                                                    class="variation-option"
+                                                                    data-typeid="{{ $variationType->id }}"
+                                                                    data-typename="{{ $variationType->getTranslation('name', session()->get('lang')) }}"
+                                                                    data-name="{{ $variation->name }}"
+                                                                    data-type="{{ strtolower($variationType->type === 'number' ? 'number' : 'text') }}"
+                                                                    data-price="{{ $variationType->type === 'number' ? $variation->name : $variation->getFinalPriceAttribute() }}"
+                                                                    data-main-price="{{ $variation->price }}"
+                                                                    data-q-discount="{{ $variation->discountRule?->value }}"
+                                                                    data-q-discount-type="{{ $variation->discountRule?->type }}"
+                                                                    value="{{ $variation->id }}">
+                                                                <label
+                                                                    class="btn btn-soft-primary px-1 py-0 fs-12 d-flex align-items-center justify-content-center"
+                                                                    for="variation_{{ $variation->id }}">
+                                                                    {{ $variation->name }}
+                                                                </label>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
                                             </div>
-                                            <div class="flex-grow-1 d-flex">
-                                                <b
-                                                    style="margin-right: 5px;">{{ $variationType->getTranslation('name', session()->get('lang')) }}:</b>
-                                                <ul class="clothe-size list-unstyled hstack gap-2 mb-0 flex-wrap">
-                                                    @foreach ($variationType->variations as $variation)
-                                                        <li>
-                                                            <input type="radio" name="variation_{{ $variationType->id }}"
-                                                                id="variation_{{ $variation->id }}"
-                                                                class="variation-option"
-                                                                data-typeid="{{ $variationType->id }}"
-                                                                data-typename="{{ $variationType->getTranslation('name', session()->get('lang')) }}"
-                                                                data-name="{{ $variation->name }}"
-                                                                data-type="{{ strtolower($variationType->type === 'number' ? 'number' : 'text') }}"
-                                                                {{-- data-price="{{ $variationType->type === 'number' ? $variation->getTranslation('name', 'en') : $variation->price  }}" --}} --}} {{-- data-type="{{ strtolower($variationType->getTranslation('name', session()->get('lang'))) }}" --}}
-                                                                data-price="{{ $variationType->type === 'number' ? $variation->name : $variation->price }}"
-                                                                value="{{ $variation->id }}">
-                                                            <label
-                                                                class="btn btn-soft-primary px-1 py-0 fs-12 d-flex align-items-center justify-content-center"
-                                                                for="variation_{{ $variation->id }}">
-                                                                {{ $variation->name }}
-                                                            </label>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                @endforeach
-                            </ul>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
 
-
-                            <h5 class="mt-3">
+                            {{-- <h5 class="mt-3">
                                 <strong>Total Price: </strong> <span id="total-price"
                                     class="fw-normal">{{ number_format($service->price, 2) }} </span> <span
                                     class="fw-normal">lei</span>
+                            </h5> --}}
+                            <h5 class="mt-3">
+                                <span>Total:</span>
+                                <span class="text-danger fw-bold" id="total-price">
+                                    {{ number_format($service->price, 2) }} lei
+                                </span>
+                                <span class="text-muted fs-14 text-decoration-line-through" id="total-price-main">
+
+                                </span>
+
                             </h5>
 
-
-
-
-
-
-
-
-                            {{-- <script>
-                                        document.addEventListener('DOMContentLoaded', function () {
-                                            const variationInputs = document.querySelectorAll('.variation-option');
-                                            const totalPriceSpan = document.getElementById('total-price');
-                                    
-                                            let selected = {
-                                                area: null,
-                                                session: 1
-                                            };
-                                    
-                                            variationInputs.forEach(input => {
-                                                input.addEventListener('change', function () {
-                                                    const type = this.dataset.type;
-                                                    const price = parseFloat(this.dataset.price);
-                                    
-                                                    if (type === 'text') {
-                                                        selected.area = price;
-                                                    } else if (type === 'number') {
-                                                        selected.session = price;
-                                                    }
-                                    
-                                                    updateTotal();
-                                                });
-                                            });
-                                    
-                                            function updateTotal() {
-                                                const area = selected.area ?? 0;
-                                                const session = selected.session ?? 1;
-                                                const total = area * session;
-                                                totalPriceSpan.textContent = total.toFixed(2);
-                                            }
-                                        });
-                                    </script> --}}
 
 
                             <input type="hidden" wire:model="selectedVariations" id="selected-variations">
@@ -312,22 +286,47 @@
                                 document.addEventListener('DOMContentLoaded', function() {
                                     const variationInputs = document.querySelectorAll('.variation-option');
                                     const totalPriceSpan = document.getElementById('total-price');
+                                    const totalPriceMainSpan = document.getElementById('total-price-main');
                                     const cartBtn = document.getElementById('cart-btn');
+                                    const buyBtn = document.getElementById('buy-btn');
 
                                     cartBtn.classList.add('disabled');
                                     cartBtn.setAttribute('aria-disabled', 'true');
                                     cartBtn.setAttribute('tabindex', '-1');
+                                   
+                                    buyBtn.classList.add('disabled');
+                                    buyBtn.setAttribute('aria-disabled', 'true');
+                                    buyBtn.setAttribute('tabindex', '-1');
 
                                     let selected = {
                                         area: null,
-                                        session: 0
+                                        session: {{ count($service->variationTypes) > 1 ? 0 : 1 }},
+                                        mainPrice: null,
+                                        mainSession: {{ count($service->variationTypes) > 1 ? 0 : 1 }},
+                                        fixedDiscount: 0,
                                     };
 
                                     function updateTotal() {
                                         const area = selected.area ?? 0;
                                         const session = selected.session ?? 1;
-                                        const total = area * session;
-                                        totalPriceSpan.textContent = total.toFixed(2);
+                                        const mainPrice = selected.mainPrice ?? 0;
+                                        const mainSession = selected.mainSession ?? 1;
+                                        const fixedDiscount = selected.fixedDiscount ?? 0;
+
+                                        let total = area * session;
+                                        const mainTotal = mainPrice * mainSession;
+                                        
+                                        if(fixedDiscount !== 0) {
+                                            total = total - fixedDiscount;
+                                        }
+
+                                        totalPriceSpan.textContent = total.toFixed(2) + 'lei';
+                                        
+                                        if (total != mainTotal) {
+                                            totalPriceMainSpan.textContent = mainTotal.toFixed(2) + 'lei';
+                                        } else {
+                                            totalPriceMainSpan.textContent = '';
+                                        }
 
                                         // Update hidden fields for Livewire
                                         const selectedVariations = [];
@@ -337,11 +336,19 @@
                                                     id: input.value,
                                                     typeId: input.dataset.typeid,
                                                     type: input.dataset.typename,
+                                                    dataType: input.dataset.type,
                                                     price: parseFloat(input.dataset.price),
                                                     name: input.labels[0]?.innerText.trim()
                                                 });
                                             }
                                         });
+
+                                        // document.getElementById('buy-btn').href = ;
+
+                                        // let href = '/payment?id={{ $service->id }}&price=' + total.toFixed(2) + '&variations=' + JSON.stringify(selectedVariations);
+                                        let href = buyBtn.href;
+                                        href += '&price=' + total.toFixed(2) + '&variations=' + JSON.stringify(selectedVariations);
+                                        buyBtn.href = href;
 
                                         document.getElementById('selected-variations').value = JSON.stringify(selectedVariations);
                                         document.getElementById('calculated-price').value = total.toFixed(2);
@@ -350,10 +357,18 @@
                                             cartBtn.classList.remove('disabled');
                                             cartBtn.removeAttribute('aria-disabled');
                                             cartBtn.removeAttribute('tabindex');
+                                            
+                                            buyBtn.classList.remove('disabled');
+                                            buyBtn.removeAttribute('aria-disabled');
+                                            buyBtn.removeAttribute('tabindex');
                                         } else {
                                             cartBtn.classList.add('disabled');
                                             cartBtn.setAttribute('aria-disabled', 'true');
                                             cartBtn.setAttribute('tabindex', '-1');
+                                            
+                                            buyBtn.classList.add('disabled');
+                                            buyBtn.setAttribute('aria-disabled', 'true');
+                                            buyBtn.setAttribute('tabindex', '-1');
                                         }
                                     }
 
@@ -361,11 +376,22 @@
                                         input.addEventListener('change', function() {
                                             const type = this.dataset.type;
                                             const price = parseFloat(this.dataset.price);
+                                            const mainPrice = parseFloat(this.dataset['mainPrice']);
+                                            const qDiscount = Number(this.dataset['qDiscount']);
+                                            const qDiscountType = this.dataset['qDiscountType'];
 
                                             if (type === 'text') {
                                                 selected.area = price;
+                                                selected.mainPrice = mainPrice;
                                             } else if (type === 'number') {
-                                                selected.session = price;
+                                                selected.mainSession = price;
+                                                if (qDiscountType == 'percentage') {
+                                                    selected.session = price * (1 - (qDiscount / 100));
+                                                    selected.fixedDiscount = 0;
+                                                } else {
+                                                    selected.session = price;
+                                                    selected.fixedDiscount = qDiscount;
+                                                }
                                             }
 
                                             updateTotal();
@@ -382,8 +408,8 @@
                             <h5 class="fs-15 mb-0">Quantity:</h5>
                             <div class="input-step ms-2">
                                 <button type="button" class="minus" id="minus">–</button>
-                                <input type="number" class="product-quantity1" id="quantity" value="1" min="0"
-                                    max="100" readonly="">
+                                <input type="number" class="product-quantity1" id="quantity" value="1"
+                                    min="0" max="100" readonly="">
                                 <button type="button" class="plus" id="plus">+</button>
                             </div>
                         </div>
@@ -391,7 +417,7 @@
                             <div class="mt-3">
                                 <div class="hstack gap-2">
                                     <livewire:add-to-cart :service="$service" :quantity="1" />
-                                    <a href="/payment?id={{ $service->id }}" class="btn btn-success btn-hover w-100">
+                                    <a href="/payment?id={{ $service->id }}" id="buy-btn" class="btn btn-success btn-hover w-100" style="display: none">
                                         <i
                                             class="bi bi-basket2 me-2"></i>{{ session()->get('lang') === 'ro' ? 'Cumpărați acum' : 'Buy Now' }}
                                     </a>
@@ -794,14 +820,12 @@
         plus.addEventListener('click', function() {
             productQuantity++;
             quantity.value = productQuantity;
-            console.log('JavaScript quantity now:', productQuantity);
         });
 
         minus.addEventListener('click', function() {
             if (productQuantity > 1) {
                 productQuantity--;
                 quantity.value = productQuantity;
-                console.log('JavaScript quantity now:', productQuantity);
             }
         });
 
@@ -812,12 +836,18 @@
                     id: parseInt(el.value),
                     typeId: parseInt(el.getAttribute('data-typeid')),
                     type: el.getAttribute('data-typename'),
+                    dataType: el.getAttribute('data-type'),
                     name: el.getAttribute('data-name'),
-                    // type: el.getAttribute('data-type'),
+                    discount: el.getAttribute('data-q-discount'),
+                    discountType: el.getAttribute('data-q-discount-type'),
                     price: parseFloat(el.getAttribute('data-price')),
                 });
             });
             return selected;
+        }
+
+        function calculatedPrice() {
+            return document.getElementById('calculated-price').value;
         }
 
         // Find and modify the add to cart button click behavior
@@ -832,7 +862,7 @@
                 const componentId = addBtn.getAttribute('wire:id');
 
                 // Call a method that accepts the quantity parameter
-                Livewire.find(componentId).call('addToCartWithVariations', getSelectedVariations(), parseInt(
+                Livewire.find(componentId).call('addToCartWithVariations', getSelectedVariations(), calculatedPrice(), parseInt(
                     productQuantity));
             }
         });

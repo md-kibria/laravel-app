@@ -86,6 +86,12 @@
                 </li> --}}
 
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="/admin/discounts" >
+                        <i class="bi bi-tag"></i> <span data-key="t-discounts">{{ __('Discounts') }}</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarPosts" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarPosts">
                         <i class="mdi mdi-file-sign"></i> <span data-key="t-oosts">{{ __('Blog Posts') }}</span>
                     </a>
