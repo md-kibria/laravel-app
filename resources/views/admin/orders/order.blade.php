@@ -79,42 +79,36 @@
                                         @endforeach
                                     </td>
                                     <td>
-                                        <span class="text-secondary">{{ number_format(json_decode($item->price)->price, 2) }} lei</span>
+                                        <span class="text-secondary">{{ number_format(json_decode($item->price)->mainPrice, 2) }} lei</span>
                                     </td>
 
                                     <td>{{ $item->quantity }}</td>
-                                    <td class="text-end">{{ number_format(json_decode($item->price)->price * $item->quantity, 2) }} lei</td>
+                                    <td class="text-end">{{ number_format(json_decode($item->price)->mainPrice * $item->quantity, 2) }} lei</td>
                                 </tr>
                                 @endforeach
 
                                 @php
-                                    $total = 0;
-                                    $discount = 0;
+                                    $mainTotal = 0;
                                     foreach ($order->items as $item) {
-                                        $total += json_decode($item->price)->price * $item->quantity;
+                                        $mainTotal += json_decode($item->price)->mainPrice * $item->quantity;
                                     }
-                                    foreach ($order->items as $item) {
-                                        $discount += json_decode($item->price)->mainPrice * $item->quantity;
-                                    }
-
-                                    $discount = $discount - $total;
                                 @endphp
                                 <tr>
-                                    <td colspan="3"></td>
+                                    <td colspan="4"></td>
                                     <td colspan="2" class="p-0">
                                         <table class="table table-borderless mb-0">
                                             <tbody>
                                                 <tr>
                                                     <td>Sub Total:</td>
-                                                    <td class="text-end">{{ number_format($total, 2) }} lei</td>
+                                                    <td class="text-end">{{ number_format($mainTotal, 2) }} lei</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Discount:</td>
-                                                    <td class="text-end">({{ number_format($discount, 2) }}) lei</td>
+                                                    <td class="text-end">({{ number_format($mainTotal - $order->total, 2) }}) lei</td>
                                                 </tr>
                                                 <tr class="border-top">
                                                     <th>Total (RON) :</th>
-                                                    <th class="text-end">{{ number_format($total, 2) }} lei</th>
+                                                    <th class="text-end">{{ number_format($order->total, 2) }} lei</th>
                                                 </tr>
                                             </tbody>
                                         </table>

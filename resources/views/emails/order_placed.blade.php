@@ -318,34 +318,33 @@
                                         @endforeach
                                     </td>
                                     <td>{{ $item->quantity }}</td>
-                                    <td>LEI <span
-                                            class="text-muted">{{ number_format(json_decode($item->price)->price, 2) }}</span>
+                                    <td><span
+                                            class="text-muted">{{ number_format(json_decode($item->price)->mainPrice, 2) }} lei</span>
                                     </td>
-                                    <td>LEI {{ number_format(json_decode($item->price)->price * $item->quantity, 2) }}
+                                    <td>{{ number_format(json_decode($item->price)->mainPrice * $item->quantity, 2) }} lei
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                         @php
-                            $discount = 0;
+                            $mainTotal = 0;
                             foreach ($order->items as $item) {
-                                $discount += json_decode($item->price)->mainPrice * $item->quantity;
+                                $mainTotal += json_decode($item->price)->mainPrice * $item->quantity;
                             }
 
-                            $discount = $discount - $order->total;
                         @endphp
                         <tfoot>
                             <tr>
-                                <td colspan="3" class="text-end"><strong>Subtotal:</strong></td>
-                                <td>LEI {{ number_format($order->total, 2) }}</td>
+                                <td colspan="4" class="text-end"><strong>Subtotal:</strong></td>
+                                <td>{{ number_format($mainTotal, 2) }} lei</td>
                             </tr>
                             <tr>
-                                <td colspan="3" class="text-end"><strong>Discount:</strong></td>
-                                <td>LEI {{ number_format($discount, 2) }}</td>
+                                <td colspan="4" class="text-end"><strong>Discount:</strong></td>
+                                <td>({{ number_format($mainTotal - $order->total, 2) }}) lei</td>
                             </tr>
                             <tr>
-                                <td colspan="3" class="text-end"><strong>Total:</strong></td>
-                                <td><strong>LEI {{ number_format($order->total, 2) }}</strong></td>
+                                <td colspan="4" class="text-end"><strong>Total:</strong></td>
+                                <td><strong>{{ number_format($order->total, 2) }}</strong> lei</td>
                             </tr>
                         </tfoot>
                     </table>
