@@ -1,6 +1,6 @@
 <!-- start subscribe-->
 <section class="section bg-light bg-opacity-25"
-    style="background-image: url('build/images/ecommerce/bg-effect.png');background-position: center; background-size: cover;">
+    style="background-image: url('/img/bg-effect.png');background-position: center; background-size: cover;">
     <div class="container">
         <div class="row align-items-center justify-content-between">
             <div class="col-lg-6">

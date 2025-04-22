@@ -1,7 +1,18 @@
     <div class="top-tagbar">
         <div class="w-100">
             <div class="row justify-content-between align-items-center">
-                <div class="col-md-4 col-9">
+                <div class="col-md-4 col-9 d-block d-lg-none">
+                    @if (config('site_phone'))
+                        <a href="tel:{{ config('site_phone') }}"
+                            class="text-reset text-decoration-none fw-normal">
+                            @if (config('site_phone'))
+                                <i class="bi bi-telephone-outbound align-middle me-2"></i> {{ config('site_phone') }}
+                            @endif
+                        </a>
+                    @endif
+                </div>
+
+                <div class="col-md-4 col-9 d-none d-lg-block">
                     @if (config('site_address'))
                         <div class="fs-14 fw-medium">
                             <i class="bi bi-geo-alt align-middle me-2"></i> {{ config('site_address') }}
@@ -19,7 +30,8 @@
                 </div>
                 <div class="col-md-4 col-3">
                     <div class="d-flex align-items-center justify-content-end gap-3 fs-14">
-                        <a href="tel:{{ config('site_phone') }}" class="text-reset text-decoration-none fw-normal d-none d-lg-block">
+                        <a href="tel:{{ config('site_phone') }}"
+                            class="text-reset text-decoration-none fw-normal d-none d-lg-block">
                             @if (config('site_phone'))
                                 <i class="bi bi-telephone-outbound align-middle me-2"></i> {{ config('site_phone') }}
                             @endif

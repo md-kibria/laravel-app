@@ -137,12 +137,14 @@
                             <div class="col-xxl-4 col-lg-4 col-md-6">
                                 <div class="card ecommerce-product-widgets border-0 rounded-0 shadow-none overflow-hidden">
                                     <div class="bg-light bg-dark-subtle bg-opacity-50 rounded py-4 position-relative" style="min-height: 200px;">
+                                        @if($service->thumbnail)
                                         <picture>
                                             <source srcset="{{ asset('/storage/' . $service->thumbnail) }}" type="image/webp">
                                         <img src="{{ asset('/storage/' . $service->thumbnail) }}"
                                             alt="{{ $service->getTranslation('name', session()->get('lang')) }}"
                                             style="max-height: 200px;max-width: 100%;" class="mx-auto d-block rounded-2" loading="lazy">
                                         </picture>
+                                        @endif
                                         @if ($service->discounted_price > 0)
                                             <div class="avatar-xs label">
                                                 <div class="avatar-title bg-danger rounded-circle fs-11">
@@ -164,16 +166,16 @@
                                             <div class="mt-2">
                                                 <span class="float-end text-muted">{{ number_format($service->reviews_avg_rating, 1) }} <i
                                                         class="bi bi-star-fill text-warning align-bottom"></i></span>
-                                                @if ($service->discounted_price > 0)
+                                                {{-- @if ($service->discounted_price > 0)
                                                     <h5 class="text-secondary mb-0">
                                                         {{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }} lei
                                                         <span
                                                             class="text-muted fs-12"><del>{{ number_format($service->price, 2) }} lei</del></span>
                                                     </h5>
-                                                @else
+                                                @else --}}
                                                     <h5 class="text-secondary mb-0">
-                                                        {{ number_format($service->price, 2) }} lei</h5>
-                                                @endif
+                                                        {{ $service->price }} lei</h5>
+                                                {{-- @endif --}}
                                             </div>
                                             <div class="tn mt-3">
                                                 <livewire:add-to-cart :service="$service" />

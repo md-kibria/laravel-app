@@ -264,26 +264,25 @@
         <!-- Header -->
         <div class="header">
             <img src="{{ config('logo') }}" alt="{{ config('site_title') }}" height="50">
-            <h2 class="mt-3">Order Confirmation</h2>
+            <h2 class="mt-3">{{ session()->get('lang') === 'ro' ? 'Confirmarea comenzii' : 'Order Confirmation' }}</h2>
         </div>
 
         <!-- Content -->
         <div class="content">
-            <p>Hello <strong>{{ $order->name ?? $order->user->name }}</strong>,</p>
+            <p>{{ session()->get('lang') === 'ro' ? 'Buna ziua' : 'Hello' }} <strong>{{ $order->name ?? $order->user->name }}</strong>,</p>
 
-            <p>Thank you for your order! We're pleased to confirm that we've received your order and it's being
-                processed.</p>
+            <p>{{ session()->get('lang') === 'ro' ? 'Vă mulțumim pentru comandă! Ne face plăcere să confirmăm că am primit comanda dvs. și că aceasta este în curs de procesare.' : 'Thank you for your order! We\'re pleased to confirm that we\'ve received your order and it\'s being processed.' }}</p>
 
             <div class="order-summary">
-                <h5>Order Summary</h5>
-                <p><strong>Order Number:</strong> #{{ $order->id }}</p>
-                <p><strong>Order Date:</strong> {{ \Carbon\Carbon::parse($order->created_at)->toFormattedDateString() }}
+                <h5>{{ session()->get('lang') === 'ro' ? 'Rezumatul comenzii' : 'Order Summary' }}</h5>
+                <p><strong>{{ session()->get('lang') === 'ro' ? 'Număr de ordine' : 'Order Number' }}:</strong> #{{ $order->id }}</p>
+                <p><strong>{{ session()->get('lang') === 'ro' ? 'Data comenzii' : 'Order Date' }}:</strong> {{ \Carbon\Carbon::parse($order->created_at)->toFormattedDateString() }}
                 </p>
-                <p><strong>Total Amount:</strong> LEI {{ number_format($order->total, 2) }}</p>
+                <p><strong>{{ session()->get('lang') === 'ro' ? 'Valoare totală' : 'Total Amount' }}:</strong> LEI {{ number_format($order->total, 2) }}</p>
             </div>
 
             <div class="order-details">
-                <h5>Order Details</h5>
+                <h5>{{ session()->get('lang') === 'ro' ? 'Detalii comandă' : 'Order Details' }}</h5>
 
                 <div class="table-responsive">
                     <table>
@@ -339,7 +338,7 @@
                                 <td>{{ number_format($mainTotal, 2) }} lei</td>
                             </tr>
                             <tr>
-                                <td colspan="4" class="text-end"><strong>Discount:</strong></td>
+                                <td colspan="4" class="text-end"><strong>{{ session()->get('lang') === 'ro' ? 'Reducere' : 'Discount' }}:</strong></td>
                                 <td>({{ number_format($mainTotal - $order->total, 2) }}) lei</td>
                             </tr>
                             <tr>
@@ -353,7 +352,7 @@
 
             <div class="row">
                 <div class="col-half shipping-info">
-                    <h5>Address</h5>
+                    <h5>{{ session()->get('lang') === 'ro' ? 'Adresa' : 'Address' }}</h5>
                     <p>
                         {{ $order->name ?? $order->user->name }}<br>
                         @if ($order->address)
@@ -366,7 +365,7 @@
             </div>
 
             <div class="thank-you">
-                <p>Thank you for shopping with us!</p>
+                <p>{{ session()->get('lang') === 'ro' ? 'Vă mulțumim că ați cumpărat de la noi!' : 'Thank you for shopping with us!' }}</p>
             </div>
 
             <div class="button-container">
@@ -374,8 +373,8 @@
             </div>
 
             <div class="mt-4">
-                <p>If you have any questions about your order, please contact our customer service team at <a
-                        href="mailto:{{ $site['email'] }}">{{ $site['email'] }}</a> or call us at
+                <p>{{ session()->get('lang') === 'ro' ? 'Dacă aveți întrebări despre comanda dvs., vă rugăm să contactați echipa noastră de asistență clienți la ' : 'If you have any questions about your order, please contact our customer service team at ' }} <a
+                        href="mailto:{{ $site['email'] }}">{{ $site['email'] }}</a> {{ session()->get('lang') === 'ro' ? 'sau sunați-ne la' : 'or call us at' }}
                     {{ $site['phone'] }}.</p>
             </div>
         </div>

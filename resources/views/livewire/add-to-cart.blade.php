@@ -1,10 +1,3 @@
-
-{{-- <a href="#!" class="btn btn-primary btn-hover w-100 add-btn" x-data="{}" 
-   x-on:click.prevent="$wire.addToCartWithQuantity(document.getElementById('quantity').value)><i
-        class="mdi mdi-cart me-1"></i>
-    {{ session()->get('lang') === 'ro' ? 'Adaugă in coş' : 'Add To Cart' }}
-</a> --}}
-
 <a href="#!" id="cart-btn" class="btn btn-primary btn-hover w-100 add-btn"
    x-data="{
        getSelectedVariations() {
@@ -21,7 +14,7 @@
        }
    }"
    {{-- x-on:click.prevent="$wire.call('addToCartWithVariations', getSelectedVariations(), parseInt(document.getElementById('quantity').value))" --}}
-   x-on:click.prevent="$wire.addToCartWithVariations(getSelectedVariations(), parseInt(document.getElementById('quantity').value)"
+   x-on:click.prevent="$wire.addToCartWithVariations(getSelectedVariations(), parseInt(document.getElementById('quantity').value))"
    >
    <i class="mdi mdi-cart me-1"></i>
    {{ session()->get('lang') === 'ro' ? 'Adaugă in coş' : 'Add To Cart' }}

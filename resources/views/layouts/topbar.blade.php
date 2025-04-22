@@ -16,8 +16,8 @@
             <ul class="navbar-nav mx-lg-auto mb-2 mb-lg-0" id="navigation-menu">
                  <li class="nav-item d-block d-lg-none">
                     <a class="d-block p-3 h-auto text-center" href="/">
-                        <img src="{{ config('logo') }}" alt="{{ config('site_title') }}" height="25" class="card-logo-dark mx-auto">
-                        <img src="{{ config('logo') }}" alt="{{ config('site_title') }}" height="25" class="card-logo-light mx-auto">
+                        <img src="{{ config('logo') }}" alt="{{ config('site_title') }}" height="50" class="card-logo-dark mx-auto">
+                        <img src="{{ config('logo') }}" alt="{{ config('site_title') }}" height="50" class="card-logo-light mx-auto">
                     </a>
                 </li>
 
@@ -48,6 +48,9 @@
         <div class="bg-overlay navbar-overlay" data-bs-toggle="collapse"  data-bs-target="#navbarSupportedContent.show"></div>
 
         <div class="d-flex align-items-center">
+            <a href="/" class="btn btn-icon btn-topbar btn-ghost-dark rounded-circle text-muted d-none" aria-label="Home" id="navHomeBtn">
+                <i class="bi bi-house fs-22"></i>
+            </a>
             <button type="button" class="btn btn-icon btn-topbar btn-ghost-dark rounded-circle text-muted" data-bs-toggle="modal" data-bs-target="#searchModal" aria-label="Search">
                 <i class="bi bi-search fs-22"></i>
             </button>

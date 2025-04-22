@@ -65,7 +65,7 @@
 @endsection
 @section('content')
     <section class="ecommerce-about"
-        style="background-image: url('build/images/profile-bg.jpg'); background-size: cover;background-position: center;">
+        style="background-image: ''; background-size: cover;background-position: center;">
         <div class="bg-overlay bg-primary" style="opacity: 0.85;"></div>
         <div class="container">
             <div class="row justify-content-center">
@@ -725,9 +725,9 @@
                     <div class="col-xxl-4 col-lg-4 col-md-6">
                         <div class="card ecommerce-product-widgets border-0 rounded-0 shadow-none overflow-hidden">
                             <div class="bg-light bg-opacity-50 rounded py-4 position-relative">
-                                <img src="{{ asset('/storage/' . $service->thumbnail) }}"
+                                {{-- <img src="{{ asset('/storage/' . $service->thumbnail) }}"
                                     alt="{{ $service->getTranslation('name', session()->get('lang')) }}"
-                                    style="max-height: 200px;max-width: 100%;" class="mx-auto d-block rounded-2">
+                                    style="max-height: 200px;max-width: 100%;" class="mx-auto d-block rounded-2"> --}}
                                 @if ($service->discounted_price > 0)
                                     <div class="avatar-xs label">
                                         <div class="avatar-title bg-danger rounded-circle fs-11">
@@ -869,9 +869,9 @@
     </script>
 
     <!--Swiper slider js-->
-    <script src="{{ URL::asset('build/libs/swiper/swiper-bundle.min.js') }}"></script>
+    {{-- <script src="{{ URL::asset('build/libs/swiper/swiper-bundle.min.js') }}"></script> --}}
 
-    <script src="{{ URL::asset('build/js/frontend/product-details.init.js') }}"></script>
+    {{-- <script src="{{ URL::asset('build/js/frontend/product-details.init.js') }}"></script> --}}
 
     <!-- landing-index js -->
     <script src="{{ URL::asset('build/js/frontend/menu.init.js') }}"></script>

@@ -37,9 +37,8 @@
             <div class="row justify-content-center">
                 <div class="col-lg-6">
                     <div class="text-center">
-                        <h1 class="text-white mb-2">Contact Us</h1>
-                        <p class="text-white-75 mb-0">We invite you to send us your phone number or email address so we
-                            can contact you! We will be happy to clarify things for you and set up an appointment!</p>
+                        <h1 class="text-white mb-2">{{ session()->get('lang') === 'ro' ? 'Contactaţi-ne' : 'Contact Us' }}</h1>
+                        <p class="text-white-75 mb-0">{{ session()->get('lang') === 'ro' ? 'Vă invităm să ne trimiteți numărul dumneavoastră de telefon sau adresa de e-mail pentru a vă putea contacta! Vom fi bucuroși să clarificăm lucrurile pentru dumneavoastră și să stabilim o întâlnire!' : 'We invite you to send us your phone number or email address so we can contact you! We will be happy to clarify things for you and set up an appointment!' }}</p>
                     </div>
                 </div>
             </div>
@@ -74,11 +73,11 @@
                             @csrf
                             @method('POST')
                             <div class="row">
-                                <b class="text-muted mb-1" style="color: rgb(73, 80, 87)">Available 24/7</b>
-                                <h2 class="mb-4" style="color: rgb(73, 80, 87)">Get In Touch</h2>
+                                <b class="text-muted mb-1" style="color: rgb(73, 80, 87)">{{ session()->get('lang') === 'ro' ? 'Disponibil' : 'Available' }} 24/7</b>
+                                <h2 class="mb-4" style="color: rgb(73, 80, 87)">{{ session()->get('lang') === 'ro' ? 'Contactați-ne' : 'Get In Touch' }}</h2>
                                 <div class="col-12">
                                     <div class="mb-3">
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Enter your name"
+                                        <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți numele dvs.' : 'Enter your name' }}"
                                             id="firstNameinput" name="name" value="{{ old('name') }}">
                                             @error('name')
                                                 <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -87,7 +86,7 @@
                                 </div><!--end col-->
                                 <div class="col-12">
                                     <div class="mb-3">
-                                        <input type="text" class="form-control @error('email') is-invalid @enderror" placeholder="Enter your email"
+                                        <input type="text" class="form-control @error('email') is-invalid @enderror" placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți adresa de e-mail' : 'Enter your email address' }}"
                                             id="email" value="{{ old('email') }}" name="email">
                                             @error('email')
                                                 <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -96,7 +95,7 @@
                                 </div><!--end col-->
                                 <div class="col-12">
                                     <div class="mb-3">
-                                        <textarea class="form-control @error('message') is-invalid @enderror" placeholder="Enter your message" name="message" id="message" cols="30"
+                                        <textarea class="form-control @error('message') is-invalid @enderror" placeholder="{{  session()->get('lang') === 'ro' ? 'Introdu mesajul tău' : 'Enter your message' }}" name="message" id="message" cols="30"
                                             rows="10">{{ old('message') }}</textarea>
                                             @error('message')
                                                 <div class="invalid-feedback text-danger">{{ $message }}</div>
@@ -104,7 +103,7 @@
                                     </div>
                                 </div><!--end col-->
                                 <div class="col-12">
-                                    <button type="submit" class="btn btn-primary w-100">Submit</button>
+                                    <button type="submit" class="btn btn-primary w-100">{{ session()->get('lang') === 'ro' ? 'Trimite' : 'Submit' }}</button>
                                 </div>
                             </div><!--end row-->
                         </form>
@@ -115,7 +114,7 @@
                                     <i class="fs-20 bi bi-geo-alt" style="color: rgb(73, 80, 87)"></i>
                                 </div>
                                 <div class="flex-grow-1" style="color: rgb(73, 80, 87);">
-                                    <h3 class="fs-20" style="color: rgb(73, 80, 87)">Location</h3>
+                                    <h3 class="fs-20" style="color: rgb(73, 80, 87)">{{ session()->get('lang') === 'ro' ? 'Locaţie' : 'Location' }}</h3>
                                     <p class="" style="border-bottom: 1px solid rgb(215, 218, 221);">{{ $location }}</p>
                                 </div>
                             </div>
@@ -125,7 +124,7 @@
                                     <i class="fs-20 bi bi-telephone" style="color: rgb(73, 80, 87)"></i>
                                 </div>
                                 <div class="flex-grow-1" style="color: rgb(73, 80, 87)">
-                                    <h3 class="fs-20" style="color: rgb(73, 80, 87)">Phone Number</h3>
+                                    <h3 class="fs-20" style="color: rgb(73, 80, 87)">{{ session()->get('lang') === 'ro' ? 'Număr de telefon' : 'Phone Number' }}</h3>
                                     <a href="tel:{{ $phone }}" class="d-block" style="border-bottom: 1px solid rgb(215, 218, 221); color: rgb(73, 80, 87);margin-bottom: 1rem;">{{ $phone }}</a>
                                 </div>
                             </div>
@@ -135,7 +134,7 @@
                                     <i class="fs-20 bi bi-envelope" style="color: rgb(73, 80, 87)"></i>
                                 </div>
                                 <div class="flex-grow-1" style="color: rgb(73, 80, 87)">
-                                    <h3 class="fs-20" style="color: rgb(73, 80, 87)">Email Address</h3>
+                                    <h3 class="fs-20" style="color: rgb(73, 80, 87)">{{ session()->get('lang') === 'ro' ? 'Adresa de e-mail' : 'Email Address' }}</h3>
                                     <a href="mailto:{{ $email }}" class="d-block" style="border-bottom: 1px solid rgb(215, 218, 221); color: rgb(73, 80, 87);margin-bottom: 1rem;">{{ $email }}</a>
                                 </div>
                             </div>
@@ -152,5 +151,5 @@
 @endsection
 @section('scripts')
     <!-- landing-index js -->
-    <script src="{{ URL::asset('build/js/frontend/menu.init.js') }}"></script>
+    {{-- <script src="{{ URL::asset('build/js/frontend/menu.init.js') }}"></script> --}}
 @endsection

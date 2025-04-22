@@ -3,6 +3,15 @@
 section h1 {
   font-size: 2rem; /* Or whatever size you prefer */
 }
+@media (max-width: 992px) {
+  #navbarSupportedContent {
+    margin-top: 35px;
+  }
+
+  #navHomeBtn {
+    display: inline-block !important;
+  }
+}
 </style>
 {{-- <link href="{{ URL::asset('build/css/icons.min.css') }}" rel="stylesheet" type="text/css"> --}}
 <!-- Bootstrap Css -->

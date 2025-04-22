@@ -94,30 +94,38 @@
         </div>
         
         <div class="content">
-            <h1>Password Reset Request</h1>
-            <p>Hello {{ $user->name }},</p>
+            <h1>{{ session()->get('lang') === 'ro' ? 'Cerere de resetare a parolei' : 'Password Reset Request' }}</h1>
+            <p>{{ session()->get('lang') === 'ro' ? 'Buna ziua' : 'Hello' }} {{ $user->name }},</p>
             
+            @if(session()->get('lang') === 'ro')
+            <p>Am primit o solicitare de resetare a parolei pentru contul dumneavoastră <b>{{ config('site_title') }}</b>. Dacă nu ați făcut această solicitare, puteți ignora acest e-mail în siguranță.</p>
+            @else
             <p>We received a request to reset your password for your <b>{{ config('site_title') }}</b> account. If you didn't make this request, you can safely ignore this email.</p>
+            @endif
             
             <div class="divider"></div>
             
-            <p>To reset your password, click the button below:</p>
+            <p>{{ session()->get('lang') === 'ro' ? 'Pentru a reseta parola, faceți clic pe butonul de mai jos' : 'To reset your password, click the button below' }}:</p>
             
             <p style="text-align: center;">
                 <a href="{{ url('/reset-password?token=' . $token) }}" class="reset-button">
-                    Reset Password
+                    {{ session()->get('lang') === 'ro' ? 'Resetare parolă' : 'Reset Password' }}
                 </a>
             </p>
             
-            <p>This link will expire in 24 hours. If the button doesn't work, copy and paste the following link into your browser:</p>
+            <p>{{ session()->get('lang') === 'ro' ? 'Acest link va expira în 24 de ore. Dacă butonul nu funcționează, copiați și lipiți următorul link în browserul dvs' : 'This link will expire in 24 hours. If the button doesn\'t work, copy and paste the following link into your browser' }}:</p>
             
             <p><span class="code">{{ url('/reset-password?token=' . $token) }}</span></p>
             
             <div class="divider"></div>
             
-            <p>If you have any questions, please contact our support team at <a href="mailto:{{ $site['email'] }}">{{ $site['email'] }}</a>.</p>
+            <p>{{ session()->get('lang') === 'ro' ? 'Dacă aveți întrebări, vă rugăm să contactați echipa noastră de asistență la ' : 'If you have any questions, please contact our support team at ' }} <a href="mailto:{{ $site['email'] }}">{{ $site['email'] }}</a>.</p>
             
-            <p>Thanks,<br>The <strong>{{ $site['title'] }}</strong> Team</p>
+            @if(session()->get('lang') === 'ro')
+                <p>Mulțumesc,<br>Echipa <strong>{{ $site['title'] }}</strong></p>
+            @else
+                <p>Thanks,<br>The <strong>{{ $site['title'] }}</strong> Team</p>
+            @endif
         </div>
         
         <div class="footer">
