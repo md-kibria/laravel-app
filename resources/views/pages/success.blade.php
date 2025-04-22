@@ -23,9 +23,9 @@
                 <div class="swal2-success-fix" style="background-color: rgb(255, 255, 255);"></div>
                 <div class="swal2-success-circular-line-right" style="background-color: rgb(255, 255, 255);"></div>
             </div><img class="swal2-image" style="display: none;">
-            <h2 class="swal2-title" id="swal2-title" style="display: block;">Payment completed!</h2>
-            <div class="swal2-html-container" id="swal2-html-container" style="display: block;">Your order
-                #{{ $order->id }} has been confirmed.
+            <h2 class="swal2-title" id="swal2-title" style="display: block;">{{ session()->get('lang') === 'ro' ? 'Plată finalizată!' : 'Payment completed!' }}</h2>
+            <div class="swal2-html-container" id="swal2-html-container" style="display: block;">{{ session()->get('lang') === 'ro' ? 'Comanda dumneavoastră ' : 'Your order ' }}
+                #{{ $order->id }} {{ session()->get('lang') === 'ro' ? ' a fost confirmată' : ' has been confirmed' }}.
             </div><input id="swal2-input" class="swal2-input" style="display: none;"><input type="file"
                 class="swal2-file" style="display: none;">
             <div class="swal2-range" style="display: none;"><input type="range"><output></output></div><select

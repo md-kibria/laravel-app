@@ -46,9 +46,9 @@
                             </th> --}}
                             <th scope="col">Id</th>
                             <th scope="col">Service Name</th>
-                            <th scope="col">Rate</th>
+                            {{-- <th scope="col">Rate</th> --}}
                             <th scope="col">Price</th>
-                            <th scope="col">Discount</th>
+                            {{-- <th scope="col">Discount</th> --}}
                             <th scope="col">Orders</th>
                             <th scope="col">Publish</th>
                             <th scope="col">Status</th>
@@ -78,17 +78,12 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="align-middle">{{ number_format($service->reviews_avg_rating, 1) }} <i
-                                    class="ri-star-fill text-warning align-bottom"></i></td>
+                                {{-- <td class="align-middle">{{ number_format($service->reviews_avg_rating, 1) }} <i
+                                    class="ri-star-fill text-warning align-bottom"></i></td> --}}
                                 <td class="align-middle">
-                                    @if ($service->discounted_price)
-                                        {{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }} lei
-                                        <p class="mb-0 text-body-secondary"><del>{{ number_format($service->price, 2) }} lei</del></p>
-                                    @else
-                                        {{ number_format($service->price, 2) }} lei
-                                    @endif
+                                        {{ $service->price }} lei
                                 </td>
-                                <td class="align-middle">{{ (int) $service->discounted_price }}%</td>
+                                {{-- <td class="align-middle">{{ (int) $service->discounted_price }}%</td> --}}
                                 <td class="align-middle">{{ count($service->orders) }}</td>
                                 <td class="align-middle">
                                     {{ \Carbon\Carbon::parse($service->created_at)->toFormattedDateString() }}</td>

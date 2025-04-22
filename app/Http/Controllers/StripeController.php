@@ -110,16 +110,21 @@ class StripeController extends Controller
                     $mainPrice = $variationData->price;
                     if($variation['discountType'] == 'percentage') {
                         $price = (int) ($variationData->price * (1 - ((int) ($variationData->discountRule?->value ?? 0) / 100)));
-                    } else {
+                    } elseif($variation['discountType'] == 'fixed') {
                         $price = (int)$variationData->price - (int)$variationData->discountRule?->value;
+                    } else {
+                        $price = (int)$variationData->price;
                     }
                 } elseif($variation['dataType'] == 'number') {
                     $mainQuantity = (int) $variationData->name;
                     if($variation['discountType'] == 'percentage') {
-                        $quantity = (int) ($variationData->name * (1 - ((int) ($variationData->discountRule?->value ?? 0) / 100)));
+                        $quantity = $variationData->name * (1 - ((int) ($variationData->discountRule?->value ?? 0) / 100));
+                    } elseif($variation['discountType'] == 'fixed') {
+                        $quantity = $variationData->name;
+                        $fixedDiscount =  (int)$variationData->discountRule?->value;
                     } else {
                         $quantity = (int) $variationData->name;
-                        $fixedDiscount =  (int)$variationData->discountRule?->value;
+                        $fixedDiscount =  0;
                     }
                 }
             }
@@ -133,6 +138,7 @@ class StripeController extends Controller
 
             $totalMainPrice = $mainPrice * $mainQuantity;
             $totalPrice = $price * $quantity;
+           
             if($fixedDiscount > 0) {
                 $totalPrice = $totalPrice - $fixedDiscount;
             }

@@ -89,6 +89,20 @@
                                 @enderror
                             </div>
                         </div>
+                        
+                        <div class="mt-3">
+                            <div class="d-flex align-items-start">
+                                <div class="flex-grow-1">
+                                    <label class="form-label">Service Price</label>
+                                </div>
+                            </div>
+                            <div>
+                                <input class="form-control @error('price') is-invalid @enderror" id="price" name="price" placeholder="Enter price" value="{{ old('price') }}"/>
+                                @error('price') 
+                                <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- end card -->
@@ -140,7 +154,7 @@
                 </div>
                 <!-- end card -->
 
-                <div class="card">
+                {{-- <div class="card">
                     <div class="card-header">
                         <div class="d-flex">
                             <div class="flex-shrink-0 me-3">
@@ -199,7 +213,6 @@
                         </div>
                         <!-- end row -->
                         <!-- end row -->
-                        {{-- Lebel 1 --}}
                         <div class="row">
                             <div class="col-lg-3 col-sm-6">
                                 <div class="mb-3">
@@ -232,7 +245,6 @@
                         <!-- end row -->
 
                         <!-- end row -->
-                        {{-- Lebel 2 --}}
                         <div class="row">
                             <div class="col-lg-3 col-sm-6">
                                 <div class="mb-3">
@@ -264,7 +276,7 @@
                         </div>
                         <!-- end row -->
                     </div>
-                </div>
+                </div> --}}
                 <!-- end card -->
 
                 {{-- <div class="card">
@@ -378,8 +390,7 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label for="status" class="form-label">Status</label>
-
-                            <select class="form-select" id="status" name="status">
+                            <select class="form-select" id="" name="status">
                                 <option value="published" @selected(old('status') == 'published')>Published</option>
                                 <option value="draft" @selected(old('status') == 'draft')>Draft</option>
                             </select>

@@ -100,10 +100,10 @@
                         <div class="col-md-12">
                             {{-- col-md-10 --}}
                             <div class="bg-light rounded-2 position-relative ribbon-box overflow-hidden">
-                                <div class="ribbon ribbon-danger ribbon-shape trending-ribbon">
+                                {{-- <div class="ribbon ribbon-danger ribbon-shape trending-ribbon">
                                     <span class="trending-ribbon-text">{{ $service->discounted_price }}% off</span> <i
                                         class="bi bi-lightning-charge-fill text-white align-bottom float-end ms-1"></i>
-                                </div>
+                                </div> --}}
                                 <div class="swiper productSwiper2">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide" style="min-height: 350px;">
@@ -137,7 +137,7 @@
                             <p class="text-muted mb-4">
                                 {{ $service->getTranslation('short_description', session()->get('lang')) }}</p>
 
-                            @if ($service->discounted_price > 0)
+                            {{-- @if ($service->discounted_price > 0)
                                 <h5 class="fs-24 mb-4">
                                     {{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }}
                                     lei
@@ -145,9 +145,9 @@
                                             lei</del></span>
                                     <span class="fs-14 ms-2 text-danger"> ({{ $service->discounted_price }}% off)</span>
                                 </h5>
-                            @else
-                                <h5 class="fs-24 mb-4">{{ number_format($service->price, 2) }} lei</h5>
-                            @endif
+                            @else --}}
+                                <h5 class="fs-24 mb-4">{{ $service->price }} lei</h5>
+                            {{-- @endif --}}
 
                             <ul class="list-unstyled vstack gap-2">
                                 <li class=""><i
@@ -268,7 +268,7 @@
                             <h5 class="mt-3">
                                 <span>Total:</span>
                                 <span class="text-danger fw-bold" id="total-price">
-                                    {{ number_format($service->price, 2) }} lei
+                                    {{ $service->price }} lei
                                 </span>
                                 <span class="text-muted fs-14 text-decoration-line-through" id="total-price-main">
 
@@ -749,17 +749,17 @@
                                     <div class="mt-2">
                                         <span class="float-end">{{ number_format($service->reviews_avg_rating, 1) }} <i
                                                 class="bi bi-star-fill text-warning align-bottom"></i></span>
-                                        @if ($service->discounted_price > 0)
+                                        {{-- @if ($service->discounted_price > 0)
                                             <h5 class="text-secondary mb-0">
                                                 {{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }}
                                                 lei
                                                 <span class="text-muted fs-12"><del>{{ number_format($service->price, 2) }}
                                                         lei</del></span>
                                             </h5>
-                                        @else
+                                        @else --}}
                                             <h5 class="text-secondary mb-0">
-                                                {{ number_format($service->price, 2) }} lei</h5>
-                                        @endif
+                                                {{ $service->price }} lei</h5>
+                                        {{-- @endif --}}
                                     </div>
                                     <div class="tn mt-3">
                                         <livewire:add-to-cart :service="$service" />

@@ -216,7 +216,11 @@ class PageController extends Controller
         $datePublished = $site_settings->created_at->format('Y-m-d\TH:i:sP');
         $dateModified = $site_settings->updated_at->format('Y-m-d\TH:i:sP');
 
-        return view('pages.contact', compact('keywords', 'datePublished', 'dateModified'));
+        $location = $site_settings->street.', '. $site_settings->city.', '.$site_settings->country;
+        $phone = $site_settings->phone;
+        $email = $site_settings->email;
+
+        return view('pages.contact', compact('keywords', 'datePublished', 'dateModified', 'location', 'phone', 'email'));
     }
 
     public function refundPolicy()

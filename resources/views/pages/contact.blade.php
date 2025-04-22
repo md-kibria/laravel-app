@@ -109,34 +109,34 @@
                             </div><!--end row-->
                         </form>
 
-                        <div class="col-lg-6 px-5" style="display: flex; flex-direction: column; justify-content: center">
+                        <div class="col-lg-6 px-5 pt-5 sm:pt-0" style="display: flex; flex-direction: column; justify-content: center">
                             <div class="d-flex py-2" style="gap: 10px;">
                                 <div class="d-flex" style="border: 1px solid rgb(73, 80, 87); border-radius: 50%; height: 35px; width: 35px; align-items: center; justify-content: center;">
-                                    <i class="fs-20 ri-map-pin-line" style="color: rgb(73, 80, 87)"></i>
+                                    <i class="fs-20 bi bi-geo-alt" style="color: rgb(73, 80, 87)"></i>
                                 </div>
-                                <div class="w-100" style="color: rgb(73, 80, 87)">
+                                <div class="flex-grow-1" style="color: rgb(73, 80, 87);">
                                     <h3 class="fs-20" style="color: rgb(73, 80, 87)">Location</h3>
-                                    <p class="" style="border-bottom: 1px solid rgb(215, 218, 221);">Phoenix, USA</p>
+                                    <p class="" style="border-bottom: 1px solid rgb(215, 218, 221);">{{ $location }}</p>
                                 </div>
                             </div>
                             
                             <div class="d-flex py-2" style="gap: 10px;">
                                 <div class="d-flex" style="border: 1px solid rgb(73, 80, 87); border-radius: 50%; height: 35px; width: 35px; align-items: center; justify-content: center;">
-                                    <i class="fs-20 ri-phone-line" style="color: rgb(73, 80, 87)"></i>
+                                    <i class="fs-20 bi bi-telephone" style="color: rgb(73, 80, 87)"></i>
                                 </div>
-                                <div class="w-100" style="color: rgb(73, 80, 87)">
+                                <div class="flex-grow-1" style="color: rgb(73, 80, 87)">
                                     <h3 class="fs-20" style="color: rgb(73, 80, 87)">Phone Number</h3>
-                                    <p class="" style="border-bottom: 1px solid rgb(215, 218, 221);">+(235) 01234 5678</p>
+                                    <a href="tel:{{ $phone }}" class="d-block" style="border-bottom: 1px solid rgb(215, 218, 221); color: rgb(73, 80, 87);margin-bottom: 1rem;">{{ $phone }}</a>
                                 </div>
                             </div>
                             
                             <div class="d-flex py-2" style="gap: 10px;">
                                 <div class="d-flex" style="border: 1px solid rgb(73, 80, 87); border-radius: 50%; height: 35px; width: 35px; align-items: center; justify-content: center;">
-                                    <i class="fs-20 ri-mail-line" style="color: rgb(73, 80, 87)"></i>
+                                    <i class="fs-20 bi bi-envelope" style="color: rgb(73, 80, 87)"></i>
                                 </div>
-                                <div class="w-100" style="color: rgb(73, 80, 87)">
+                                <div class="flex-grow-1" style="color: rgb(73, 80, 87)">
                                     <h3 class="fs-20" style="color: rgb(73, 80, 87)">Email Address</h3>
-                                    <p class="" style="border-bottom: 1px solid rgb(215, 218, 221);">test@example.com</p>
+                                    <a href="mailto:{{ $email }}" class="d-block" style="border-bottom: 1px solid rgb(215, 218, 221); color: rgb(73, 80, 87);margin-bottom: 1rem;">{{ $email }}</a>
                                 </div>
                             </div>
                         </div>
