@@ -396,7 +396,7 @@
                 <!-- end row -->
             @endif
             @if($item->section === 'services')
-                <h2>Section Title</h2>
+                <h2>Section Title & Description</h2>
                 <hr>
             @endif
             @if ($item->type === 'section_title')
