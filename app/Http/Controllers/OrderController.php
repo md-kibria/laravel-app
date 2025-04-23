@@ -31,7 +31,8 @@ class OrderController extends Controller
             return view('pages.checkout', compact('services', 'total'));
         }
 
-        function calculatePrice($variations) {
+        function calculatePrice($variations)
+        {
             $price = null;
             $mainPrice = 0;
             $mainQuantity = 0;
@@ -40,20 +41,20 @@ class OrderController extends Controller
 
             foreach ($variations as $variation) {
                 $variationData = Variation::find($variation['id']);
-                if($variation['dataType'] == 'text') {
+                if ($variation['dataType'] == 'text') {
                     $mainPrice = $variationData->price;
-                    if($variation['discountType'] == 'percentage') {
+                    if ($variation['discountType'] == 'percentage') {
                         $price = (int) ($variationData->price * (1 - ((int) ($variationData->discountRule?->value ?? 0) / 100)));
-                    } elseif($variation['discountType'] == 'fixed') {
+                    } elseif ($variation['discountType'] == 'fixed') {
                         $price = (int)$variationData->price - (int)$variationData->discountRule?->value;
                     } else {
                         $price = (int)$variationData->price;
                     }
-                } elseif($variation['dataType'] == 'number') {
+                } elseif ($variation['dataType'] == 'number') {
                     $mainQuantity = (int) $variationData->name;
-                    if($variation['discountType'] == 'percentage') {
+                    if ($variation['discountType'] == 'percentage') {
                         $quantity = $variationData->name * (1 - ((int) ($variationData->discountRule?->value ?? 0) / 100));
-                    } elseif($variation['discountType'] == 'fixed') {
+                    } elseif ($variation['discountType'] == 'fixed') {
                         $quantity = $variationData->name;
                         $fixedDiscount =  (int)$variationData->discountRule?->value;
                     } else {
@@ -62,8 +63,8 @@ class OrderController extends Controller
                     }
                 }
             }
-            
-            if($quantity === 0 && $mainQuantity === 0) {
+
+            if ($quantity === 0 && $mainQuantity === 0) {
                 return [
                     'price' => $price,
                     'mainPrice' => $mainPrice
@@ -72,8 +73,8 @@ class OrderController extends Controller
 
             $totalMainPrice = $mainPrice * $mainQuantity;
             $totalPrice = $price * $quantity;
-           
-            if($fixedDiscount > 0) {
+
+            if ($fixedDiscount > 0) {
                 $totalPrice = $totalPrice - $fixedDiscount;
             }
 
@@ -82,7 +83,7 @@ class OrderController extends Controller
                 'mainPrice' => $totalMainPrice
             ];
         }
-        
+
         $services = [];
 
         foreach ($cart as $cartItem) {
@@ -90,7 +91,7 @@ class OrderController extends Controller
             $service->quantity = $cartItem['quantity'];
             $service->variations = $cartItem['variations'];
             $service->price = calculatePrice($cartItem['variations']);
-            
+
             $services[] = $service;
         }
 
@@ -101,7 +102,7 @@ class OrderController extends Controller
             $total += (int) $service->price['price'] * (int)$service->quantity;
             $mainTotal += (int) $service->price['mainPrice'] * (int)$service->quantity;
         }
-        
+
         return view('pages.checkout', compact('services', 'total', 'mainTotal'));
     }
 
@@ -165,9 +166,14 @@ class OrderController extends Controller
                 "issueDate" => $order->created_at,
                 "products" => $items
             ]);
-    
+
             if ($response->successful()) {
-                return $response->json(); // The invoice details
+                $res = $response->json(); // The invoice details
+
+                $order->update([
+                    'series' => $res['series'],
+                    'number' => $res['number']
+                ]);
             }
 
             Mail::to($order->email ?? $order->user->email)->send(new OrderPlacedMail($order));
