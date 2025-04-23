@@ -12,6 +12,14 @@ section h1 {
     display: inline-block !important;
   }
 }
+
+.bg-success-subtle-custom {
+  /* background-color: #d1e7dd !important; */
+  background-color: #cdf7ecbe !important;
+  
+  /* background-color: #d1e7dd !important; */
+  /* color: #0f5132 !important; */
+}
 </style>
 {{-- <link href="{{ URL::asset('build/css/icons.min.css') }}" rel="stylesheet" type="text/css"> --}}
 <!-- Bootstrap Css -->

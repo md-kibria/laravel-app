@@ -57,8 +57,8 @@
             <div class="row justify-content-center">
                 <div class="col-lg-7">
                     <div class="text-center">
-                        <h3 class="mb-3">{{ session()->get('lang') === 'ro' ? 'Sfaturi și tendințe estetice de la experți' : 'Expert Aesthetic Tips & Trends' }}</h3>
-                        <p class="text-muted fs-15">{{ session()->get('lang') === 'ro' ? 'Explorează cele mai noi tratamente de înfrumusețare, îngrijire a pielii și estetică cu Reshape Clinique. De la sfaturi de specialitate despre conturarea corpului până la cele mai noi tendințe în proceduri neinvazive, blogul nostru te ține informat și inspirat în călătoria ta către încredere și bunăstare.' : 'Explore the latest in beauty, skincare, and aesthetic treatments with Reshape Clinique. From expert tips on body contouring to the newest trends in non-invasive procedures, our blog keeps you informed and inspired on your journey to confidence and well-being.' }}</p>
+                        <h3 class="mb-3">{{ $section_tilte->getTranslation('title', session()->get('lang')) }}</h3>
+                        <p class="text-muted fs-15">{{ $section_tilte->getTranslation('description', session()->get('lang')) }}</p>
                     </div>
                 </div>
             </div>

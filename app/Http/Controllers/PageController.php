@@ -50,6 +50,8 @@ class PageController extends Controller
 
         $instas = HomepageContent::where('type', 'insta')->orderBy('id', 'desc')->get();
 
+        $section_tilte = HomepageContent::where('type', 'section_title')->get();
+
         $this->storeViewData('home', 'page');
 
         $homepage = HomepageContent::where('section', 'header')->first();
@@ -83,7 +85,8 @@ class PageController extends Controller
             'keywords',
             'description',
             'logo',
-            'instaLink'
+            'instaLink',
+            'section_tilte'
         ));
     }
 
@@ -171,6 +174,7 @@ class PageController extends Controller
     public function blogs()
     {
         $posts = Post::orderBy('id', 'desc')->paginate(10);
+        $section_tilte = HomepageContent::where('section', 'blogs')->first();
 
         $this->storeViewData('blogs', 'page');
 
@@ -178,7 +182,7 @@ class PageController extends Controller
         $keywords = $site_settings->keywords;
         $datePublished = $site_settings->created_at->format('Y-m-d\TH:i:sP');
 
-        return view('pages.blogs', compact('posts', 'keywords', 'datePublished'));
+        return view('pages.blogs', compact('posts', 'keywords', 'datePublished', 'section_tilte'));
     }
 
 

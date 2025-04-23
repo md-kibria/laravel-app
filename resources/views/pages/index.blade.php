@@ -40,18 +40,20 @@
                     <div class="ecommerce-home bg-primary-subtle"
                         style="background-image: url('{{ $header->image ? asset('/storage/' . $header->image) : '' }}');">
                         <div class="container">
-                            <div class="row">
-                                <div class="col-lg-7">
-                                    <div>
-                                        <p class="fs-15 fw-semibold text-uppercase"><i
+                            <div class="row bg-success-subtle-custom py-5" style="border-top-right-radius: 200px;border-bottom-left-radius: 200px;">
+                                {{-- <div class="col-lg-7"> --}}
+                                <div class="col-lg-12 px-2 px-md-5">
+                                    <div class="d-flex" style="align-items: center; justify-content: center; flex-direction: column">
+                                        <p class="fs-15 fw-semibold text-uppercase text-center text-md-start"><i
                                                 class="bi bi-lightning-charge-fill text-success align-bottom me-1"></i>
                                             {{ $header->getTranslation('sub_title', session()->get('lang')) }}</p>
-                                        <h1 class="display-3 fw-semibold text-capitalize lh-base" style="font-size: 70px">
+                                        <h1 class="display-3 fw-semibold text-capitalize lh-base text-center text-md-start" style="font-size: 70px;">
                                             {{ $header->getTranslation('title', session()->get('lang')) }}</h1>
-                                        <p class="">
+                                        <p class="text-center text-md-center fs-16" style="color: rgb(99, 99, 99)">
                                             {{ $header->getTranslation('description', session()->get('lang')) }}</p>
-                                        <a href="/services" class="btn btn-success btn-hover mt-4"><i
-                                                class="ph-shopping-cart align-middle me-1"></i> {{ session()->get('lang') === 'ro' ? 'Serviciile noastre' : 'Our Services' }}</a>
+                                        <a href="/services" class="btn btn-success btn-hover mt-4 text-center text-md-start">
+                                            <i class="ph-shopping-cart align-middle me-1"></i> {{ session()->get('lang') === 'ro' ? 'Serviciile noastre' : 'Our Services' }}
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -188,8 +190,9 @@
             <div class="row justify-content-center">
                 <div class="col-lg-7">
                     <div class="text-center">
-                        <h3 class="mb-3">{{ session()->get('lang') === 'ro' ? 'Servicii recomandate' : 'Featured Services' }}</h3>
-                        <p class="text-muted fs-15">{{ session()->get('lang') === 'ro' ? 'Ceea ce porți este modul în care te prezinți lumii, mai ales astăzi, când contactele umane sunt atât de rapide. Moda este un limbaj instantaneu.' : 'What you wear is how you present yourself to the world, especially today, when human contacts are so quick. Fashion is instant language.' }}</p>
+                        {{-- {{dd($section_tilte)}} --}}
+                        <h3 class="mb-3">{{ $section_tilte[0]->getTranslation('title', session()->get('lang')) }}</h3>
+                        <p class="text-muted fs-15">{{ $section_tilte[0]->getTranslation('description', session()->get('lang')) }}</p>
                     </div>
                 </div>
                 <!--end col-->
@@ -258,8 +261,8 @@
             <div class="row justify-content-center">
                 <div class="col-lg-7">
                     <div class="text-center">
-                        <h3 class="mb-3">{{ session()->get('lang') === 'ro' ? 'Ce spun clienții despre noi' : 'What Customers Say About Us' }}</h3>
-                        <p class="text-muted fs-15">{{ session()->get('lang') === 'ro' ? 'Un client este o persoană sau o afacere care cumpără bunuri sau servicii de la o altă afacere. Clienții sunt cruciali deoarece ei generează venituri.' : 'A customer is a person or business that buys goods or services from another business. Customers are crucial because they generate revenue.' }}</p>
+                        <h3 class="mb-3">{{ $section_tilte[1]->getTranslation('title', session()->get('lang')) }}</h3>
+                        <p class="text-muted fs-15">{{ $section_tilte[1]->getTranslation('description', session()->get('lang')) }}</p>
                     </div>
                 </div>
                 <!--end col-->
@@ -306,8 +309,8 @@
             <div class="row justify-content-center">
                 <div class="col-lg-7">
                     <div class="text-center">
-                        <h3 class="mb-3">{{ session()->get('lang') === 'ro' ? 'Sfaturi și tendințe estetice de la experți' : 'Expert Aesthetic Tips & Trends' }}</h3>
-                        <p class="text-muted fs-15">{{ session()->get('lang') === 'ro' ? 'Explorează cele mai noi tratamente de înfrumusețare, îngrijire a pielii și estetică cu Reshape Clinique. De la sfaturi de specialitate despre conturarea corpului până la cele mai noi tendințe în proceduri neinvazive, blogul nostru te ține informat și inspirat în călătoria ta către încredere și bunăstare.' : 'Explore the latest in beauty, skincare, and aesthetic treatments with Reshape Clinique. From expert tips on body contouring to the newest trends in non-invasive procedures, our blog keeps you informed and inspired on your journey to confidence and well-being.' }}</p>
+                        <h3 class="mb-3">{{ $section_tilte[2]->getTranslation('title', session()->get('lang')) }}</h3>
+                        <p class="text-muted fs-15">{{ $section_tilte[2]->getTranslation('description', session()->get('lang')) }}</p>
                     </div>
                 </div>
             </div>
@@ -362,8 +365,8 @@
             <div class="row justify-content-center g-0">
                 <div class="col-lg-7">
                     <div class="text-center">
-                        <h3 class="mb-3">{{ session()->get('lang') === 'ro' ? 'Urmăriți-ne pe Instagram' : 'Follow Us In Instagram' }}</h3>
-                        <p class="text-muted fs-15">{{ session()->get('lang') === 'ro' ? 'Cea mai comună metodă pe care oamenii o folosesc pentru a spune „urmărește-mă” pe Instagram este trimiterea unui mesaj direct.' : 'The most common approach that peoples use to say follow me on Instagram is by sending a direct message.' }}</p>
+                        <h3 class="mb-3">{{ $section_tilte[3]->getTranslation('title', session()->get('lang')) }}</h3>
+                        <p class="text-muted fs-15">{{ $section_tilte[3]->getTranslation('description', session()->get('lang')) }}</p>
                     </div>
                 </div>
             </div>

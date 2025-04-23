@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('section')->unique()->nullable(); // e.g., 'banner', 'why_choose_us'
             $table->text('sub_title')->nullable();
             $table->text('title')->nullable();
-            $table->enum('type', ['general', 'key_features', 'featured_promotion', 'insta'])->default('general')->nullable();
+            $table->enum('type', ['general', 'key_features', 'section_title', 'insta'])->default('general')->nullable();
             $table->string('link')->nullable();
             $table->text('description')->nullable();
             $table->json('data')->nullable();

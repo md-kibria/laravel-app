@@ -60,9 +60,10 @@ class InvoiceController extends Controller
         ]);
     }
 
-    public function test() {
-        $result = $this->smartBill->testConnection4();
-        dd($result);
+    public function test()
+    {
+        // $result = $this->smartBill->testConnection4();
+        // dd($result);
 
         // $response = Http::withHeaders([
         //     'Authorization' => '',
@@ -72,6 +73,47 @@ class InvoiceController extends Controller
         // ])->get('https://jsonplaceholder.typicode.com/users',[]);
 
         // dd($response->json());
+
+
+
+        // return base64_encode('office@reshape-clinique.ro:002|a9af36cee6222d5b4178132f2104bbaa');
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Basic ' . base64_encode('office@reshape-clinique.ro:002|a9af36cee6222d5b4178132f2104bbaa'),
+        ])->withOptions([
+            'verify' => base_path('/public/storage/cacert.pem') // Make sure the file exists here
+        ])->post('https://ws.smartbill.ro/SBORestApi/api/invoice', [
+            'companyVatCode' => 'RO38395650',
+            'seriesName' => 'FCT', // invoice series
+            'client' => [
+                'name' => 'Client Name',
+                'vatCode' => 'RO38395650',
+                'country' => 'Romania',
+                'city' => 'Bucharest',
+                'county' => 'Bucharest',
+                'address' => 'Strada Exemplu, Nr. 1',
+            ],
+            'products' => [
+                [
+                    'name' => 'Product 1',
+                    'code' => 'P001',
+                    'currency' => 'RON',
+                    'measuringUnitName' => 'buc',
+                    'isTaxIncluded' => true,
+                    'price' => 100,
+                    'quantity' => 1,
+                ]
+            ],
+            'issueDate' => now()->toDateString(),
+            'dueDate' => now()->addDays(7)->toDateString(),
+            'email' => 'client@example.com',
+        ]);
+
+        if ($response->successful()) {
+            return $response->json(); // The invoice details
+        } else {
+            return $response->body(); // Error message
+        }
     }
 
     public function showInvoice($series, $number)

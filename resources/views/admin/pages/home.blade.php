@@ -153,6 +153,10 @@
                 </div>
                 <!-- end row -->
             @endif
+            @if($item->section === 'key_feature_1')
+                <h2>Key Features</h2>
+                <hr>
+            @endif
             @if ($item->type === 'key_features')
                 <div class="row">
                     <form action="/admin/home-page" enctype="multipart/form-data" method="POST"
@@ -274,6 +278,10 @@
                 </div>
                 <!-- end row -->
             @endif
+            @if($item->section === 'featured_services')
+                <h2>Featured Services</h2>
+                <hr>
+            @endif
             @if ($item->section === 'featured_services')
                 <div class="row">
                     <form action="/admin/home-page" enctype="multipart/form-data" method="POST"
@@ -387,6 +395,102 @@
                 </div>
                 <!-- end row -->
             @endif
+            @if($item->section === 'services')
+                <h2>Section Title</h2>
+                <hr>
+            @endif
+            @if ($item->type === 'section_title')
+            <div class="row">
+                <form action="/admin/home-page" enctype="multipart/form-data" method="POST"
+                    class="col-xl-8 col-lg-8 needs-validation">
+                    @method('POST')
+                    @csrf
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="d-flex">
+                                <div class="flex-shrink-0 me-3">
+                                    <div class="avatar-sm">
+                                        <div class="avatar-title rounded-circle bg-light text-primary fs-20">
+                                            <i class="bi bi-question"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h5 class="card-title mb-1 text-capitalize">{{ $item->section }}</h5>
+                                    <p class="text-muted mb-0">Update home page <b>{{ $item->section }}</b> section title & description.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row ">
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="manufacturer-name-input">Title (en)</label>
+                                        <input type="text"
+                                            class="form-control @error('title.en') is-invalid @enderror"
+                                            id="manufacturer-name-input" placeholder="Enter title" name="title[en]"
+                                            value="{{ old('title.en') ?? $item->getTranslation('title', 'en') }}">
+                                        @error('title.en')
+                                            <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="manufacturer-name-input">Title (ro)</label>
+                                        <input type="text"
+                                            class="form-control @error('title.ro') is-invalid @enderror"
+                                            id="manufacturer-name-input" placeholder="Enter title" name="title[ro]"
+                                            value="{{ old('title.ro') ?? $item->getTranslation('title', 'ro') }}">
+                                        @error('title.ro')
+                                            <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="manufacturer-name-input">Description
+                                            (en)</label>
+                                        <textarea class="form-control @error('description.en') is-invalid @enderror" id="manufacturer-name-input"
+                                            rows="4" placeholder="Enter description" name="description[en]">{{ old('description.en') ?? $item->getTranslation('description', 'en') }}</textarea>
+                                        @error('description.en')
+                                            <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="manufacturer-name-input">Description
+                                            (ro)</label>
+                                        <textarea class="form-control @error('description.ro') is-invalid @enderror" id="manufacturer-name-input"
+                                            rows="4" placeholder="Enter description" name="description[ro]">{{ old('description.ro') ?? $item->getTranslation('description', 'ro') }}</textarea>
+                                        @error('description.ro')
+                                            <div class="invalid-feedback text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <input type="hidden" name="section" value="{{ $item->section }}">
+                                <input type="hidden" name="type" value="section_title">
+
+                            </div>
+                            <!-- end row -->
+
+                            <div class="text-end mb-3">
+                                <button type="submit" class="btn btn-success w-sm">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- end card -->
+                </form>
+                <!-- end col -->
+
+               
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        @endif
         @endforeach
     </div>
 @endsection
