@@ -63,10 +63,10 @@ class InvoiceController extends Controller
             ],
             // other invoice details
         ];
-
+// dd($this->smartBill->createInvoice([]));
         $result = $this->smartBill->createInvoice($invoiceData);
 
-        // dd($result);
+        dd($result);
 
         if (isset($result['error'])) {
             return back()->with('error', $result['error']);

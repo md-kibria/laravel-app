@@ -17,10 +17,10 @@ class SmartBillService
 
     public function __construct()
     {
-        $this->client = new Client([
-            'timeout' => 30,
-            'http_errors' => true,
-        ]);
+        // $this->client = new Client([
+        //     'timeout' => 30,
+        //     'http_errors' => true,
+        // ]);
         $this->email = env('SMARTBILL_API_EMAIL');
         $this->apiKey = env('SMARTBILL_API_TOKEN');
         $this->companyVatCode = env('SMARTBILL_COMPANY_VAT');
@@ -49,19 +49,19 @@ class SmartBillService
 
 
 
-    protected function handleException(GuzzleException $e)
-    {
-        $response = [
-            'error' => $e->getMessage(),
-            'code' => $e->getCode(),
-        ];
+    // protected function handleException(GuzzleException $e)
+    // {
+    //     $response = [
+    //         'error' => $e->getMessage(),
+    //         'code' => $e->getCode(),
+    //     ];
 
-        if ($e->hasResponse()) {
-            $response['details'] = $e->getResponse()->getBody()->getContents();
-        }
+    //     if ($e->hasResponse()) {
+    //         $response['details'] = $e->getResponse()->getBody()->getContents();
+    //     }
 
-        return $response;
-    }
+    //     return $response;
+    // }
 
     /**
      * Create an invoice
@@ -88,7 +88,7 @@ class SmartBillService
         //     "products" => $invoiceData['products'],
         // ]);
 
-        
+
         // $response = Http::withHeaders($this->getHeaders())->withOptions([
         //     'verify' => base_path('/public/storage/cacert.pem') // Make sure the file exists here
         // ])->post($url, [
@@ -200,77 +200,77 @@ class SmartBillService
 
 
 
-    public function testConnection2()
-    {
-        try {
-            $response = $this->client->get($this->baseUrl . '/status', [
-                'headers' => $this->getHeaders(),
-                'verify' => base_path('public/storage/cacert.pem'), // Ensure this path is correct
-                'debug' => fopen(storage_path('logs/smartbill_debug_' . date('Y-m-d') . '.log'), 'a'),
-                'timeout' => 15,
-                'connect_timeout' => 5,
-                'allow_redirects' => false, // Disable redirects for debugging
-                'http_errors' => false // Don't throw exceptions on HTTP errors
-            ]);
+    // public function testConnection2()
+    // {
+    //     try {
+    //         $response = $this->client->get($this->baseUrl . '/status', [
+    //             'headers' => $this->getHeaders(),
+    //             'verify' => base_path('public/storage/cacert.pem'), // Ensure this path is correct
+    //             'debug' => fopen(storage_path('logs/smartbill_debug_' . date('Y-m-d') . '.log'), 'a'),
+    //             'timeout' => 15,
+    //             'connect_timeout' => 5,
+    //             'allow_redirects' => false, // Disable redirects for debugging
+    //             'http_errors' => false // Don't throw exceptions on HTTP errors
+    //         ]);
 
-            // Verify response status
-            if ($response->getStatusCode() !== 200) {
-                throw new \Exception("Unexpected status code: " . $response->getStatusCode());
-            }
+    //         // Verify response status
+    //         if ($response->getStatusCode() !== 200) {
+    //             throw new \Exception("Unexpected status code: " . $response->getStatusCode());
+    //         }
 
-            // Verify content type
-            $contentType = $response->getHeaderLine('Content-Type');
-            if (strpos($contentType, 'application/json') === false) {
-                throw new \Exception("Unexpected Content-Type: " . $contentType);
-            }
+    //         // Verify content type
+    //         $contentType = $response->getHeaderLine('Content-Type');
+    //         if (strpos($contentType, 'application/json') === false) {
+    //             throw new \Exception("Unexpected Content-Type: " . $contentType);
+    //         }
 
-            $body = json_decode($response->getBody(), true);
+    //         $body = json_decode($response->getBody(), true);
 
-            // Verify response structure
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                throw new \Exception("Invalid JSON response");
-            }
+    //         // Verify response structure
+    //         if (json_last_error() !== JSON_ERROR_NONE) {
+    //             throw new \Exception("Invalid JSON response");
+    //         }
 
-            return $body;
+    //         return $body;
 
-            return [
-                'status' => $response->getStatusCode(),
-                'body' => json_decode($response->getBody(), true)
-            ];
-        } catch (GuzzleException $e) {
-            $this->logError($e);
-            throw new \RuntimeException('SmartBill connection test failed: ' . $e->getMessage());
-        }
-    }
+    //         return [
+    //             'status' => $response->getStatusCode(),
+    //             'body' => json_decode($response->getBody(), true)
+    //         ];
+    //     } catch (GuzzleException $e) {
+    //         $this->logError($e);
+    //         throw new \RuntimeException('SmartBill connection test failed: ' . $e->getMessage());
+    //     }
+    // }
 
-    protected function logError(GuzzleException $e)
-    {
-        Log::error('SmartBill API Error', [
-            'message' => $e->getMessage(),
-            'code' => $e->getCode(),
-            'response' => $e->hasResponse() ? $e->getResponse()->getBody()->getContents() : null,
-            'trace' => $e->getTraceAsString()
-        ]);
-    }
+    // protected function logError(GuzzleException $e)
+    // {
+    //     Log::error('SmartBill API Error', [
+    //         'message' => $e->getMessage(),
+    //         'code' => $e->getCode(),
+    //         'response' => $e->hasResponse() ? $e->getResponse()->getBody()->getContents() : null,
+    //         'trace' => $e->getTraceAsString()
+    //     ]);
+    // }
 
 
-    public function testConnection3()
-    {
-        $url = $this->baseUrl . '/status'; // Endpoint as shown in docs
+    // public function testConnection3()
+    // {
+    //     $url = $this->baseUrl . '/status'; // Endpoint as shown in docs
 
-        try {
-            $response = $this->client->get($url, [
-                'headers' => $this->getHeaders(),
-                'verify' => false, // Temporary for testing
-            ]);
+    //     try {
+    //         $response = $this->client->get($url, [
+    //             'headers' => $this->getHeaders(),
+    //             'verify' => false, // Temporary for testing
+    //         ]);
 
-            return json_decode($response->getBody()->getContents(), true);
-        } catch (GuzzleException $e) {
-            return [
-                'error' => $e->getMessage(),
-                'code' => $e->getCode(),
-                'response' => $e->hasResponse() ? $e->getResponse()->getBody()->getContents() : null
-            ];
-        }
-    }
+    //         return json_decode($response->getBody()->getContents(), true);
+    //     } catch (GuzzleException $e) {
+    //         return [
+    //             'error' => $e->getMessage(),
+    //             'code' => $e->getCode(),
+    //             'response' => $e->hasResponse() ? $e->getResponse()->getBody()->getContents() : null
+    //         ];
+    //     }
+    // }
 }
