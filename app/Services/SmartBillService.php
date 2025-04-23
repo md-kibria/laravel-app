@@ -152,7 +152,7 @@ class SmartBillService
     {
         $url = $this->baseUrl . '/invoice/pdf';
 
-        try {
+        // try {
             $response = $this->client->get($url, [
                 'headers' => [
                     'Content-Type' => 'application/json',
@@ -167,36 +167,36 @@ class SmartBillService
             ]);
 
             return $response->getBody()->getContents();
-        } catch (GuzzleException $e) {
-            // Handle exception
-            return ['error' => $e->getMessage()];
-        }
+        // } catch (GuzzleException $e) {
+        //     // Handle exception
+        //     return ['error' => $e->getMessage()];
+        // }
     }
 
     // Add more methods for other SmartBill API endpoints as needed
 
 
-    public function testConnection()
-    {
-        $url = $this->baseUrl . '/status';
-        // dd($this->getHeaders());
-        // dd(base64_decode('b2ZmaWNlQHJlc2hhcGUtY2xpbmlxdWUucm86MDAyfGE5YWYzNmNlZTYyMjJkNWI0MTc4MTMyZjIxMDRiYmFh'));
-        // dd(base_path('\public\storage\cacert.pem'));
-        try {
-            $response = $this->client->get($url, [
-                'headers' => $this->getHeaders(),
-                'verify' => base_path('/public/storage/cacert.pem')
-            ]);
+    // public function testConnection()
+    // {
+    //     $url = $this->baseUrl . '/status';
+    //     // dd($this->getHeaders());
+    //     // dd(base64_decode('b2ZmaWNlQHJlc2hhcGUtY2xpbmlxdWUucm86MDAyfGE5YWYzNmNlZTYyMjJkNWI0MTc4MTMyZjIxMDRiYmFh'));
+    //     // dd(base_path('\public\storage\cacert.pem'));
+    //     try {
+    //         $response = $this->client->get($url, [
+    //             'headers' => $this->getHeaders(),
+    //             'verify' => base_path('/public/storage/cacert.pem')
+    //         ]);
 
-            dd($response);
+    //         dd($response);
 
-            return json_decode($response->getBody()->getContents(), true);
-        } catch (GuzzleException $e) {
-            dd($e);
-            logger()->error('SmartBill Connection Test Failed: ' . $e->getMessage());
-            return ['error' => 'Connection test failed'];
-        }
-    }
+    //         return json_decode($response->getBody()->getContents(), true);
+    //     } catch (GuzzleException $e) {
+    //         dd($e);
+    //         logger()->error('SmartBill Connection Test Failed: ' . $e->getMessage());
+    //         return ['error' => 'Connection test failed'];
+    //     }
+    // }
 
 
 

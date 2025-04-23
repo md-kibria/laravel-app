@@ -17,6 +17,44 @@ class InvoiceController extends Controller
 
     public function createInvoice(Request $request)
     {
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Basic ' . base64_encode(env('SMARTBILL_API_EMAIL') . ':' . env('SMARTBILL_API_TOKEN')),
+            'Content-Type' => 'application/json'
+        ])->withOptions([
+            'verify' => base_path('/public/storage/cacert.pem') // Make sure the file exists here
+        ])->post('https://ws.smartbill.ro/SBORO/api/invoice', [
+            "companyVatCode" => "RO38395650",
+            "seriesName" => "RCON",
+            "client" => [
+                "name" => "SC Company SA",
+                "vatCode" => "RO12345678",
+                "isTaxPayer" => true,
+                "address" => "Str. Iasomiei nr 2",
+                "city" => "Cluj-Napoca",
+                "county" => "Cluj-Napoca",
+                "country" => "Romania",
+                "email" => "emailclient@domain.ro",
+                "saveToDb" => true
+            ],
+            "issueDate" => "2023-07-27",
+            "products" => [
+                [
+                    "code" => "10",
+                    "name" => "Produs 1",
+                    "measuringUnitName" => "buc",
+                    "currency" => "RON",
+                    "quantity" => 1,
+                    "price" => 10,
+                    "isTaxIncluded" => true,
+                    "taxPercentage" => 19,
+                    "saveToDb" => false
+                ]
+            ]
+        ]);
+
+        dd($response);
+        
         $invoiceData = [
             'client' => [
                 // 'name' => $request->client_name,
