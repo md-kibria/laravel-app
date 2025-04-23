@@ -113,7 +113,7 @@ class SmartBillService
                     'Authorization' => 'Basic ' . base64_encode($this->email . ':' . $this->apiKey),
                 ],
                 'query' => [
-                    'companyVatCode' => $this->companyVatCode,
+                    'cif' => $this->companyVatCode,
                     'seriesName' => $invoiceSeries,
                     'number' => $invoiceNumber
                 ]
