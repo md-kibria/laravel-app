@@ -38,7 +38,7 @@ class SmartBillService
         }
     }
 
-    protected function getHeaders($type)
+    protected function getHeaders($type=null)
     {
         return [
             'Content-Type' => 'application/json',
