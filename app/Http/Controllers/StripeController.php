@@ -28,6 +28,8 @@ class StripeController extends Controller
             $request->validate([
                 's-name' => 'required',
                 's-address' => 'required',
+                's-city' => 'required',
+                's-country' => 'required',
                 's-email' => 'required',
                 's-phone' => 'required',
             ]);
@@ -178,8 +180,13 @@ class StripeController extends Controller
             'method' => 'stripe',
             'name' => $request->input('s-name') ?? Auth::user()->name,
             'address' => $request->input('s-address'),
+            'city' => $request->input('s-city'),
+            'country' => $request->input('s-country'),
             'email' => $request->input('s-email') ?? Auth::user()->email,
             'phone' => $request->input('s-phone') ?? Auth::user()->phone,
+            'vat' => $request->input('vat'),
+            'company' => $request->input('company'),
+            'trade' => $request->input('trade'),
         ]);
         // Save order items
         foreach ($services as $item) {

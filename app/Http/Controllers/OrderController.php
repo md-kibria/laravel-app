@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Service;
+use App\Models\Variation;
 use Illuminate\Http\Request;
 use App\Mail\OrderPlacedMail;
-use App\Models\Variation;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
@@ -120,8 +121,54 @@ class OrderController extends Controller
             // Update order status
             $order->update(['status' => 'paid']);
 
+            $items = [];
+
+            foreach ($order->items as $item) {
+                $itemData = [
+                    "code" => $item->id,
+                    "name" => $item->name,
+                    "measuringUnitName" => "buc",
+                    "currency" => "RON",
+                    "quantity" => $item->quantity,
+                    "price" => json_decode($item->price)->price,
+                    // "isTaxIncluded" => true,
+                    // "taxPercentage" => 0,
+                    "saveToDb" => false
+                ];
+
+                $items[] = $itemData;
+            }
+
             // Clear the cart
             Cookie::queue('cart', json_encode([]), 0);
+
+            // Create invoice
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+                'Authorization' => 'Basic ' . base64_encode(env('SMARTBILL_API_EMAIL') . ':' . env('SMARTBILL_API_TOKEN')),
+                'Content-Type' => 'application/json'
+            ])->withOptions([
+                'verify' => base_path('/public/storage/cacert.pem') // Make sure the file exists here
+            ])->post('https://ws.smartbill.ro/SBORO/api/invoice', [
+                "companyVatCode" => env('SMARTBILL_COMPANY_VAT'),
+                "seriesName" => "RCON",
+                "client" => [
+                    "name" => $order->name,
+                    "vatCode" => $order->vat,
+                    "address" => $order->address,
+                    "city" => $order->city,
+                    "county" => $order->city,
+                    "country" => $order->country,
+                    "email" => $order->email,
+                    "saveToDb" => true
+                ],
+                "issueDate" => $order->created_at,
+                "products" => $items
+            ]);
+    
+            if ($response->successful()) {
+                return $response->json(); // The invoice details
+            }
 
             Mail::to($order->email ?? $order->user->email)->send(new OrderPlacedMail($order));
 

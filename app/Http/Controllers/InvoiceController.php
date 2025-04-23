@@ -180,6 +180,8 @@ class InvoiceController extends Controller
         ]);
 
         if ($response->successful()) {
+            $result = $response->json();
+            dd($result['number']);
             return $response->json(); // The invoice details
         } else {
             return $response->body(); // Error message

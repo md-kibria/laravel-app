@@ -65,7 +65,9 @@
                             <div class="card">
                                 <form class="card-body" action="/checkout/stripe" method="post">
                                     @csrf
-                                    @guest
+                                    
+                                    <h4>{{ session()->get('lang') === 'ro' ? 'Informații despre persoană' : 'Person Info' }}</h4>
+                                    <hr>
                                         <div class="row gy-3">
                                             <div class="col-md-6">
                                                 <label for="name"
@@ -73,7 +75,7 @@
                                                 <input type="text" class="form-control @error('s-name') is-invalid @enderror"
                                                     id="name"
                                                     placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți numele dvs' : 'Enter your name' }}"
-                                                    name="s-name" value="{{ old('s-name') }}">
+                                                    name="s-name" value="{{ old('s-name') ?? Auth::user()?->name }}">
                                                 @error('s-name')
                                                     <div class="invalid-feedback text-danger">
                                                         {{ $message }}
@@ -94,6 +96,34 @@
                                                     </div>
                                                 @enderror
                                             </div>
+                                            <div class="col-md-6">
+                                                <label for="city"
+                                                    class="form-label">{{ session()->get('lang') === 'ro' ? 'Oraş' : 'City' }}</label>
+                                                <input type="text"
+                                                    class="form-control @error('s-city') is-invalid @enderror"
+                                                    id="city"
+                                                    placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți orașul dvs.' : 'Enter your city' }}"
+                                                    name="s-city" value="{{ old('s-city') ?? Auth::user()?->city }}">
+                                                @error('s-city')
+                                                    <div class="invalid-feedback text-danger">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="country"
+                                                    class="form-label">{{ session()->get('lang') === 'ro' ? 'Ţară' : 'Country' }}</label>
+                                                <input type="text"
+                                                    class="form-control @error('s-country') is-invalid @enderror"
+                                                    id="country"
+                                                    placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți țara dvs.' : 'Enter your country' }}"
+                                                    name="s-country" value="{{ old('s-country') ?? Auth::user()?->country }}">
+                                                @error('s-country')
+                                                    <div class="invalid-feedback text-danger">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
 
                                             <div class="col-md-6">
                                                 <label for="buyers-address"
@@ -102,7 +132,7 @@
                                                     class="form-control @error('s-email') is-invalid @enderror"
                                                     id="buyers-address"
                                                     placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți adresa dvs. de e-mail' : 'Enter your email' }}"
-                                                    name="s-email" value="{{ old('s-email') }}">
+                                                    name="s-email" value="{{ old('s-email') ?? Auth::user()?->email }}">
                                                 @error('s-email')
                                                     <div class="invalid-feedback text-danger">
                                                         {{ $message }}
@@ -117,7 +147,7 @@
                                                     class="form-control @error('s-phone') is-invalid @enderror"
                                                     id="buyers-phone"
                                                     placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți telefonul dvs' : 'Enter your phone' }}"
-                                                    name="s-phone" value="{{ old('s-phone') }}">
+                                                    name="s-phone" value="{{ old('s-phone') ?? Auth::user()?->phone }}">
                                                 @error('s-phone')
                                                     <div class="invalid-feedback text-danger">
                                                         {{ $message }}
@@ -126,13 +156,53 @@
                                             </div>
 
                                         </div>
-                                    @endguest
+                                        <h4 class="pt-3">{{ session()->get('lang') === 'ro' ? 'Informații despre firmă/companie' : 'Firm/Company Info' }}</h4>
+                                        <hr>
+                                        <div class="row gy-3">
+                                            <div class="col-md-12">
+                                                <label for="company"
+                                                    class="form-label">{{ session()->get('lang') === 'ro' ? 'Numele companiei' : 'Company Name' }}</label>
+                                                <input type="text" class="form-control @error('s-company') is-invalid @enderror"
+                                                    id="company"
+                                                    placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți numele companiei dvs.' : 'Enter your company name' }}"
+                                                    name="s-company" value="{{ old('s-company') }}">
+                                                @error('s-company')
+                                                    <div class="invalid-feedback text-danger">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
 
-                                    @auth
-                                        <p class="form-label"><i class="ri-information-line align-bottom ms-2"></i>
-                                            {{ session()->get('lang') === 'ro' ? 'Finalizați plata pentru a vă confirma comanda' : 'Complete payment to confirm your order' }}
-                                        </p>
-                                    @endauth
+                                            <div class="col-md-6">
+                                                <label for="vat"
+                                                    class="form-label">{{ session()->get('lang') === 'ro' ? 'Cod TVA' : 'VAT Number' }}</label>
+                                                <input type="text"
+                                                    class="form-control @error('s-vat') is-invalid @enderror" id="vat"
+                                                    placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți codul TVA al companiei' : 'Enter company vat number' }}"
+                                                    name="s-vat" value="{{ old('s-vat') }}">
+                                                @error('s-vat')
+                                                    <div class="invalid-feedback text-danger">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="trade"
+                                                    class="form-label">{{ session()->get('lang') === 'ro' ? 'Numărul de înregistrare la Registrul Comerțului' : 'Trade Register registration number' }}</label>
+                                                <input type="text"
+                                                    class="form-control @error('s-trade') is-invalid @enderror"
+                                                    id="trade"
+                                                    placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți numărul de înregistrare la registrul comerțului' : 'Enter trade register registration number' }}"
+                                                    name="s-trade" value="{{ old('s-trade') }}">
+                                                @error('s-trade')
+                                                    <div class="invalid-feedback text-danger">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+
+                                        </div>
+                       
 
                                     <input type="hidden" name="service_id" value="{{ request('id') }}">
 
@@ -151,19 +221,21 @@
                                 <form class="card-body" action="/checkout/netopia" method="post">
                                     @csrf
                                     @auth
-                                        <p class="form-label"><i class="ri-information-line align-bottom ms-2"></i>
+                                        {{-- <p class="form-label"><i class="ri-information-line align-bottom ms-2"></i>
                                             {{ session()->get('lang') === 'ro' ? 'Finalizați plata pentru a vă confirma comanda' : 'Complete payment to confirm your order' }}
-                                        </p>
+                                        </p> --}}
                                     @endauth
+                                    <h4>{{ session()->get('lang') === 'ro' ? 'Informații despre persoană' : 'Person Info' }}</h4>
+                                    <hr>
                                     <div class="row gy-3">
-                                        @guest
+                                        
                                             <div class="col-md-6">
                                                 <label for="name"
                                                     class="form-label">{{ session()->get('lang') === 'ro' ? 'Nume' : 'Name' }}</label>
                                                 <input type="text"
                                                     class="form-control @error('n-name') is-invalid @enderror" id="name"
                                                     placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți numele dvs' : 'Enter your name' }}"
-                                                    name="n-name" value="{{ old('n-name') }}">
+                                                    name="n-name" value="{{ old('n-name') ?? Auth::user()?->name }}">
                                                 @error('n-name')
                                                     <div class="invalid-feedback text-danger">
                                                         {{ $message }}
@@ -185,6 +257,34 @@
                                                     </div>
                                                 @enderror
                                             </div>
+                                            <div class="col-md-6">
+                                                <label for="city"
+                                                    class="form-label">{{ session()->get('lang') === 'ro' ? 'Oraş' : 'City' }}</label>
+                                                <input type="text"
+                                                    class="form-control @error('n-city') is-invalid @enderror"
+                                                    id="city"
+                                                    placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți orașul dvs.' : 'Enter your city' }}"
+                                                    name="n-city" value="{{ old('n-city') ?? Auth::user()?->city }}">
+                                                @error('n-city')
+                                                    <div class="invalid-feedback text-danger">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="country"
+                                                    class="form-label">{{ session()->get('lang') === 'ro' ? 'Ţară' : 'Country' }}</label>
+                                                <input type="text"
+                                                    class="form-control @error('n-country') is-invalid @enderror"
+                                                    id="country"
+                                                    placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți țara dvs.' : 'Enter your country' }}"
+                                                    name="n-country" value="{{ old('n-country') ?? Auth::user()?->country }}">
+                                                @error('n-country')
+                                                    <div class="invalid-feedback text-danger">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
 
                                             <div class="col-md-6">
                                                 <label for="buyers-address"
@@ -193,7 +293,7 @@
                                                     class="form-control @error('n-email') is-invalid @enderror"
                                                     id="buyers-address"
                                                     placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți adresa dvs. de e-mail' : 'Enter your email' }}"
-                                                    name="n-email" value="{{ old('n-email') }}">
+                                                    name="n-email" value="{{ old('n-email') ?? Auth::user()?->email }}">
                                                 @error('n-email')
                                                     <div class="invalid-feedback text-danger">
                                                         {{ $message }}
@@ -208,7 +308,7 @@
                                                     class="form-control @error('n-phone') is-invalid @enderror"
                                                     id="buyers-phone"
                                                     placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți telefonul dvs' : 'Enter your phone' }}"
-                                                    name="n-phone" value="{{ old('n-phone') }}">
+                                                    name="n-phone" value="{{ old('n-phone') ?? Auth::user()?->phone }}">
                                                 @error('n-phone')
                                                     <div class="invalid-feedback text-danger">
                                                         {{ $message }}
@@ -216,8 +316,56 @@
                                                 @enderror
                                             </div>
 
-                                        @endguest
+                                            <h4 class="pt-3">{{ session()->get('lang') === 'ro' ? 'Informații despre firmă/companie' : 'Firm/Company Info' }}</h4>
+                                        <hr>
                                         <div class="row gy-3">
+                                            <div class="col-md-12">
+                                                <label for="company"
+                                                    class="form-label">{{ session()->get('lang') === 'ro' ? 'Numele companiei' : 'Company Name' }}</label>
+                                                <input type="text" class="form-control @error('n-company') is-invalid @enderror"
+                                                    id="company"
+                                                    placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți numele companiei dvs.' : 'Enter your company name' }}"
+                                                    name="n-company" value="{{ old('n-company') }}">
+                                                @error('n-company')
+                                                    <div class="invalid-feedback text-danger">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label for="vat"
+                                                    class="form-label">{{ session()->get('lang') === 'ro' ? 'Cod TVA' : 'VAT Number' }}</label>
+                                                <input type="text"
+                                                    class="form-control @error('n-vat') is-invalid @enderror" id="vat"
+                                                    placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți codul TVA al companiei' : 'Enter company vat number' }}"
+                                                    name="n-vat" value="{{ old('n-vat') }}">
+                                                @error('n-vat')
+                                                    <div class="invalid-feedback text-danger">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="trade"
+                                                    class="form-label">{{ session()->get('lang') === 'ro' ? 'Numărul de înregistrare la Registrul Comerțului' : 'Trade Register registration number' }}</label>
+                                                <input type="text"
+                                                    class="form-control @error('n-trade') is-invalid @enderror"
+                                                    id="trade"
+                                                    placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți numărul de înregistrare la registrul comerțului' : 'Enter trade register registration number' }}"
+                                                    name="n-trade" value="{{ old('n-trade') }}">
+                                                @error('n-trade')
+                                                    <div class="invalid-feedback text-danger">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+
+                                        </div>
+
+                                        <h4 class="pt-3">{{ session()->get('lang') === 'ro' ? 'Informații despre card' : 'Card Info' }}</h4>
+                                        <hr>
+                                        <div class="row">
                                             <div class="col-md-12">
                                                 <label for="cc-name" class="form-label">Name on card</label>
                                                 <input type="text"

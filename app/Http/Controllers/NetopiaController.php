@@ -37,6 +37,8 @@ class NetopiaController extends Controller
             $request->validate([
                 'n-name' => 'required',
                 'n-address' => 'required',
+                'n-city' => 'required',
+                'n-country' => 'required',
                 'n-email' => 'required',
                 'n-phone' => 'required',
             ]);
@@ -66,8 +68,13 @@ class NetopiaController extends Controller
                 'status' => 'unpaid',
                 'name' => $request->input('n-name') ?? Auth::user()->name,
                 'address' => $request->input('n-address'),
+                'city' => $request->input('s-city'),
+                'country' => $request->input('s-country'),
                 'email' => $request->input('n-email') ?? Auth::user()->email,
                 'phone' => $request->input('n-phone') ?? Auth::user()->phone,
+                'vat' => $request->input('vat'),
+                'company' => $request->input('company'),
+                'trade' => $request->input('trade'),
             ]);
 
             OrderItem::create([
