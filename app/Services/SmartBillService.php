@@ -71,13 +71,23 @@ class SmartBillService
         $url = $this->baseUrl . '/invoice';
 
         // try {
-            $response = $this->client->post($url, [
-                'headers' => $this->getHeaders(),
-                'json' => [
-                    'companyVatCode' => $this->companyVatCode,
-                    'invoice' => $invoiceData
-                ],
-                'verify' => base_path('/public/storage/cacert.pem')
+            // $response = $this->client->post($url, [
+            //     'headers' => $this->getHeaders(),
+            //     'json' => [
+            //         'companyVatCode' => $this->companyVatCode,
+            //         'invoice' => $invoiceData
+            //     ],
+            //     'verify' => base_path('/public/storage/cacert.pem')
+            // ]);
+
+            $response = Http::withHeaders($this->getHeaders())->withOptions([
+                'verify' => base_path('/public/storage/cacert.pem') // Make sure the file exists here
+            ])->post($url, [
+                "companyVatCode" => $this->companyVatCode,
+                "seriesName" => "RCON",
+                "client" => $invoiceData['client'],
+                "issueDate" => now()->format('Y-m-d'),
+                "products" => $invoiceData['products'],
             ]);
 
             dd(json_decode($response->getBody()->getContents(), true));

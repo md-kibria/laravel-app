@@ -39,8 +39,8 @@ class InvoiceController extends Controller
                 "email" => "emailclient@domain.ro",
                 "saveToDb" => true
             ],
-            'issueDate' => now()->format('Y-m-d'),
-            'dueDate' => now()->addDays(30)->format('Y-m-d'),
+            // 'issueDate' => now()->format('Y-m-d'),
+            // 'dueDate' => now()->addDays(30)->format('Y-m-d'),
             'products' => [
                 [
                     // 'name' => 'Product 1',
