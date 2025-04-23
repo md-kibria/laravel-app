@@ -70,7 +70,7 @@ class SmartBillService
     {
         $url = $this->baseUrl . '/invoice';
 
-        try {
+        // try {
             $response = $this->client->post($url, [
                 'headers' => $this->getHeaders(),
                 'json' => [
@@ -82,10 +82,10 @@ class SmartBillService
 
             dd(json_decode($response->getBody()->getContents(), true));
             return json_decode($response->getBody()->getContents(), true);
-        } catch (GuzzleException $e) {
-            // Handle exception
-            return ['error' => $e->getMessage()];
-        }
+        // } catch (GuzzleException $e) {
+        //     // Handle exception
+        //     return ['error' => $e->getMessage()];
+        // }
     }
 
     /**
