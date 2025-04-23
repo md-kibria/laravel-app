@@ -75,39 +75,41 @@ class InvoiceController extends Controller
         // dd($response->json());
 
 
-
-        // return base64_encode('office@reshape-clinique.ro:002|a9af36cee6222d5b4178132f2104bbaa');
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Basic ' . base64_encode('office@reshape-clinique.ro:002|a9af36cee6222d5b4178132f2104bbaa'),
+            'Authorization' => 'Basic '. base64_encode(env('SMARTBILL_API_EMAIL') . ':' . env('SMARTBILL_API_TOKEN')),
+            'Content-Type' => 'application/json'
         ])->withOptions([
             'verify' => base_path('/public/storage/cacert.pem') // Make sure the file exists here
-        ])->post('https://ws.smartbill.ro/SBORestApi/api/invoice', [
-            'companyVatCode' => 'RO38395650',
-            'seriesName' => 'FCT', // invoice series
-            'client' => [
-                'name' => 'Client Name',
-                'vatCode' => 'RO38395650',
-                'country' => 'Romania',
-                'city' => 'Bucharest',
-                'county' => 'Bucharest',
-                'address' => 'Strada Exemplu, Nr. 1',
+        ])->post('https://ws.smartbill.ro/SBORO/api/invoice', [
+            "companyVatCode" => "RO38395650",
+            "seriesName" => "RCON",
+            "client" => [
+              "name" => "SC Company SA",
+              "vatCode" => "RO12345678",
+              "isTaxPayer" => true,
+              "address" => "Str. Iasomiei nr 2",
+              "city" => "Cluj-Napoca",
+              "county" => "Cluj-Napoca",
+              "country" => "Romania",
+              "email" => "emailclient@domain.ro",
+              "saveToDb" => true
             ],
-            'products' => [
-                [
-                    'name' => 'Product 1',
-                    'code' => 'P001',
-                    'currency' => 'RON',
-                    'measuringUnitName' => 'buc',
-                    'isTaxIncluded' => true,
-                    'price' => 100,
-                    'quantity' => 1,
-                ]
-            ],
-            'issueDate' => now()->toDateString(),
-            'dueDate' => now()->addDays(7)->toDateString(),
-            'email' => 'client@example.com',
-        ]);
+            "issueDate" => "2023-07-27",
+            "products" => [
+              [
+                "code" => "10",
+                "name" => "Produs 1",
+                "measuringUnitName" => "buc",
+                "currency" => "RON",
+                "quantity" => 1,
+                "price" => 10,
+                "isTaxIncluded" => true,
+                "taxPercentage" => 19,
+                "saveToDb" => false
+              ]
+            ]
+          ]);
 
         if ($response->successful()) {
             return $response->json(); // The invoice details
