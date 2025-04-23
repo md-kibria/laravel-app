@@ -75,6 +75,7 @@ Route::post('/comment/{post}/store', [CommentController::class, 'store']);
 Route::post('/comment/visible/{comment}', [CommentController::class, 'update']);
 
 Route::get('/invoice', [InvoiceController::class, 'createInvoice']);
+Route::get('/invoice/{id}', [InvoiceController::class, 'getInvoice']);
 Route::get('/test-invoice', [InvoiceController::class, 'test']);
 
 // Route::get('/services', [PageController::class, 'services']);

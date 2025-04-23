@@ -79,6 +79,17 @@ class InvoiceController extends Controller
         ]);
     }
 
+    public function getInvoice($id) {
+        $invoice = $this->smartBill->getInvoicePdf('RCON', $id);
+
+        if (isset($invoice['error'])) {
+            return back()->with('error', $invoice['error']);
+        }
+
+        dd($invoice);
+        return view('invoice.show', compact('invoice'));
+    }
+
     public function test()
     {
         // $result = $this->smartBill->testConnection4();
