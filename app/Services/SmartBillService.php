@@ -71,27 +71,74 @@ class SmartBillService
         $url = $this->baseUrl . '/invoice';
 
         // try {
-            // $response = $this->client->post($url, [
-            //     'headers' => $this->getHeaders(),
-            //     'json' => [
-            //         'companyVatCode' => $this->companyVatCode,
-            //         'invoice' => $invoiceData
-            //     ],
-            //     'verify' => base_path('/public/storage/cacert.pem')
-            // ]);
+        // $response = $this->client->post($url, [
+        //     'headers' => $this->getHeaders(),
+        //     'json' => [
+        //         'companyVatCode' => $this->companyVatCode,
+        //         'invoice' => $invoiceData
+        //     ],
+        //     'verify' => base_path('/public/storage/cacert.pem')
+        // ]);
+        
+        // dd([
+        //     "companyVatCode" => $this->companyVatCode,
+        //     "seriesName" => "RCON",
+        //     "client" => $invoiceData['client'],
+        //     "issueDate" => now()->format('Y-m-d'),
+        //     "products" => $invoiceData['products'],
+        // ]);
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Basic ' . base64_encode(env('SMARTBILL_API_EMAIL') . ':' . env('SMARTBILL_API_TOKEN')),
+            'Content-Type' => 'application/json'
+        ])->withOptions([
+            'verify' => base_path('/public/storage/cacert.pem') // Make sure the file exists here
+        ])->post($url, [
+            "companyVatCode" => $this->companyVatCode,
+            "seriesName" => "RCON",
+            "client" => $invoiceData['client'],
+            "issueDate" => now()->format('Y-m-d'),
+            "products" => $invoiceData['products'],
+        ]);
 
-            $response = Http::withHeaders($this->getHeaders())->withOptions([
-                'verify' => base_path('/public/storage/cacert.pem') // Make sure the file exists here
-            ])->post($url, [
-                "companyVatCode" => $this->companyVatCode,
-                "seriesName" => "RCON",
-                "client" => $invoiceData['client'],
-                "issueDate" => now()->format('Y-m-d'),
-                "products" => $invoiceData['products'],
-            ]);
+        // $response = Http::withHeaders([
+        //     'Accept' => 'application/json',
+        //     'Authorization' => 'Basic ' . base64_encode(env('SMARTBILL_API_EMAIL') . ':' . env('SMARTBILL_API_TOKEN')),
+        //     'Content-Type' => 'application/json'
+        // ])->withOptions([
+        //     'verify' => base_path('/public/storage/cacert.pem') // Make sure the file exists here
+        // ])->post('https://ws.smartbill.ro/SBORO/api/invoice', [
+        //     "companyVatCode" => "RO38395650",
+        //     "seriesName" => "RCON",
+        //     "client" => [
+        //         "name" => "SC Company SA",
+        //         "vatCode" => "RO12345678",
+        //         "isTaxPayer" => true,
+        //         "address" => "Str. Iasomiei nr 2",
+        //         "city" => "Cluj-Napoca",
+        //         "county" => "Cluj-Napoca",
+        //         "country" => "Romania",
+        //         "email" => "emailclient@domain.ro",
+        //         "saveToDb" => true
+        //     ],
+        //     "issueDate" => "2023-07-27",
+        //     "products" => [
+        //         [
+        //             "code" => "10",
+        //             "name" => "Produs 1",
+        //             "measuringUnitName" => "buc",
+        //             "currency" => "RON",
+        //             "quantity" => 1,
+        //             "price" => 10,
+        //             "isTaxIncluded" => true,
+        //             "taxPercentage" => 19,
+        //             "saveToDb" => false
+        //         ]
+        //     ]
+        // ]);
 
-            dd(json_decode($response->getBody()->getContents(), true));
-            return json_decode($response->getBody()->getContents(), true);
+        dd(json_decode($response->getBody()->getContents(), true));
+        return json_decode($response->getBody()->getContents(), true);
         // } catch (GuzzleException $e) {
         //     // Handle exception
         //     return ['error' => $e->getMessage()];
