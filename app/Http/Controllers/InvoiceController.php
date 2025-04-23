@@ -58,67 +58,6 @@ class InvoiceController extends Controller
         } else {
             return $response->body(); // Error message
         }
-
-        $invoiceData = [
-            'client' => [
-                // 'name' => $request->client_name,
-                // 'vatCode' => $request->client_vat_code ?? '',
-                // 'address' => $request->client_address,
-                // 'email' => $request->client_email
-                // other client details
-                // 'name' => 'Mr Dev',
-                // 'vatCode' => '',
-                // 'address' => 'Dhaka, BD',
-                // 'email' => 'mrdev774@gmail.com'
-
-                "name" => "SC Company SA",
-                "vatCode" => "RO12345678",
-                "isTaxPayer" => true,
-                "address" => "Str. Iasomiei nr 2",
-                "city" => "Cluj-Napoca",
-                "county" => "Cluj-Napoca",
-                "country" => "Romania",
-                "email" => "emailclient@domain.ro",
-                "saveToDb" => true
-            ],
-            // 'issueDate' => now()->format('Y-m-d'),
-            // 'dueDate' => now()->addDays(30)->format('Y-m-d'),
-            'products' => [
-                [
-                    // 'name' => 'Product 1',
-                    // 'code' => 'PROD1',
-                    // 'quantity' => 1,
-                    // 'price' => 10,
-                    // 'isTaxIncluded' => false,
-                    // 'taxPercentage' => 0,
-                    // other product details
-                    "code" => "10",
-                    "name" => "Produs 1",
-                    "measuringUnitName" => "buc",
-                    "currency" => "RON",
-                    "quantity" => 1,
-                    "price" => 10,
-                    "isTaxIncluded" => true,
-                    "taxPercentage" => 19,
-                    "saveToDb" => false
-                ]
-            ],
-            // other invoice details
-        ];
-// dd($this->smartBill->createInvoice([]));
-        $result = $this->smartBill->createInvoice($invoiceData);
-
-        dd($result);
-
-        if (isset($result['error'])) {
-            return back()->with('error', $result['error']);
-        }
-
-
-        return redirect()->route('invoice.show', [
-            'series' => $result['series'],
-            'number' => $result['number']
-        ]);
     }
 
     public function getInvoice($id) {
