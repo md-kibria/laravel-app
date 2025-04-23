@@ -38,11 +38,11 @@ class SmartBillService
         }
     }
 
-    protected function getHeaders($type=null)
+    protected function getHeaders()
     {
         return [
             'Content-Type' => 'application/json',
-            'Accept' => $type ?? 'application/json',
+            'Accept' => 'application/json',
             'Authorization' => 'Basic ' . base64_encode($this->email . ':' . $this->apiKey),
         ];
     }
@@ -97,7 +97,11 @@ class SmartBillService
 
         try {
             $response = $this->client->get($url, [
-                'headers' => $this->getHeaders('application/octet-stream'),
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/octet-stream',
+                    'Authorization' => 'Basic ' . base64_encode($this->email . ':' . $this->apiKey),
+                ],
                 'query' => [
                     'companyVatCode' => $this->companyVatCode,
                     'seriesName' => $invoiceSeries,
