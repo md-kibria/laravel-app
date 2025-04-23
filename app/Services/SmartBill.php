@@ -65,12 +65,12 @@ class SmartBillService
     public function getInvoicePdf($invoiceSeries, $invoiceNumber)
     {
         $url = $this->baseUrl . '/invoice/pdf';
-
+        
         try {
             $response = $this->client->get($url, [
                 'headers' => $this->getHeaders(),
                 'query' => [
-                    'companyVatCode' => $this->companyVatCode,
+                    'cif' => $this->companyVatCode,
                     'seriesName' => $invoiceSeries,
                     'number' => $invoiceNumber
                 ]
