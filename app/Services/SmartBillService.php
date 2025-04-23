@@ -21,9 +21,9 @@ class SmartBillService
             'timeout' => 30,
             'http_errors' => true,
         ]);
-        $this->email = 'office@reshape-clinique.ro';
-        $this->apiKey = '002|a9af36cee6222d5b4178132f2104bbaa';
-        $this->companyVatCode = 'RO38395650';
+        $this->email = env('SMARTBILL_API_EMAIL');
+        $this->apiKey = env('SMARTBILL_API_TOKEN');
+        $this->companyVatCode = env('SMARTBILL_COMPANY_VAT');
         $this->baseUrl = 'https://ws.smartbill.ro/SBORO/api';
     }
 
@@ -47,35 +47,7 @@ class SmartBillService
         ];
     }
 
-    public function testConnection4()
-    {
-        $url = $this->baseUrl . '/status';
 
-        try {
-            // $response = $this->client->get($url, [
-            //     'headers' => $this->getHeaders(),
-            //     'verify' => false, // Temporary for testing
-            // ]);
-
-            // return [
-            //     'status' => $response->getStatusCode(),
-            //     'data' => json_decode($response->getBody()->getContents(), true)
-            // ];
-
-
-            $response = Http::withHeaders([
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-                'Authorization' => 'Basic ' . base64_encode($this->email . ':' . $this->apiKey),
-            ])->withOptions([
-                'verify' => base_path('/public/storage/cacert.pem') // Make sure the file exists here
-            ])->get('https://ws.smartbill.ro/SBORO/api/status', []);
-
-            dd($response);
-        } catch (GuzzleException $e) {
-            return $this->handleException($e);
-        }
-    }
 
     protected function handleException(GuzzleException $e)
     {
@@ -108,7 +80,7 @@ class SmartBillService
                 'verify' => base_path('/public/storage/cacert.pem')
             ]);
 
-            // dd($response);
+            dd(json_decode($response->getBody()->getContents(), true));
             return json_decode($response->getBody()->getContents(), true);
         } catch (GuzzleException $e) {
             // Handle exception

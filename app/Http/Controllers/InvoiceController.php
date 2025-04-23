@@ -24,22 +24,41 @@ class InvoiceController extends Controller
                 // 'address' => $request->client_address,
                 // 'email' => $request->client_email
                 // other client details
-                'name' => 'Mr Dev',
-                'vatCode' => '',
-                'address' => 'Dhaka, BD',
-                'email' => 'mrdev774@gmail.com'
+                // 'name' => 'Mr Dev',
+                // 'vatCode' => '',
+                // 'address' => 'Dhaka, BD',
+                // 'email' => 'mrdev774@gmail.com'
+
+                "name" => "SC Company SA",
+                "vatCode" => "RO12345678",
+                "isTaxPayer" => true,
+                "address" => "Str. Iasomiei nr 2",
+                "city" => "Cluj-Napoca",
+                "county" => "Cluj-Napoca",
+                "country" => "Romania",
+                "email" => "emailclient@domain.ro",
+                "saveToDb" => true
             ],
             'issueDate' => now()->format('Y-m-d'),
             'dueDate' => now()->addDays(30)->format('Y-m-d'),
             'products' => [
                 [
-                    'name' => 'Product 1',
-                    'code' => 'PROD1',
-                    'quantity' => 1,
-                    'price' => 100,
-                    'isTaxIncluded' => false,
-                    'taxPercentage' => 0,
+                    // 'name' => 'Product 1',
+                    // 'code' => 'PROD1',
+                    // 'quantity' => 1,
+                    // 'price' => 10,
+                    // 'isTaxIncluded' => false,
+                    // 'taxPercentage' => 0,
                     // other product details
+                    "code" => "10",
+                    "name" => "Produs 1",
+                    "measuringUnitName" => "buc",
+                    "currency" => "RON",
+                    "quantity" => 1,
+                    "price" => 10,
+                    "isTaxIncluded" => true,
+                    "taxPercentage" => 19,
+                    "saveToDb" => false
                 ]
             ],
             // other invoice details
@@ -77,7 +96,7 @@ class InvoiceController extends Controller
 
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Basic '. base64_encode(env('SMARTBILL_API_EMAIL') . ':' . env('SMARTBILL_API_TOKEN')),
+            'Authorization' => 'Basic ' . base64_encode(env('SMARTBILL_API_EMAIL') . ':' . env('SMARTBILL_API_TOKEN')),
             'Content-Type' => 'application/json'
         ])->withOptions([
             'verify' => base_path('/public/storage/cacert.pem') // Make sure the file exists here
@@ -85,31 +104,31 @@ class InvoiceController extends Controller
             "companyVatCode" => "RO38395650",
             "seriesName" => "RCON",
             "client" => [
-              "name" => "SC Company SA",
-              "vatCode" => "RO12345678",
-              "isTaxPayer" => true,
-              "address" => "Str. Iasomiei nr 2",
-              "city" => "Cluj-Napoca",
-              "county" => "Cluj-Napoca",
-              "country" => "Romania",
-              "email" => "emailclient@domain.ro",
-              "saveToDb" => true
+                "name" => "SC Company SA",
+                "vatCode" => "RO12345678",
+                "isTaxPayer" => true,
+                "address" => "Str. Iasomiei nr 2",
+                "city" => "Cluj-Napoca",
+                "county" => "Cluj-Napoca",
+                "country" => "Romania",
+                "email" => "emailclient@domain.ro",
+                "saveToDb" => true
             ],
             "issueDate" => "2023-07-27",
             "products" => [
-              [
-                "code" => "10",
-                "name" => "Produs 1",
-                "measuringUnitName" => "buc",
-                "currency" => "RON",
-                "quantity" => 1,
-                "price" => 10,
-                "isTaxIncluded" => true,
-                "taxPercentage" => 19,
-                "saveToDb" => false
-              ]
+                [
+                    "code" => "10",
+                    "name" => "Produs 1",
+                    "measuringUnitName" => "buc",
+                    "currency" => "RON",
+                    "quantity" => 1,
+                    "price" => 10,
+                    "isTaxIncluded" => true,
+                    "taxPercentage" => 19,
+                    "saveToDb" => false
+                ]
             ]
-          ]);
+        ]);
 
         if ($response->successful()) {
             return $response->json(); // The invoice details

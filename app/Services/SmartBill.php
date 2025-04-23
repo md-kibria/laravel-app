@@ -19,9 +19,9 @@ class SmartBillService
             'timeout' => 30,
             'http_errors' => true,
         ]);
-        $this->email = 'office@reshape-clinique.ro';
-        $this->apiKey = '002|a9af36cee6222d5b4178132f2104bbaa';
-        $this->companyVatCode = 'RO38395650';
+        $this->email = env('SMARTBILL_API_EMAIL');
+        $this->apiKey = env('SMARTBILL_API_TOKEN');
+        $this->companyVatCode = env('SMARTBILL_COMPANY_VAT');
         $this->baseUrl = 'https://ws.smartbill.ro/SBORO/api';
     }
 
