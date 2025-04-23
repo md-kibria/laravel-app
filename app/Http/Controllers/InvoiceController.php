@@ -53,8 +53,12 @@ class InvoiceController extends Controller
             ]
         ]);
 
-        dd($response);
-        
+        if ($response->successful()) {
+            return $response->json(); // The invoice details
+        } else {
+            return $response->body(); // Error message
+        }
+
         $invoiceData = [
             'client' => [
                 // 'name' => $request->client_name,
