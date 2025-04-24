@@ -187,7 +187,7 @@ class OrderController extends Controller
                     ]
                 ]
             ]);
-            dd($response);
+            dd($response->json());
             if ($response->successful()) {
                 $res = $response->json(); // The invoice details
                 dd($res);
