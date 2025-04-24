@@ -120,7 +120,7 @@ class OrderController extends Controller
         // using Stripe webhooks for production
         if ($order->status == 'unpaid') {
             // Update order status
-            // $order->update(['status' => 'paid']);
+            $order->update(['status' => 'paid']);
             
             $client = [
                 "name" => $order->name,
@@ -179,7 +179,6 @@ class OrderController extends Controller
                     'series' => $res['series'],
                     'number' => $res['number']
                 ]);
-                dd($res['series'], $res['number']);
             }
 
             Mail::to($order->email ?? $order->user->email)->send(new OrderPlacedMail($order));
