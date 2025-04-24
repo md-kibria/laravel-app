@@ -162,14 +162,15 @@ class OrderController extends Controller
                 "companyVatCode" => env('SMARTBILL_COMPANY_VAT'),
                 "seriesName" => "RCON",
                 "client" => [
-                    "name" => $order->name,
-                    "vatCode" => $order->vat,
-                    "address" => $order->address,
-                    "city" => $order->city,
-                    "county" => $order->city,
-                    "country" => $order->country,
-                    "email" => $order->email,
-                    "saveToDb" => true
+                    "name" => "SC Company SA",
+                "vatCode" => "RO12345678",
+                "isTaxPayer" => true,
+                "address" => "Str. Iasomiei nr 2",
+                "city" => "Cluj-Napoca",
+                "county" => "Cluj-Napoca",
+                "country" => "Romania",
+                "email" => "emailclient@domain.ro",
+                "saveToDb" => true
                 ],
                 "issueDate" => $order->created_at,
                 "products" => $items
