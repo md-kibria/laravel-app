@@ -382,7 +382,7 @@
 
             <div class="button-container">
                 <a href="/invoice/{{ $order->id }}" class="invoice-button">
-                    {{ session()->get('lang') === 'ro' ? 'Download Invoice' : 'Download Invoice' }}
+                    {{ session()->get('lang') === 'ro' ? 'Factura' : 'Invoice' }}
                 </a>
             </div>
 
