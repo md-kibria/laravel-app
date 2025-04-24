@@ -163,17 +163,29 @@ class OrderController extends Controller
                 "seriesName" => "RCON",
                 "client" => [
                     "name" => "SC Company SA",
-                "vatCode" => "RO12345678",
-                "isTaxPayer" => true,
-                "address" => "Str. Iasomiei nr 2",
-                "city" => "Cluj-Napoca",
-                "county" => "Cluj-Napoca",
-                "country" => "Romania",
-                "email" => "emailclient@domain.ro",
-                "saveToDb" => true
+                    "vatCode" => "RO12345678",
+                    "isTaxPayer" => true,
+                    "address" => "Str. Iasomiei nr 2",
+                    "city" => "Cluj-Napoca",
+                    "county" => "Cluj-Napoca",
+                    "country" => "Romania",
+                    "email" => "emailclient@domain.ro",
+                    "saveToDb" => true
                 ],
                 "issueDate" => $order->created_at,
-                "products" => $items
+                "products" => [
+                    [
+                        "code" => "10",
+                        "name" => "Produs 1",
+                        "measuringUnitName" => "buc",
+                        "currency" => "RON",
+                        "quantity" => 1,
+                        "price" => 10,
+                        "isTaxIncluded" => true,
+                        "taxPercentage" => 19,
+                        "saveToDb" => false
+                    ]
+                ]
             ]);
             dd($response);
             if ($response->successful()) {
