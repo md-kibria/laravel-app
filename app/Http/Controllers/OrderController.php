@@ -121,7 +121,21 @@ class OrderController extends Controller
         if ($order->status == 'unpaid') {
             // Update order status
             // $order->update(['status' => 'paid']);
+            $client = [
+                "name" => $order->name,
+                "address" => $order->address,
+                "city" => $order->city,
+                "county" => $order->city,
+                "country" => $order->country,
+                "email" => $order->email,
+                "phone" => $order->phone,
+                "saveToDb" => true
+            ];
 
+            if($order->vat) {
+                $client['vatCode'] = $order->vat;
+            }
+            
             $items = [];
             // dd(["name" => $order->name,
             //         "vatCode" => $order->vat,
@@ -161,16 +175,7 @@ class OrderController extends Controller
             ])->post('https://ws.smartbill.ro/SBORO/api/invoice', [
                 "companyVatCode" => env('SMARTBILL_COMPANY_VAT'),
                 "seriesName" => "RCON",
-                "client" => [
-                    "name" => $order->name,
-                    "vatCode" => $order->vat,
-                    "address" => $order->address,
-                    "city" => $order->city,
-                    "county" => $order->city,
-                    "country" => $order->country,
-                    "email" => $order->email,
-                    "saveToDb" => true
-                ],
+                "client" => $client,
                 "issueDate" => $order->created_at,
                 "products" => $items
             ]);
