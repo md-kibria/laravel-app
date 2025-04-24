@@ -90,7 +90,7 @@
                                         <div class="card-body">
 
                                             <div class="d-flex mb-4">
-                                                <h6 class="fs-16 text-decoration-underline flex-grow-1 mb-0">Personal Info
+                                                <h6 class="fs-16 text-decoration-underline flex-grow-1 mb-0">{{ session()->get('lang') === 'ro' ? 'Date personale' : 'Personal Details' }}
                                                 </h6>
                                             </div>
 
@@ -99,7 +99,7 @@
                                                     <tbody>
                                                         <tr>
                                                             <td>
-                                                                Customer Name
+                                                                {{ session()->get('lang') === 'ro' ? 'Numele clientului' : 'Customer Name' }}
                                                             </td>
                                                             <td class="fw-medium">
                                                                 {{ $user->name }}
@@ -107,7 +107,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                Mobile / Phone Number
+                                                                {{ session()->get('lang') === 'ro' ? 'Număr de telefon mobil' : 'Mobile / Phone Number' }}
                                                             </td>
                                                             <td class="fw-medium">
                                                                 {{ $user->phone ?? 'Null' }}
@@ -115,7 +115,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                Email Address
+                                                                {{ session()->get('lang') === 'ro' ? 'Adresa de e-mail' : 'Email Address' }}
                                                             </td>
                                                             <td class="fw-medium">
                                                                 {{ $user->email ?? 'null' }}
@@ -123,7 +123,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                Location
+                                                                {{ session()->get('lang') === 'ro' ? 'Locaţie' : 'Location' }}
                                                             </td>
                                                             <td class="fw-medium">
                                                                 {{ $user->city ?? 'null' }},
@@ -132,7 +132,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                Since Member
+                                                                {{ session()->get('lang') === 'ro' ? 'Întrucât membru' : 'Since Member' }}
                                                             </td>
                                                             <td class="fw-medium">
                                                                 {{ \Carbon\Carbon::parse($user->created_at)->toFormattedDateString() }}
@@ -218,7 +218,7 @@
                                                 @csrf
                                                 <div class="row">
                                                     <div class="col-lg-12">
-                                                        <h5 class="fs-16 text-decoration-underline mb-4">Personal Details
+                                                        <h5 class="fs-16 text-decoration-underline mb-4">{{ session()->get('lang') === 'ro' ? 'Date personale' : 'Personal Details' }}
                                                         </h5>
                                                     </div>
                                                     <div class="col-lg-6">

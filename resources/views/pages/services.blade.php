@@ -178,7 +178,12 @@
                                                 {{-- @endif --}}
                                             </div>
                                             <div class="tn mt-3">
-                                                <livewire:add-to-cart :service="$service" />
+                                                {{-- <livewire:add-to-cart :service="$service" /> --}}
+
+                                                <a href="/{{ $service->slug }}" class="btn btn-primary btn-hover w-100 add-btn" >
+                                                    <i class="mdi mdi-cart me-1"></i>
+                                                    {{ session()->get('lang') === 'ro' ? 'Detalii despre serviciu' : 'Service Details' }}
+                                                </a>
                                             </div>
                                         </div>
                                     </div>

@@ -40,19 +40,24 @@
                     <div class="ecommerce-home bg-primary-subtle"
                         style="background-image: url('{{ $header->image ? asset('/storage/' . $header->image) : '' }}');">
                         <div class="container">
-                            <div class="row bg-success-subtle-custom py-5" style="border-top-right-radius: 200px;border-bottom-left-radius: 200px;">
+                            <div class="row bg-success-subtle-custom py-5"
+                                style="border-top-right-radius: 200px;border-bottom-left-radius: 200px;">
                                 {{-- <div class="col-lg-7"> --}}
                                 <div class="col-lg-12 px-2 px-md-5">
-                                    <div class="d-flex" style="align-items: center; justify-content: center; flex-direction: column">
+                                    <div class="d-flex"
+                                        style="align-items: center; justify-content: center; flex-direction: column">
                                         <p class="fs-15 fw-semibold text-uppercase text-center text-md-start"><i
                                                 class="bi bi-lightning-charge-fill text-success align-bottom me-1"></i>
                                             {{ $header->getTranslation('sub_title', session()->get('lang')) }}</p>
-                                        <h1 class="display-3 fw-semibold text-capitalize lh-base text-center text-md-start" style="font-size: 70px;">
+                                        <h1 class="display-3 fw-semibold text-capitalize lh-base text-center text-md-start"
+                                            style="font-size: 70px;">
                                             {{ $header->getTranslation('title', session()->get('lang')) }}</h1>
                                         <p class="text-center text-md-center fs-16" style="color: rgb(99, 99, 99)">
                                             {{ $header->getTranslation('description', session()->get('lang')) }}</p>
-                                        <a href="/services" class="btn btn-success btn-hover mt-4 text-center text-md-start">
-                                            <i class="ph-shopping-cart align-middle me-1"></i> {{ session()->get('lang') === 'ro' ? 'Serviciile noastre' : 'Our Services' }}
+                                        <a href="/services"
+                                            class="btn btn-success btn-hover mt-4 text-center text-md-start">
+                                            <i class="ph-shopping-cart align-middle me-1"></i>
+                                            {{ session()->get('lang') === 'ro' ? 'Serviciile noastre' : 'Our Services' }}
                                         </a>
                                     </div>
                                 </div>
@@ -93,7 +98,8 @@
                     @if ($item->status === 'show')
                         <div class="col-lg-6 my-2">
                             <a href="{{ $item->link }}" aria-label="Promotion Link"
-                                class="product-banner-1 mt-4 mt-lg-0 rounded overflow-hidden position-relative d-block h-100" style="min-height: 300px;">
+                                class="product-banner-1 mt-4 mt-lg-0 rounded overflow-hidden position-relative d-block h-100"
+                                style="min-height: 300px;">
                                 <img src="{{ $item->image ? asset('/storage/' . $item->image) : '' }}"
                                     class="img-fluid rounded h-100" alt="">
                                 <div class="bg-overlay blue"></div>
@@ -134,8 +140,10 @@
                         </div>
 
                         <div class="mt-4 pt-2 d-flex gap-2">
-                            <a href="/services" class="btn btn-primary w-md btn-hover">{{ session()->get('lang') === 'ro' ? 'Obțineți servicii' : 'Get Service' }}</a>
-                            <a href="/about" class="btn btn-danger w-md btn-hover" aria-label="About Page">{{ session()->get('lang') === 'ro' ? 'Citeşte mai mult' : 'Read More' }}</a>
+                            <a href="/services"
+                                class="btn btn-primary w-md btn-hover">{{ session()->get('lang') === 'ro' ? 'Obțineți servicii' : 'Get Service' }}</a>
+                            <a href="/about" class="btn btn-danger w-md btn-hover"
+                                aria-label="About Page">{{ session()->get('lang') === 'ro' ? 'Citeşte mai mult' : 'Read More' }}</a>
                         </div>
                     </div>
                 </div>
@@ -176,8 +184,10 @@
                         </div>
 
                         <div class="mt-4 pt-2 d-flex gap-2">
-                            <a href="/contact" class="btn btn-primary w-md btn-hover">{{ session()->get('lang') === 'ro' ? 'Contactați acum' : 'Contact Now' }}</a>
-                            <a href="/about" class="btn btn-danger w-md btn-hover" aria-label="About Page">{{ session()->get('lang') === 'ro' ? 'Citeşte mai mult' : 'Read More' }}</a>
+                            <a href="/contact"
+                                class="btn btn-primary w-md btn-hover">{{ session()->get('lang') === 'ro' ? 'Contactați acum' : 'Contact Now' }}</a>
+                            <a href="/about" class="btn btn-danger w-md btn-hover"
+                                aria-label="About Page">{{ session()->get('lang') === 'ro' ? 'Citeşte mai mult' : 'Read More' }}</a>
                         </div>
                     </div>
                 </div>
@@ -192,7 +202,8 @@
                     <div class="text-center">
                         {{-- {{dd($section_tilte)}} --}}
                         <h3 class="mb-3">{{ $section_tilte[0]->getTranslation('title', session()->get('lang')) }}</h3>
-                        <p class="text-muted fs-15">{{ $section_tilte[0]->getTranslation('description', session()->get('lang')) }}</p>
+                        <p class="text-muted fs-15">
+                            {{ $section_tilte[0]->getTranslation('description', session()->get('lang')) }}</p>
                     </div>
                 </div>
                 <!--end col-->
@@ -228,18 +239,26 @@
                                                         <i class="bi bi-star-fill text-warning align-bottom"></i></span>
                                                     @if ($service->discounted_price > 0)
                                                         <h5 class="mb-0">
-                                                            {{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }} lei
-                                                            <span
-                                                                class="text-muted fs-12"><del>{{ number_format($service->price, 2) }} lei</del></span>
+                                                            {{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }}
+                                                            lei
+                                                            <span class="text-muted fs-12"><del>{{ number_format($service->price, 2) }}
+                                                                    lei</del></span>
                                                         </h5>
                                                     @else
                                                         <h5 class="mb-0">
-                                                            {{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }} lei
+                                                            {{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }}
+                                                            lei
                                                         </h5>
                                                     @endif
                                                 </div>
                                                 <div class="mt-3">
-                                                    <livewire:add-to-cart :service="$service" />
+                                                    {{-- <livewire:add-to-cart :service="$service" /> --}}
+
+                                                    <a href="/{{ $service->slug }}" class="btn btn-primary btn-hover w-100 add-btn" >
+                                                        <i class="mdi mdi-cart me-1"></i>
+                                                        {{ session()->get('lang') === 'ro' ? 'Detalii despre serviciu' : 'Service Details' }}
+                                                    </a>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -262,7 +281,8 @@
                 <div class="col-lg-7">
                     <div class="text-center">
                         <h3 class="mb-3">{{ $section_tilte[1]->getTranslation('title', session()->get('lang')) }}</h3>
-                        <p class="text-muted fs-15">{{ $section_tilte[1]->getTranslation('description', session()->get('lang')) }}</p>
+                        <p class="text-muted fs-15">
+                            {{ $section_tilte[1]->getTranslation('description', session()->get('lang')) }}</p>
                     </div>
                 </div>
                 <!--end col-->
@@ -310,7 +330,8 @@
                 <div class="col-lg-7">
                     <div class="text-center">
                         <h3 class="mb-3">{{ $section_tilte[2]->getTranslation('title', session()->get('lang')) }}</h3>
-                        <p class="text-muted fs-15">{{ $section_tilte[2]->getTranslation('description', session()->get('lang')) }}</p>
+                        <p class="text-muted fs-15">
+                            {{ $section_tilte[2]->getTranslation('description', session()->get('lang')) }}</p>
                     </div>
                 </div>
             </div>
@@ -319,7 +340,7 @@
                 @foreach ($blogs as $post)
                     <div class="col-lg-4">
                         <div class="card overflow-hidden">
-                            <div class="bg-dark-subtle"  style="min-height: 200px;">
+                            <div class="bg-dark-subtle" style="min-height: 200px;">
                                 <img src="{{ asset('/storage/' . $post->thumbnail) }}" class="img-fluid" alt="">
                             </div>
                             <div class="card-body">
@@ -352,8 +373,9 @@
             </div>
 
             <div class="mt-4 text-center">
-                <a href="/blogs" class="btn btn-soft-primary btn-hover">{{ session()->get('lang') === 'ro' ? 'Vezi mai multe articole' : 'View More Articles' }} <i
-                        class="bi bi-arrow-right ms-2"></i></a>
+                <a href="/blogs"
+                    class="btn btn-soft-primary btn-hover">{{ session()->get('lang') === 'ro' ? 'Vezi mai multe articole' : 'View More Articles' }}
+                    <i class="bi bi-arrow-right ms-2"></i></a>
             </div>
         </div>
     </section>
@@ -366,7 +388,8 @@
                 <div class="col-lg-7">
                     <div class="text-center">
                         <h3 class="mb-3">{{ $section_tilte[3]->getTranslation('title', session()->get('lang')) }}</h3>
-                        <p class="text-muted fs-15">{{ $section_tilte[3]->getTranslation('description', session()->get('lang')) }}</p>
+                        <p class="text-muted fs-15">
+                            {{ $section_tilte[3]->getTranslation('description', session()->get('lang')) }}</p>
                     </div>
                 </div>
             </div>
@@ -377,7 +400,8 @@
                 @foreach ($instas as $item)
                     <div class="col">
                         <div class="insta-img">
-                            <a href="{{ $item->link }}" class="stretched-link" target="_blank" aria-label="Instagram Link">
+                            <a href="{{ $item->link }}" class="stretched-link" target="_blank"
+                                aria-label="Instagram Link">
                                 <img src="@if ($item->image) {{ asset('/storage/' . $item->image) }} @else {{ URL::asset('build/images/ecommerce/headphone.png') }} @endif"
                                     class="img-fluid" alt="">
                                 <i class="bi bi-instagram"></i>
