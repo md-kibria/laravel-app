@@ -144,7 +144,7 @@ class InvoiceController extends Controller
         $response = Http::withHeaders([
             'Accept' => 'application/octet-stream',
             'Authorization' => 'Basic ' . base64_encode(env('SMARTBILL_API_EMAIL') . ':' . env('SMARTBILL_API_TOKEN')),
-            'Content-Type' => 'application/json'
+            'Content-Type' => 'application/octet-stream'
         ])->withOptions([
             'verify' => base_path('/public/storage/cacert.pem') // Make sure the file exists here
         ])->post('https://ws.smartbill.ro/SBORO/api/invoice', [
@@ -153,7 +153,7 @@ class InvoiceController extends Controller
             'number' => '0641'
         ]);
 
-        dd($response);
+        return $response;
         return $response->getBody()->getContents();
     }
 
