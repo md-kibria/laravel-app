@@ -141,19 +141,38 @@ class InvoiceController extends Controller
         //     ]
         // ]);
 
+        // $response = Http::withHeaders([
+        //     'Accept' => 'application/octet-stream',
+        //     'Authorization' => 'Basic ' . base64_encode(env('SMARTBILL_API_EMAIL') . ':' . env('SMARTBILL_API_TOKEN')),
+        // ])->withOptions([
+        //     'verify' => base_path('/public/storage/cacert.pem') // Make sure the file exists here
+        // ])->get('https://ws.smartbill.ro/SBORO/api/invoice/pdf', [
+        //     'cif' => env('SMARTBILL_COMPANY_VAT'),
+        //     'seriesName' => 'RCON',
+        //     'number' => '0641'
+        // ]);
+
+        // return $response;
+        // return $response->getBody()->getContents();
+
         $response = Http::withHeaders([
             'Accept' => 'application/octet-stream',
             'Authorization' => 'Basic ' . base64_encode(env('SMARTBILL_API_EMAIL') . ':' . env('SMARTBILL_API_TOKEN')),
         ])->withOptions([
-            'verify' => base_path('/public/storage/cacert.pem') // Make sure the file exists here
+            'verify' => base_path('public/storage/cacert.pem')
         ])->get('https://ws.smartbill.ro/SBORO/api/invoice/pdf', [
             'cif' => env('SMARTBILL_COMPANY_VAT'),
             'seriesName' => 'RCON',
             'number' => '0641'
         ]);
-
-        return $response;
-        return $response->getBody()->getContents();
+    
+        if ($response->successful()) {
+            return response($response->body(), 200)
+                ->header('Content-Type', 'application/pdf')
+                ->header('Content-Disposition', 'inline; filename="invoice.pdf"');
+        }
+    
+        return response('Failed to fetch PDF', 500);
     }
 
     public function test()
