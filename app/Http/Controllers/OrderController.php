@@ -132,21 +132,21 @@ class OrderController extends Controller
             //         "email" => $order->email,
             //         "saveToDb" => true]);
 
-            // foreach ($order->items as $item) {
-            //     $itemData = [
-            //         "code" => $item->id,
-            //         "name" => $item->service->name,
-            //         "measuringUnitName" => "buc",
-            //         "currency" => "RON",
-            //         "quantity" => $item->quantity,
-            //         "price" => json_decode($item->price)->price,
-            //         // "isTaxIncluded" => true,
-            //         // "taxPercentage" => 0,
-            //         "saveToDb" => false
-            //     ];
+            foreach ($order->items as $item) {
+                $itemData = [
+                    "code" => (string)$item->id,
+                    "name" => $item->service->name,
+                    "measuringUnitName" => "buc",
+                    "currency" => "RON",
+                    "quantity" => $item->quantity,
+                    "price" => json_decode($item->price)->price,
+                    // "isTaxIncluded" => true,
+                    // "taxPercentage" => 0,
+                    "saveToDb" => false
+                ];
 
-            //     $items[] = $itemData;
-            // }
+                $items[] = $itemData;
+            }
             // dd($items);
             // Clear the cart
             Cookie::queue('cart', json_encode([]), 0);
@@ -173,19 +173,7 @@ class OrderController extends Controller
                     "saveToDb" => true
                 ],
                 "issueDate" => $order->created_at,
-                "products" => [
-                    [
-                        "code" => "10",
-                        "name" => "Produs 1",
-                        "measuringUnitName" => "buc",
-                        "currency" => "RON",
-                        "quantity" => 1,
-                        "price" => 10,
-                        "isTaxIncluded" => true,
-                        "taxPercentage" => 19,
-                        "saveToDb" => false
-                    ]
-                ]
+                "products" => $items
             ]);
             dd($response->json());
             if ($response->successful()) {
