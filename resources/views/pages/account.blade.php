@@ -17,14 +17,14 @@
                 <div class="col-lg-12">
                     <div class="pt-3">
                         <div class="mt-n5 d-flex gap-3 flex-wrap align-items-end">
-                            <img src="@if($user->image) {{ asset('/storage/' . $user->image) }} @else {{ URL::asset('img/default.png') }}@endif" alt=""
-                                class="avatar-xl rounded p-1 bg-light mt-n3">
+                            <img src="@if ($user->image) {{ asset('/storage/' . $user->image) }} @else {{ URL::asset('img/default.png') }} @endif"
+                                alt="" class="avatar-xl rounded p-1 bg-light mt-n3">
                             <div>
                                 <h5 class="fs-18">{{ $user->name }}</h5>
-                                @if($user->city || $user->country)
-                                <div class="text-muted">
-                                    <i class="bi bi-geo-alt"></i> {{$user->city}}, {{$user->country}}
-                                </div>
+                                @if ($user->city || $user->country)
+                                    <div class="text-muted">
+                                        <i class="bi bi-geo-alt"></i> {{ $user->city }}, {{ $user->country }}
+                                    </div>
                                 @endif
                             </div>
                             <div class="ms-md-auto">
@@ -51,25 +51,30 @@
                                 <li class="nav-item " role="presentation">
                                     <a class="nav-link fs-15 active" data-bs-toggle="tab" href="#custom-v-pills-profile"
                                         role="tab" aria-selected="true"><i
-                                            class="bi bi-person-circle align-middle me-1"></i> {{ session()->get('lang') === 'ro' ? 'Informații despre cont' : 'Account Info' }}</a>
+                                            class="bi bi-person-circle align-middle me-1"></i>
+                                        {{ session()->get('lang') === 'ro' ? 'Informații despre cont' : 'Account Info' }}</a>
                                 </li>
                                 <li class="nav-item " role="presentation">
                                     <a class="nav-link fs-15" data-bs-toggle="tab" href="#custom-v-pills-order"
                                         role="tab" aria-selected="false" tabindex="-1"><i
-                                            class="bi bi-bag align-middle me-1"></i> {{ session()->get('lang') === 'ro' ? 'Comenzi' : 'Orders' }}</a>
+                                            class="bi bi-bag align-middle me-1"></i>
+                                        {{ session()->get('lang') === 'ro' ? 'Comenzi' : 'Orders' }}</a>
                                 </li>
                                 <li class="nav-item " role="presentation">
                                     <a class="nav-link fs-15" data-bs-toggle="tab" href="#custom-v-pills-setting"
                                         role="tab" aria-selected="false" tabindex="-1"><i
-                                            class="bi bi-gear align-middle me-1"></i> {{ session()->get('lang') === 'ro' ? 'Setări' : 'Settings' }}</a>
+                                            class="bi bi-gear align-middle me-1"></i>
+                                        {{ session()->get('lang') === 'ro' ? 'Setări' : 'Settings' }}</a>
                                 </li>
                                 <li class="nav-item " role="presentation">
                                     <a class="nav-link fs-15" href="/account/password"><i
-                                            class="bi bi-key align-middle me-1"></i> {{ session()->get('lang') === 'ro' ? 'Resetează parola' : 'Reset Password' }}</a>
+                                            class="bi bi-key align-middle me-1"></i>
+                                        {{ session()->get('lang') === 'ro' ? 'Resetează parola' : 'Reset Password' }}</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link fs-15" href="/logout"><i
-                                            class="bi bi-box-arrow-right align-middle me-1"></i> {{ session()->get('lang') === 'ro' ? 'Deconectare' : 'Logout' }}</a>
+                                            class="bi bi-box-arrow-right align-middle me-1"></i>
+                                        {{ session()->get('lang') === 'ro' ? 'Deconectare' : 'Logout' }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -121,7 +126,8 @@
                                                                 Location
                                                             </td>
                                                             <td class="fw-medium">
-                                                                {{$user->city ?? 'null'}}, {{$user->country ?? 'null'}}
+                                                                {{ $user->city ?? 'null' }},
+                                                                {{ $user->country ?? 'null' }}
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -136,7 +142,7 @@
                                                 </table>
                                             </div>
 
-                                          
+
                                         </div>
                                     </div>
                                     <!--end card-->
@@ -144,7 +150,7 @@
                                 <!--end col-->
                             </div>
                         </div>
-                        
+
                         <!--end tab-pane-->
                         <div class="tab-pane fade" id="custom-v-pills-order" role="tabpanel">
                             <div class="card">
@@ -163,30 +169,35 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($orders as $order)
-                                                <tr>
-                                                    <td>
-                                                        <a href="#" class="text-body">#{{ $order->id }}</a>
-                                                    </td>
-                                                    <td>
-                                                        @foreach ($order->items as $item)
-                                                        <a href="/{{$item->service->slug}}">
-                                                            <p class="mb-0 fs-13">{{ $item->service->getTranslation('name', session()->get('lang')) }}</p>
-                                                        </a>
-                                                            
-                                                        @endforeach
-                                                    </td>
-                                                    <td><span class="text-muted">{{ \Carbon\Carbon::parse($order->created_at)->toFormattedDateString() }}</span></td>
-                                                    <td class="fw-medium">{{ number_format($order->total, 2) }} lei</td>
-                                                    <td>
-                                                        <span class="badge @if($order->status == 'paid') bg-success-subtle text-success @else bg-danger-subtle text-danger @endif text-uppercase">{{$order->status}}</span>
-                                                    </td>
-                                                    <td>
-                                                        <a href="/invoice/{{ $order->id }}" target="_blank" data-bs-toggle="modal"
-                                                            class="btn btn-secondary btn-sm">Invoice</a>
-                                                        {{-- <a href="#invoiceModal-{{ $order->id }}" data-bs-toggle="modal"
+                                                    <tr>
+                                                        <td>
+                                                            <a href="#" class="text-body">#{{ $order->id }}</a>
+                                                        </td>
+                                                        <td>
+                                                            @foreach ($order->items as $item)
+                                                                <a href="/{{ $item->service->slug }}">
+                                                                    <p class="mb-0 fs-13">
+                                                                        {{ $item->service->getTranslation('name', session()->get('lang')) }}
+                                                                    </p>
+                                                                </a>
+                                                            @endforeach
+                                                        </td>
+                                                        <td><span
+                                                                class="text-muted">{{ \Carbon\Carbon::parse($order->created_at)->toFormattedDateString() }}</span>
+                                                        </td>
+                                                        <td class="fw-medium">{{ number_format($order->total, 2) }} lei
+                                                        </td>
+                                                        <td>
+                                                            <span
+                                                                class="badge @if ($order->status == 'paid') bg-success-subtle text-success @else bg-danger-subtle text-danger @endif text-uppercase">{{ $order->status }}</span>
+                                                        </td>
+                                                        <td>
+                                                            {{-- <a href="#invoiceModal-{{ $order->id }}" data-bs-toggle="modal"
                                                             class="btn btn-secondary btn-sm">Invoice</a> --}}
-                                                    </td>
-                                                </tr>
+                                                            <a href="/invoice/{{ $order->id }}" target="_blank"
+                                                                class="btn btn-secondary btn-sm">Invoice</a>
+                                                        </td>
+                                                    </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
@@ -222,7 +233,8 @@
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="image" class="form-label">Image</label>
-                                                            <input type="file" class="form-control" id="image" name="image">
+                                                            <input type="file" class="form-control" id="image"
+                                                                name="image">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
@@ -242,7 +254,8 @@
                                                             <label for="emailInput" class="form-label">Email
                                                                 Address</label>
                                                             <input type="email" class="form-control" id="emailInput"
-                                                                placeholder="Enter your email" value="{{ $user->email }}" name="email">
+                                                                placeholder="Enter your email"
+                                                                value="{{ $user->email }}" name="email">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
@@ -250,7 +263,8 @@
                                                         <div class="mb-3">
                                                             <label for="cityInput" class="form-label">City</label>
                                                             <input type="text" class="form-control" id="cityInput"
-                                                                placeholder="City" value="{{ $user->city }}" name="city">
+                                                                placeholder="City" value="{{ $user->city }}"
+                                                                name="city">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
@@ -258,7 +272,8 @@
                                                         <div class="mb-3">
                                                             <label for="countryInput" class="form-label">Country</label>
                                                             <input type="text" class="form-control" id="countryInput"
-                                                                placeholder="Country" value="{{ $user->country }}" name="country">
+                                                                placeholder="Country" value="{{ $user->country }}"
+                                                                name="country">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
@@ -267,7 +282,8 @@
                                                             <label for="zipcodeInput" class="form-label">Zip Code</label>
                                                             <input type="text" class="form-control" minlength="5"
                                                                 maxlength="6" id="zipcodeInput"
-                                                                placeholder="Enter zipcode" value="{{ $user->zip }}" name="zip">
+                                                                placeholder="Enter zipcode" value="{{ $user->zip }}"
+                                                                name="zip">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
@@ -275,15 +291,18 @@
                                                         <div class="mb-3 pb-2">
                                                             <label for="exampleFormControlTextarea"
                                                                 class="form-label">Description</label>
-                                                            <textarea class="form-control" id="exampleFormControlTextarea" placeholder="Enter your description" rows="3" name="description">{{ $user->description }}</textarea>
+                                                            <textarea class="form-control" id="exampleFormControlTextarea" placeholder="Enter your description" rows="3"
+                                                                name="description">{{ $user->description }}</textarea>
                                                         </div>
                                                     </div>
                                                     <!--end col-->
                                                 </div>
                                                 <!--end row-->
                                                 <div class="text-sm-end">
-                                                    <button type="submit" class="btn btn-secondary d-block d-sm-inline-block"><i
-                                                            class="ri-edit-box-line align-middle me-2"></i> Update Profile</button>
+                                                    <button type="submit"
+                                                        class="btn btn-secondary d-block d-sm-inline-block"><i
+                                                            class="ri-edit-box-line align-middle me-2"></i> Update
+                                                        Profile</button>
                                                 </div>
                                             </form>
                                             <!--end tab-pane-->
@@ -309,21 +328,21 @@
 
     <!-- Modal -->
     @foreach ($orders as $order)
-    <div class="modal fade" id="invoiceModal-{{ $order->id }}" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-custom-size">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="invoiceModalLabel">Invoice #{{ $order->id }}</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
+        <div class="modal fade" id="invoiceModal-{{ $order->id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-custom-size">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="invoiceModalLabel">Invoice #{{ $order->id }}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
 
-                    <x-invoice orderId="{{ $order->id }}" />
-                    <!--end card-->
+                        <x-invoice orderId="{{ $order->id }}" />
+                        <!--end card-->
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     @endforeach
 @endsection
 @section('scripts')
