@@ -179,14 +179,14 @@ class OrderController extends Controller
                 "issueDate" => $order->created_at,
                 "products" => $items
             ]);
-            dd($response->json());
+           
             if ($response->successful()) {
                 $res = $response->json(); // The invoice details
-                dd($res);
                 $order->update([
                     'series' => $res['series'],
                     'number' => $res['number']
                 ]);
+                dd($res['series'], $res['number']);
             }
 
             Mail::to($order->email ?? $order->user->email)->send(new OrderPlacedMail($order));
