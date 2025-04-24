@@ -121,6 +121,7 @@ class OrderController extends Controller
         if ($order->status == 'unpaid') {
             // Update order status
             // $order->update(['status' => 'paid']);
+            
             $client = [
                 "name" => $order->name,
                 "address" => $order->address,
@@ -137,14 +138,6 @@ class OrderController extends Controller
             }
             
             $items = [];
-            // dd(["name" => $order->name,
-            //         "vatCode" => $order->vat,
-            //         "address" => $order->address,
-            //         "city" => $order->city,
-            //         "county" => $order->city,
-            //         "country" => $order->country,
-            //         "email" => $order->email,
-            //         "saveToDb" => true]);
 
             foreach ($order->items as $item) {
                 $itemData = [
