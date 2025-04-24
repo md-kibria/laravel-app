@@ -256,6 +256,18 @@
         .text-capitalize {
             text-transform: capitalize;
         }
+
+        .invoice-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #38a169; /* Green */
+            color: white !important;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            margin: 20px 0;
+            transition: background-color 0.3s;
+        }
     </style>
 </head>
 
@@ -369,7 +381,9 @@
             </div>
 
             <div class="button-container">
-                <a href="#" class="button button-primary">Download Invoice</a>
+                <a href="/invoice/{{ $order->id }}" class="invoice-button">
+                    {{ session()->get('lang') === 'ro' ? 'Download Invoice' : 'Download Invoice' }}
+                </a>
             </div>
 
             <div class="mt-4">

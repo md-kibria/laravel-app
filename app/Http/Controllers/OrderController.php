@@ -181,7 +181,7 @@ class OrderController extends Controller
                 ]);
             }
 
-            Mail::to($order->email ?? $order->user->email)->send(new OrderPlacedMail($order));
+            Mail::to($order->email ?? $order->user?->email)->send(new OrderPlacedMail($order));
 
             session()->flash('success', 'Payment completed successfully! Your order #' . $order->id . ' has been confirmed.');
         }
