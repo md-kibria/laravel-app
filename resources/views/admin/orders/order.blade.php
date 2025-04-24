@@ -14,7 +14,7 @@
         <div class="col text-end">
             {{-- <a href="#invoiceModal-{{ $order->id }}" data-bs-toggle="modal" type="button" class="btn btn-secondary"><i class="ph-download-simple me-1 align-middle"></i>
                 Invoice</a> --}}
-            <a href="/invoice/{{ $order->id }}" data-bs-toggle="modal" type="button" class="btn btn-secondary"><i class="ph-download-simple me-1 align-middle"></i>
+            <a href="/invoice/{{ $order->id }}" target="_blank" data-bs-toggle="modal" type="button" class="btn btn-secondary"><i class="ph-download-simple me-1 align-middle"></i>
                 Invoice</a>
         </div>
     </div>
