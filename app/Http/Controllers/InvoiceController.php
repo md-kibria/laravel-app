@@ -118,14 +118,43 @@ class InvoiceController extends Controller
     }
 
     public function getInvoice($id) {
-        $invoice = $this->smartBill->getInvoicePdf('RCON', $id);
+        // $invoice = $this->smartBill->getInvoicePdf('RCON', $id);
 
-        if (isset($invoice['error'])) {
-            return back()->with('error', $invoice['error']);
-        }
+        // if (isset($invoice['error'])) {
+        //     return back()->with('error', $invoice['error']);
+        // }
 
-        dd($invoice);
-        return view('invoice.show', compact('invoice'));
+        // dd($invoice);
+        // return view('invoice.show', compact('invoice'));
+
+
+        // $response = $this->client->get($url, [
+        //     'headers' => [
+        //         'Content-Type' => 'application/json',
+        //         'Accept' => 'application/octet-stream',
+        //         'Authorization' => 'Basic ' . base64_encode($this->email . ':' . $this->apiKey),
+        //     ],
+        //     'query' => [
+        //         'cif' => $this->companyVatCode,
+        //         'seriesName' => $invoiceSeries,
+        //         'number' => $invoiceNumber
+        //     ]
+        // ]);
+
+        $response = Http::withHeaders([
+            'Accept' => 'application/octet-stream',
+            'Authorization' => 'Basic ' . base64_encode(env('SMARTBILL_API_EMAIL') . ':' . env('SMARTBILL_API_TOKEN')),
+            'Content-Type' => 'application/json'
+        ])->withOptions([
+            'verify' => base_path('/public/storage/cacert.pem') // Make sure the file exists here
+        ])->post('https://ws.smartbill.ro/SBORO/api/invoice', [
+            'cif' => env('SMARTBILL_COMPANY_VAT'),
+            'seriesName' => 'RCON',
+            'number' => '0641'
+        ]);
+
+        dd($response);
+        return $response->getBody()->getContents();
     }
 
     public function test()
