@@ -369,7 +369,7 @@
             </div>
 
             <div class="button-container">
-                {{-- <a href="#" class="button button-primary">Download Invoice</a> --}}
+                <a href="#" class="button button-primary">Download Invoice</a>
             </div>
 
             <div class="mt-4">

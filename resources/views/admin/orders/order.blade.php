@@ -12,7 +12,9 @@
             <span class="badge badge-pill @if($order->status == 'paid') bg-success-subtle text-success @else bg-danger-subtle text-danger @endif text-uppercase">{{$order->status}}</span>
         </div>
         <div class="col text-end">
-            <a href="#invoiceModal-{{ $order->id }}" data-bs-toggle="modal" type="button" class="btn btn-secondary"><i class="ph-download-simple me-1 align-middle"></i>
+            {{-- <a href="#invoiceModal-{{ $order->id }}" data-bs-toggle="modal" type="button" class="btn btn-secondary"><i class="ph-download-simple me-1 align-middle"></i>
+                Invoice</a> --}}
+            <a href="/invoice/{{ $order->id }}" data-bs-toggle="modal" type="button" class="btn btn-secondary"><i class="ph-download-simple me-1 align-middle"></i>
                 Invoice</a>
         </div>
     </div>

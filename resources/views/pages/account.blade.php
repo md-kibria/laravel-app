@@ -181,8 +181,10 @@
                                                         <span class="badge @if($order->status == 'paid') bg-success-subtle text-success @else bg-danger-subtle text-danger @endif text-uppercase">{{$order->status}}</span>
                                                     </td>
                                                     <td>
-                                                        <a href="#invoiceModal-{{ $order->id }}" data-bs-toggle="modal"
+                                                        <a href="/invoice/{{ $order->id }}" data-bs-toggle="modal"
                                                             class="btn btn-secondary btn-sm">Invoice</a>
+                                                        {{-- <a href="#invoiceModal-{{ $order->id }}" data-bs-toggle="modal"
+                                                            class="btn btn-secondary btn-sm">Invoice</a> --}}
                                                     </td>
                                                 </tr>
                                                 @endforeach
