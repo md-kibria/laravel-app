@@ -147,7 +147,7 @@ class OrderController extends Controller
 
                 $items[] = $itemData;
             }
-            // dd($items);
+            
             // Clear the cart
             Cookie::queue('cart', json_encode([]), 0);
 
@@ -162,14 +162,13 @@ class OrderController extends Controller
                 "companyVatCode" => env('SMARTBILL_COMPANY_VAT'),
                 "seriesName" => "RCON",
                 "client" => [
-                    "name" => "SC Company SA",
-                    "vatCode" => "RO12345678",
-                    "isTaxPayer" => true,
-                    "address" => "Str. Iasomiei nr 2",
-                    "city" => "Cluj-Napoca",
-                    "county" => "Cluj-Napoca",
-                    "country" => "Romania",
-                    "email" => "emailclient@domain.ro",
+                    "name" => $order->name,
+                    "vatCode" => $order->vat,
+                    "address" => $order->address,
+                    "city" => $order->city,
+                    "county" => $order->city,
+                    "country" => $order->country,
+                    "email" => $order->email,
                     "saveToDb" => true
                 ],
                 "issueDate" => $order->created_at,
