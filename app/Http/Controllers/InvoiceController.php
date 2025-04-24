@@ -162,7 +162,7 @@ class InvoiceController extends Controller
             'verify' => base_path('public/storage/cacert.pem')
         ])->get('https://ws.smartbill.ro/SBORO/api/invoice/pdf', [
             'cif' => env('SMARTBILL_COMPANY_VAT'),
-            'seriesName' => 'RCON',
+            'seriesname' => 'RCON',
             'number' => '0641'
         ]);
     
