@@ -120,26 +120,34 @@ class OrderController extends Controller
         // using Stripe webhooks for production
         if ($order->status == 'unpaid') {
             // Update order status
-            $order->update(['status' => 'paid']);
+            // $order->update(['status' => 'paid']);
 
             $items = [];
+            // dd(["name" => $order->name,
+            //         "vatCode" => $order->vat,
+            //         "address" => $order->address,
+            //         "city" => $order->city,
+            //         "county" => $order->city,
+            //         "country" => $order->country,
+            //         "email" => $order->email,
+            //         "saveToDb" => true]);
 
-            foreach ($order->items as $item) {
-                $itemData = [
-                    "code" => $item->id,
-                    "name" => $item->name,
-                    "measuringUnitName" => "buc",
-                    "currency" => "RON",
-                    "quantity" => $item->quantity,
-                    "price" => json_decode($item->price)->price,
-                    // "isTaxIncluded" => true,
-                    // "taxPercentage" => 0,
-                    "saveToDb" => false
-                ];
+            // foreach ($order->items as $item) {
+            //     $itemData = [
+            //         "code" => $item->id,
+            //         "name" => $item->service->name,
+            //         "measuringUnitName" => "buc",
+            //         "currency" => "RON",
+            //         "quantity" => $item->quantity,
+            //         "price" => json_decode($item->price)->price,
+            //         // "isTaxIncluded" => true,
+            //         // "taxPercentage" => 0,
+            //         "saveToDb" => false
+            //     ];
 
-                $items[] = $itemData;
-            }
-
+            //     $items[] = $itemData;
+            // }
+            // dd($items);
             // Clear the cart
             Cookie::queue('cart', json_encode([]), 0);
 
@@ -166,10 +174,10 @@ class OrderController extends Controller
                 "issueDate" => $order->created_at,
                 "products" => $items
             ]);
-
+            dd($response);
             if ($response->successful()) {
                 $res = $response->json(); // The invoice details
-
+                dd($res);
                 $order->update([
                     'series' => $res['series'],
                     'number' => $res['number']
