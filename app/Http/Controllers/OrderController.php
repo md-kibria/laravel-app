@@ -28,7 +28,7 @@ class OrderController extends Controller
             $services = [];
             $total = 0;
             $mainTotal = 0;
-            return view('pages.checkout', compact('services', 'total'));
+            return view('pages.checkout', compact('services', 'total', 'mainTotal'));
         }
 
         function calculatePrice($variations)
