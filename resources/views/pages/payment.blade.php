@@ -106,7 +106,7 @@
 
                                             <div class="col-md-6">
                                                 <label for="vat"
-                                                    class="form-label">{{ session()->get('lang') === 'ro' ? 'Cod TVA' : 'VAT Number' }}</label>
+                                                    class="form-label">{{ session()->get('lang') === 'ro' ? 'CUI' : 'VAT Number' }}</label>
                                                 <input type="text"
                                                     class="form-control @error('s-vat') is-invalid @enderror" id="vat"
                                                     placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți codul TVA al companiei' : 'Enter company vat number' }}"
@@ -183,7 +183,7 @@
 
                                         <div class="col-md-6">
                                             <label for="nid"
-                                                class="form-label">{{ session()->get('lang') === 'ro' ? 'Număr de identificare națională' : 'National ID number' }}</label>
+                                                class="form-label">{{ session()->get('lang') === 'ro' ? 'CNP' : 'National ID number' }}</label>
                                             <input type="text"
                                                 class="form-control @error('s-nid') is-invalid @enderror" id="nid"
                                                 placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți NID-ul' : 'Enter your nid' }}"
@@ -347,7 +347,7 @@
 
                                             <div class="col-md-6">
                                                 <label for="vat"
-                                                    class="form-label">{{ session()->get('lang') === 'ro' ? 'Cod TVA' : 'VAT Number' }}</label>
+                                                    class="form-label">{{ session()->get('lang') === 'ro' ? 'CUI' : 'VAT Number' }}</label>
                                                 <input type="text"
                                                     class="form-control @error('s-vat') is-invalid @enderror"
                                                     id="vat"
@@ -416,7 +416,7 @@
 
                                         <div class="col-md-6">
                                             <label for="nid"
-                                                class="form-label">{{ session()->get('lang') === 'ro' ? 'Număr de identificare națională' : 'National ID number' }}</label>
+                                                class="form-label">{{ session()->get('lang') === 'ro' ? 'CNP' : 'National ID number' }}</label>
                                             <input type="text"
                                                 class="form-control @error('n-nid') is-invalid @enderror" id="nid"
                                                 placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți NID-ul' : 'Enter your nid' }}"
