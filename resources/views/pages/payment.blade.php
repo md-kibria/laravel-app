@@ -44,7 +44,7 @@
                         <li class="nav-item">
                             <a class="nav-link active py-3" data-bs-toggle="tab" href="#credit" role="tab">
                                 <span class="d-block d-sm-none"><i class="ri-bank-card-fill align-bottom"></i></span>
-                                <span class="d-none d-sm-block"> <i class="ri-bank-card-fill align-bottom pe-2"></i>
+                                <span class="d-sm-block"> <i class="ri-bank-card-fill align-bottom pe-2"></i>
                                     Stripe</span>
                             </a>
                         </li>
@@ -52,7 +52,7 @@
                         <li class="nav-item">
                             <a class="nav-link py-3" data-bs-toggle="tab" href="#netopia" role="tab">
                                 <span class="d-block d-sm-none"><i class="ri-wallet-fill align-bottom"></i></span>
-                                <span class="d-none d-sm-block"><i
+                                <span class="d-sm-block"><i
                                         class="ri-wallet-fill align-bottom pe-2"></i>Netopia</span>
                             </a>
                         </li>
