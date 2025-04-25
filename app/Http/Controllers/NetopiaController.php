@@ -72,9 +72,12 @@ class NetopiaController extends Controller
                 'country' => $request->input('s-country'),
                 'email' => $request->input('n-email') ?? Auth::user()->email,
                 'phone' => $request->input('n-phone') ?? Auth::user()->phone,
-                'vat' => $request->input('vat'),
-                'company' => $request->input('company'),
-                'trade' => $request->input('trade'),
+                'vat' => $request->input('s-vat'),
+                'company' => $request->input('s-company'),
+                'trade' => $request->input('s-trade'),
+                'county' => $request->input('s-county'),
+                'nid' => $request->input('s-nid'),
+                'type' => $request->input('s-type'),
             ]);
 
             OrderItem::create([

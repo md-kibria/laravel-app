@@ -20,18 +20,39 @@
     </div>
 
     <div class="row">
-        <div class="col-xxl-3 col-lg-12">
+        <div class="col-xxl-5 col-lg-12">
             <div class="card bg-success bg-opacity-10 border-0">
                 <div class="card-body">
                     <div class="d-flex gap-3">
                         <div class="flex-grow-1">
                             <h6 class="fs-18 mb-3">Customer Info</h6>
-                            <p class="mb-0 fw-medium">{{$order->name ?? $order->user?->name}}</p>
-                            <p class="mb-1">{{$order->email ?? $order->user?->email}}</p>
-                            <p class="mb-0">{{$order->phone ?? $order->user?->phone}}</p>
+                            <p class="mb-0">Name: <span class="fs-17 fw-medium">{{$order->name ?? $order->user?->name}}</span></p>
+                            @if($order->nid)<p class="mb-1">NID: {{$order->nid}}</p>@endif
+                            <p class="mb-1">Email: {{$order->email ?? $order->user?->email}}</p>
+                            <p class="mb-1">Phone: {{$order->phone ?? $order->user?->phone}}</p>
+                            <p class="mb-1">Address: {{$order->address . ', ' . $order->city . ', ' . $order->county . ', ' . $order->country}}</p>
                         </div>
                         <div class="avatar-sm flex-shrink-0">
                             <div class="avatar-title bg-success-subtle text-success rounded fs-3">
+                                <i class="ph-user-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-5 col-lg-12">
+            <div class="card bg-secondary bg-opacity-10 border-0">
+                <div class="card-body">
+                    <div class="d-flex gap-3">
+                        <div class="flex-grow-1">
+                            <h6 class="fs-18 mb-3">Firm/Company Info</h6>
+                            <p class="mb-0">Name: <span class="fs-17 fw-medium">{{$order->company ?? $order->user?->name}}</span></p>
+                            <p class="mb-1">VAT: {{$order->vat}}</p>
+                            <p class="mb-1">Trade: {{$order->trade}}</p>
+                        </div>
+                        <div class="avatar-sm flex-shrink-0">
+                            <div class="avatar-title bg-secondary-subtle text-secondary rounded fs-3">
                                 <i class="ph-user-circle"></i>
                             </div>
                         </div>

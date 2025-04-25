@@ -126,7 +126,7 @@ class OrderController extends Controller
                 "name" => $order->name,
                 "address" => $order->address,
                 "city" => $order->city,
-                "county" => $order->city,
+                "county" => $order->county,
                 "country" => $order->country,
                 "email" => $order->email,
                 "phone" => $order->phone,
