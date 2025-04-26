@@ -213,7 +213,7 @@ class StripeController extends Controller
                         'name' => $item['name'],
                         // You can also add images, descriptions, etc.
                         'images' => [
-                            url($item['thumbnail'])
+                            url($item['thumbnail'] ?? '')
                         ],
                     ],
                     'unit_amount' => $item['price']['price'] * 100, // Price in cents
@@ -221,11 +221,11 @@ class StripeController extends Controller
                 'quantity' => $item['quantity'],
             ];
         }
-
+        // dd(json_encode($lineItems));
         $session = \Stripe\Checkout\Session::create([
             'line_items' => $lineItems,
             'mode' => 'payment',
-            'success_url' => route('success', ['order_id' => $order->id]),
+            'success_url' => route('success', ['order_id' => $order->id, 'type' => 'stripe']) . '&session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => route('payment', ['order_id' => $order->id]),
         ]);
 

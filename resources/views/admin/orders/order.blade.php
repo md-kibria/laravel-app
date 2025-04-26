@@ -20,7 +20,7 @@
     </div>
 
     <div class="row">
-        <div class="col-xxl-5 col-lg-12">
+        <div class="col-xxl-4 col-lg-12">
             <div class="card bg-success bg-opacity-10 border-0">
                 <div class="card-body">
                     <div class="d-flex gap-3">
@@ -41,7 +41,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-xxl-5 col-lg-12">
+
+        @if($order->type === 'firm')
+        <div class="col-xxl-4 col-lg-12">
             <div class="card bg-secondary bg-opacity-10 border-0">
                 <div class="card-body">
                     <div class="d-flex gap-3">
@@ -54,6 +56,27 @@
                         <div class="avatar-sm flex-shrink-0">
                             <div class="avatar-title bg-secondary-subtle text-secondary rounded fs-3">
                                 <i class="ph-user-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+        <div class="col-xxl-4 col-lg-12">
+            <div class="card bg-primary bg-opacity-10 border-0">
+                <div class="card-body">
+                    <div class="d-flex gap-3">
+                        <div class="flex-grow-1">
+                            <h6 class="fs-18 mb-3">Payment Info</h6>
+                            <p class="mb-1">Payment Method: <span class="fs-17 fw-medium text-uppercase">{{$order->method}}</span></p>
+                            <p class="mb-0">Transaction Id: <span class="">{{$order->transactionId }}</span></p>
+                            <p class="mb-1">Transaction Msg: {{$order->transactionStatus}}</p>
+                            <p class="mb-1">Payment Status: <span class="badge badge-pill @if($order->status == 'paid') bg-success-subtle text-success @else bg-danger-subtle text-danger @endif text-uppercase">{{$order->status}}</span></p>
+                        </div>
+                        <div class="avatar-sm flex-shrink-0">
+                            <div class="avatar-title bg-primary-subtle text-primary rounded fs-3">
+                                <i class="bx bxs-credit-card"></i>
                             </div>
                         </div>
                     </div>

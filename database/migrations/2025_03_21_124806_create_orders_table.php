@@ -30,6 +30,8 @@ return new class extends Migration
             $table->string('trade')->nullable();
             $table->string('series')->nullable();
             $table->string('number')->nullable();
+            $table->string('transactionId')->nullable();
+            $table->string('transactionStatus')->nullable();
             $table->enum('type', ['person', 'firm'])->default('person');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');

@@ -20,7 +20,7 @@ class NetopiaController extends Controller
 
     protected $apiKey;
     protected $signature;
-    protected $url = 'https://secure.sandbox.netopia-payments.com/payment/card/start';
+    protected $url;
 
     public function __construct()
     {
@@ -28,6 +28,7 @@ class NetopiaController extends Controller
 
         $this->apiKey = $settings->netopia_key;
         $this->signature = $settings->netopia_signature;
+        $this->url = env('NETOPIA_PAYMENT');
     }
 
     public function checkout(Request $request)
@@ -226,6 +227,7 @@ class NetopiaController extends Controller
             'total' => $total,
             'mainPrice' => $mainTotal, // this line added
             'status' => 'unpaid',
+            'method' => 'netopia',
             'name' => $request->input('n-name') ?? Auth::user()->name,
             'address' => $request->input('n-address'),
             'city' => $request->input('n-city'),

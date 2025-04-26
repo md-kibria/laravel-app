@@ -107,7 +107,7 @@ class ServiceController extends Controller
         // dd($data);
 
         if($request->hasFile('thumbnail')) {
-            $data['thumbnail'] = $request->file('thumbnail')->store('categories', 'public');
+            $data['thumbnail'] = $request->file('thumbnail')->store('thumbnail', 'public');
 
             if($service->thumbnail) {
                 Storage::disk('public')->delete($service->thumbnail);

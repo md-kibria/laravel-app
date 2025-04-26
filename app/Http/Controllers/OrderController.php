@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Stripe\Stripe;
 use App\Models\Order;
 use App\Models\Service;
 use App\Models\Variation;
@@ -10,8 +11,8 @@ use Illuminate\Http\Request;
 use App\Mail\OrderPlacedMail;
 use function PHPSTORM_META\type;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Mail;
 
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
 
@@ -117,19 +118,22 @@ class OrderController extends Controller
     public function success(Request $request)
     {
         $orderId = $request->order_id;
+        $sessionId = $request->get('session_id');
         $transaction = $request->transaction;
         $type = $request->type;
 
-        if(!$transaction) {
-            return redirect()->route('payment');
-        }
+        $order = Order::findOrFail($orderId);
 
         if($type === 'netopia') {
+            if(!$transaction) {
+                return redirect()->route('payment');
+            }
+
             $settings = SiteSetting::first();
 
             $apiKey = $settings->netopia_key;
             $signature = $settings->netopia_signature;
-            $url = 'https://secure.sandbox.netopia-payments.com/payment/card/verify-auth';
+            $url = env('NETOPIA_VERIFY');
 
             $response = Http::withHeaders([
                 'Authorization' => $apiKey, // same API key as before
@@ -142,12 +146,38 @@ class OrderController extends Controller
             
             $data = json_decode($response->body());
             
+            $order->update(['transactionId' => $transaction, 'transactionStatus' => $data->error->message]);
+
             if($data->error->code != "00") {
                 return redirect()->route('payment', ['order_id' => $orderId])->with('error', $data->error->message);
             }
         }
 
-        $order = Order::findOrFail($orderId);
+        if($type === 'stripe') {
+            if(!$sessionId) {
+                return redirect()->route('payment');
+            }
+
+            $settings = SiteSetting::first();
+
+            Stripe::setApiKey($settings->stripe_key);
+
+            $session = \Stripe\Checkout\Session::retrieve($sessionId);
+
+
+            // Now you have access to payment_intent (the transaction ID)
+            $transactionId = $session->payment_intent;
+            $paymentStatus = $session->payment_status; // optional
+            
+            $order->update(['transactionId' => $transactionId, 'transactionStatus' => $paymentStatus]);
+
+            if($paymentStatus !== 'paid') {
+                return redirect()->route('payment', ['order_id' => $orderId])->with('error', $paymentStatus);
+            }
+
+        }
+
+        
 
         // Basic verification - you should implement more robust validation
         // using Stripe webhooks for production
