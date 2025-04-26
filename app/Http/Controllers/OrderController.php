@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Service;
 use App\Models\Variation;
+use App\Models\SiteSetting;
 use Illuminate\Http\Request;
 use App\Mail\OrderPlacedMail;
+use function PHPSTORM_META\type;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
 
@@ -114,6 +117,36 @@ class OrderController extends Controller
     public function success(Request $request)
     {
         $orderId = $request->order_id;
+        $transaction = $request->transaction;
+        $type = $request->type;
+
+        if(!$transaction) {
+            return redirect()->route('payment');
+        }
+
+        if($type === 'netopia') {
+            $settings = SiteSetting::first();
+
+            $apiKey = $settings->netopia_key;
+            $signature = $settings->netopia_signature;
+            $url = 'https://secure.sandbox.netopia-payments.com/payment/card/verify-auth';
+
+            $response = Http::withHeaders([
+                'Authorization' => $apiKey, // same API key as before
+                'Content-Type' => 'application/json'
+            ])->withOptions([
+                'verify' => base_path('/public/storage/cacert.pem') // SSL certificate, just like before
+            ])->post($url, [
+                'ntpID' => $transaction,
+            ]);
+            
+            $data = json_decode($response->body());
+            
+            if($data->error->code != "00") {
+                return redirect()->route('payment', ['order_id' => $orderId])->with('error', $data->error->message);
+            }
+        }
+
         $order = Order::findOrFail($orderId);
 
         // Basic verification - you should implement more robust validation

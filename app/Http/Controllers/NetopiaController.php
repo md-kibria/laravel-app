@@ -68,16 +68,16 @@ class NetopiaController extends Controller
                 'status' => 'unpaid',
                 'name' => $request->input('n-name') ?? Auth::user()->name,
                 'address' => $request->input('n-address'),
-                'city' => $request->input('s-city'),
-                'country' => $request->input('s-country'),
+                'city' => $request->input('n-city'),
+                'country' => $request->input('n-country'),
                 'email' => $request->input('n-email') ?? Auth::user()->email,
                 'phone' => $request->input('n-phone') ?? Auth::user()->phone,
-                'vat' => $request->input('s-vat'),
-                'company' => $request->input('s-company'),
-                'trade' => $request->input('s-trade'),
-                'county' => $request->input('s-county'),
-                'nid' => $request->input('s-nid'),
-                'type' => $request->input('s-type'),
+                'vat' => $request->input('n-vat'),
+                'company' => $request->input('n-company'),
+                'trade' => $request->input('n-trade'),
+                'county' => $request->input('n-county'),
+                'nid' => $request->input('n-nid'),
+                'type' => $request->input('n-type'),
             ]);
 
             OrderItem::create([
@@ -149,7 +149,8 @@ class NetopiaController extends Controller
         }
 
         // Get services based on cart IDs
-        function calculatePrice($variations) {
+        function calculatePrice($variations)
+        {
             $price = null;
             $mainPrice = 0;
             $mainQuantity = 0;
@@ -158,20 +159,20 @@ class NetopiaController extends Controller
 
             foreach ($variations as $variation) {
                 $variationData = Variation::find($variation['id']);
-                if($variation['dataType'] == 'text') {
+                if ($variation['dataType'] == 'text') {
                     $mainPrice = $variationData->price;
-                    if($variation['discountType'] == 'percentage') {
+                    if ($variation['discountType'] == 'percentage') {
                         $price = (int) ($variationData->price * (1 - ((int) ($variationData->discountRule?->value ?? 0) / 100)));
-                    } elseif($variation['discountType'] == 'fixed') {
+                    } elseif ($variation['discountType'] == 'fixed') {
                         $price = (int)$variationData->price - (int)$variationData->discountRule?->value;
                     } else {
                         $price = (int)$variationData->price;
                     }
-                } elseif($variation['dataType'] == 'number') {
+                } elseif ($variation['dataType'] == 'number') {
                     $mainQuantity = (int) $variationData->name;
-                    if($variation['discountType'] == 'percentage') {
+                    if ($variation['discountType'] == 'percentage') {
                         $quantity = $variationData->name * (1 - ((int) ($variationData->discountRule?->value ?? 0) / 100));
-                    } elseif($variation['discountType'] == 'fixed') {
+                    } elseif ($variation['discountType'] == 'fixed') {
                         $quantity = $variationData->name;
                         $fixedDiscount =  (int)$variationData->discountRule?->value;
                     } else {
@@ -180,8 +181,8 @@ class NetopiaController extends Controller
                     }
                 }
             }
-            
-            if($quantity === 0 && $mainQuantity === 0) {
+
+            if ($quantity === 0 && $mainQuantity === 0) {
                 return [
                     'price' => $price,
                     'mainPrice' => $mainPrice
@@ -190,8 +191,8 @@ class NetopiaController extends Controller
 
             $totalMainPrice = $mainPrice * $mainQuantity;
             $totalPrice = $price * $quantity;
-           
-            if($fixedDiscount > 0) {
+
+            if ($fixedDiscount > 0) {
                 $totalPrice = $totalPrice - $fixedDiscount;
             }
 
@@ -208,7 +209,7 @@ class NetopiaController extends Controller
             $service->quantity = $cartItem['quantity'];
             $service->variations = $cartItem['variations'];
             $service->price = calculatePrice($cartItem['variations']);
-            
+
             $services[] = $service;
         }
 
@@ -225,11 +226,18 @@ class NetopiaController extends Controller
             'total' => $total,
             'mainPrice' => $mainTotal, // this line added
             'status' => 'unpaid',
-            'method' => 'netopia',
-            'name' => $request->input('s-name') ?? Auth::user()->name,
-            'address' => $request->input('s-address'),
-            'email' => $request->input('s-email') ?? Auth::user()->email,
-            'phone' => $request->input('s-phone') ?? Auth::user()->phone,
+            'name' => $request->input('n-name') ?? Auth::user()->name,
+            'address' => $request->input('n-address'),
+            'city' => $request->input('n-city'),
+            'country' => $request->input('n-country'),
+            'email' => $request->input('n-email') ?? Auth::user()->email,
+            'phone' => $request->input('n-phone') ?? Auth::user()->phone,
+            'vat' => $request->input('n-vat'),
+            'company' => $request->input('n-company'),
+            'trade' => $request->input('n-trade'),
+            'county' => $request->input('n-county'),
+            'nid' => $request->input('n-nid'),
+            'type' => $request->input('n-type'),
         ]);
         // Save order items
         foreach ($services as $item) {
@@ -283,9 +291,9 @@ class NetopiaController extends Controller
         $res = json_decode($response->body());
 
         if ($res->error->code == "00") {
-            return redirect()->route('success', ['order_id' => $order->id]);
+            return redirect()->route('success', ['order_id' => $order->id, 'transaction' => $res->payment?->ntpID, 'type' => 'netopia']);
         } elseif ($res->error->code == "50") {
-            return redirect()->route('success', ['order_id' => $order->id, 'msg' => $res->error->message]);
+            return redirect()->route('success', ['order_id' => $order->id, 'transaction' => $res->payment?->ntpID, 'type' => 'netopia', 'msg' => $res->error->message]);
         } else {
             return redirect()->route('payment', ['order_id' => $order->id])->with('error', $res->error->message);
         }
