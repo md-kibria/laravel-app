@@ -219,11 +219,11 @@
                             @foreach ($featured_services as $service)
                                 <div class="swiper-slide">
                                     <div class="card overflow-hidden">
-                                        <div class="bg-dark-subtle rounded-top py-4">
+                                        <div class="bg-dark-subtle rounded-top">
                                             <div class="gallery-product" style="min-height: 150px;">
                                                 <img src="@if ($service->thumbnail) {{ asset('/storage/' . $service->thumbnail) }} @else '' @endif"
                                                     alt="{{ $service->getTranslation('name', session()->get('lang')) }}"
-                                                    style="max-height: 215px;max-width: 100%;" class="mx-auto d-block"
+                                                    class="mx-auto d-block img-fluid w-100"
                                                     loading="lazy">
                                             </div>
                                         </div>

@@ -136,13 +136,13 @@
                         @foreach ($services as $service)
                             <div class="col-xxl-4 col-lg-4 col-md-6">
                                 <div class="card ecommerce-product-widgets border-0 rounded-0 shadow-none overflow-hidden">
-                                    <div class="bg-light bg-dark-subtle bg-opacity-50 rounded py-4 position-relative" style="min-height: 200px;">
+                                    <div class="bg-light bg-dark-subtle bg-opacity-50 rounded position-relative" style="min-height: 200px;">
                                         @if($service->thumbnail)
                                         <picture>
                                             <source srcset="{{ asset('/storage/' . $service->thumbnail) }}" type="image/webp">
                                         <img src="{{ asset('/storage/' . $service->thumbnail) }}"
                                             alt="{{ $service->getTranslation('name', session()->get('lang')) }}"
-                                            style="max-height: 200px;max-width: 100%;" class="mx-auto d-block rounded-2" loading="lazy">
+                                            class="mx-auto d-block rounded-2 img-fluid w-100" loading="lazy">
                                         </picture>
                                         @endif
                                         @if ($service->discounted_price > 0)

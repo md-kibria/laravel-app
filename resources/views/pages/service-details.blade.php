@@ -109,7 +109,7 @@
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide" style="min-height: 350px;">
                                             <img src="{{ asset('/storage/' . $service->thumbnail) }}" alt=""
-                                                class="img-fluid" />
+                                                class="img-fluid w-100" />
                                         </div>
                                     </div>
                                 </div>
@@ -725,10 +725,10 @@
                 @foreach ($similerServices as $service)
                     <div class="col-xxl-4 col-lg-4 col-md-6">
                         <div class="card ecommerce-product-widgets border-0 rounded-0 shadow-none overflow-hidden">
-                            <div class="bg-light bg-opacity-50 rounded py-4 position-relative">
+                            <div class="bg-light bg-opacity-50 rounded position-relative">
                                 <img src="{{ asset('/storage/' . $service->thumbnail) }}"
                                     alt="{{ $service->getTranslation('name', session()->get('lang')) }}"
-                                    style="max-height: 200px;max-width: 100%;" class="mx-auto d-block rounded-2">
+                                    class="mx-auto d-block rounded-2 img-fluid w-100">
                                 @if ($service->discounted_price > 0)
                                     <div class="avatar-xs label">
                                         <div class="avatar-title bg-danger rounded-circle fs-11">
