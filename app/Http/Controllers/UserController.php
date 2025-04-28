@@ -14,8 +14,8 @@ class UserController extends Controller
     use ViewLoggerTrait;
     
     public function account() {
-        $orders = Order::where('user_id', Auth::id())->orderBy('id', 'desc')->get();
         $user = User::findOrFail(Auth::id());
+        $orders = Order::where('user_id', Auth::id())->orWhere('email', Auth::user()->email)->orderBy('id', 'desc')->get();
 
         $this->storeViewData('account', 'page');
 

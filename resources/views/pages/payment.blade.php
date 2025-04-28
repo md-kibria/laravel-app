@@ -52,8 +52,7 @@
                         <li class="nav-item">
                             <a class="nav-link py-3" data-bs-toggle="tab" href="#netopia" role="tab">
                                 <span class="d-block d-sm-none"><i class="ri-wallet-fill align-bottom"></i></span>
-                                <span class="d-sm-block"><i
-                                        class="ri-wallet-fill align-bottom pe-2"></i>Netopia</span>
+                                <span class="d-sm-block"><i class="ri-wallet-fill align-bottom pe-2"></i>Netopia</span>
                             </a>
                         </li>
 
@@ -63,7 +62,7 @@
 
                         <div class="tab-pane active" id="credit" role="tabpanel">
                             <div class="card">
-                                <form class="card-body" action="/checkout/stripe" method="post">
+                                <form class="card-body" action="/checkout/stripe" method="post" id="stripeForm">
                                     @csrf
 
                                     <h4>{{ session()->get('lang') === 'ro' ? 'Informații de plată' : 'Payment Info' }}
@@ -215,7 +214,8 @@
                                             <input type="text"
                                                 class="form-control @error('s-city') is-invalid @enderror" id="city"
                                                 placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți orașul dvs.' : 'Enter your city' }}"
-                                                name="s-city" value="{{ old('s-city') ?? Auth::user()?->city }}" required>
+                                                name="s-city" value="{{ old('s-city') ?? Auth::user()?->city }}"
+                                                required>
                                             @error('s-city')
                                                 <div class="invalid-feedback text-danger">
                                                     {{ $message }}
@@ -230,7 +230,8 @@
                                                 class="form-control @error('s-county') is-invalid @enderror"
                                                 id="county"
                                                 placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți județul dvs.' : 'Enter your county' }}"
-                                                name="s-county" value="{{ old('s-county') ?? Auth::user()?->county }}" required>
+                                                name="s-county" value="{{ old('s-county') ?? Auth::user()?->county }}"
+                                                required>
                                             @error('s-county')
                                                 <div class="invalid-feedback text-danger">
                                                     {{ $message }}
@@ -244,8 +245,8 @@
                                                 class="form-control @error('s-country') is-invalid @enderror"
                                                 id="country"
                                                 placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți țara dvs.' : 'Enter your country' }}"
-                                                name="s-country"
-                                                value="{{ old('s-country') ?? Auth::user()?->country }}" required>
+                                                name="s-country" value="Romania"
+                                                required disabled>
                                             @error('s-country')
                                                 <div class="invalid-feedback text-danger">
                                                     {{ $message }}
@@ -260,7 +261,8 @@
                                                 class="form-control @error('s-email') is-invalid @enderror"
                                                 id="buyers-address"
                                                 placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți adresa dvs. de e-mail' : 'Enter your email' }}"
-                                                name="s-email" value="{{ old('s-email') ?? Auth::user()?->email }}" required>
+                                                name="s-email" value="{{ old('s-email') ?? Auth::user()?->email }}"
+                                                required>
                                             @error('s-email')
                                                 <div class="invalid-feedback text-danger">
                                                     {{ $message }}
@@ -275,7 +277,8 @@
                                                 class="form-control @error('s-phone') is-invalid @enderror"
                                                 id="buyers-phone"
                                                 placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți telefonul dvs' : 'Enter your phone' }}"
-                                                name="s-phone" value="{{ old('s-phone') ?? Auth::user()?->phone }}" required>
+                                                name="s-phone" value="{{ old('s-phone') ?? Auth::user()?->phone }}"
+                                                required>
                                             @error('s-phone')
                                                 <div class="invalid-feedback text-danger">
                                                     {{ $message }}
@@ -300,7 +303,7 @@
 
                         <div class="tab-pane" id="netopia" role="tabpanel">
                             <div class="card">
-                                <form class="card-body" action="/checkout/netopia" method="post">
+                                <form class="card-body" action="/checkout/netopia" method="post" id="netopiaForm">
                                     @csrf
                                     @auth
                                         {{-- <p class="form-label"><i class="ri-information-line align-bottom ms-2"></i>
@@ -406,7 +409,8 @@
                                             <input type="text"
                                                 class="form-control @error('n-name') is-invalid @enderror" id="name"
                                                 placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți numele dvs' : 'Enter your name' }}"
-                                                name="n-name" value="{{ old('n-name') ?? Auth::user()?->name }}" required>
+                                                name="n-name" value="{{ old('n-name') ?? Auth::user()?->name }}"
+                                                required>
                                             @error('n-name')
                                                 <div class="invalid-feedback text-danger">
                                                     {{ $message }}
@@ -448,7 +452,8 @@
                                             <input type="text"
                                                 class="form-control @error('n-city') is-invalid @enderror" id="city"
                                                 placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți orașul dvs.' : 'Enter your city' }}"
-                                                name="n-city" value="{{ old('n-city') ?? Auth::user()?->city }}" required>
+                                                name="n-city" value="{{ old('n-city') ?? Auth::user()?->city }}"
+                                                required>
                                             @error('n-city')
                                                 <div class="invalid-feedback text-danger">
                                                     {{ $message }}
@@ -463,7 +468,8 @@
                                                 class="form-control @error('n-county') is-invalid @enderror"
                                                 id="county"
                                                 placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți județul dvs.' : 'Enter your county' }}"
-                                                name="n-county" value="{{ old('n-county') ?? Auth::user()?->county }}" required>
+                                                name="n-county" value="{{ old('n-county') ?? Auth::user()?->county }}"
+                                                required>
                                             @error('n-county')
                                                 <div class="invalid-feedback text-danger">
                                                     {{ $message }}
@@ -478,8 +484,8 @@
                                                 class="form-control @error('n-country') is-invalid @enderror"
                                                 id="country"
                                                 placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți țara dvs.' : 'Enter your country' }}"
-                                                name="n-country"
-                                                value="{{ old('n-country') ?? Auth::user()?->country }}" required>
+                                                name="n-country" value="Romania"
+                                                required disabled>
                                             @error('n-country')
                                                 <div class="invalid-feedback text-danger">
                                                     {{ $message }}
@@ -494,7 +500,8 @@
                                                 class="form-control @error('n-email') is-invalid @enderror"
                                                 id="buyers-address"
                                                 placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți adresa dvs. de e-mail' : 'Enter your email' }}"
-                                                name="n-email" value="{{ old('n-email') ?? Auth::user()?->email }}" required>
+                                                name="n-email" value="{{ old('n-email') ?? Auth::user()?->email }}"
+                                                required>
                                             @error('n-email')
                                                 <div class="invalid-feedback text-danger">
                                                     {{ $message }}
@@ -509,7 +516,8 @@
                                                 class="form-control @error('n-phone') is-invalid @enderror"
                                                 id="buyers-phone"
                                                 placeholder="{{ session()->get('lang') === 'ro' ? 'Introduceți telefonul dvs' : 'Enter your phone' }}"
-                                                name="n-phone" value="{{ old('n-phone') ?? Auth::user()?->phone }}" required>
+                                                name="n-phone" value="{{ old('n-phone') ?? Auth::user()?->phone }}"
+                                                required>
                                             @error('n-phone')
                                                 <div class="invalid-feedback text-danger">
                                                     {{ $message }}
@@ -606,6 +614,36 @@
     <x-key-features />
 @endsection
 @section('scripts')
+    <script>
+        const requiredFieldsStripe = document.querySelectorAll('#stripeForm input[required]');
+        const requiredFieldsNetopia = document.querySelectorAll('#netopiaForm input[required]');
+
+        requiredFieldsStripe.forEach(field => {
+            field.addEventListener('invalid', function(event) {
+                // event.preventDefault(); // Stop the browser default message
+                if (!field.validity.valid) {
+                    field.setCustomValidity('Te rog completează acest câmp');
+                }
+            });
+
+            field.addEventListener('input', function() {
+                field.setCustomValidity(''); // Clear the custom message once the user types
+            });
+        });
+        
+        requiredFieldsNetopia.forEach(field => {
+            field.addEventListener('invalid', function(event) {
+                // event.preventDefault(); // Stop the browser default message
+                if (!field.validity.valid) {
+                    field.setCustomValidity('Te rog completează acest câmp');
+                }
+            });
+
+            field.addEventListener('input', function() {
+                field.setCustomValidity(''); // Clear the custom message once the user types
+            });
+        });
+    </script>
     <!-- landing-index js -->
     <script src="{{ URL::asset('build/js/frontend/menu.init.js') }}"></script>
 @endsection
