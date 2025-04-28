@@ -24,6 +24,10 @@ class AddToCart extends Component
         $this->quantity = $newQuantity;
     }
 
+    public function hello() {
+        dd('hello');
+    }
+
     // public function addToCartWithQuantity($quantity)
     // {
     //     $this->quantity = (int) $quantity;

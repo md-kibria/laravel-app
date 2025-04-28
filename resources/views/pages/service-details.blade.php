@@ -64,7 +64,7 @@
     <link href="{{ URL::asset('build/libs/swiper/swiper-bundle.min.css') }}" rel="stylesheet" type="text/css">
 @endsection
 @section('content')
-    <section class="ecommerce-about"
+    {{-- <section class="ecommerce-about"
         style="background-image: ''; background-size: cover;background-position: center;">
         <div class="bg-overlay bg-primary" style="opacity: 0.85;"></div>
         <div class="container">
@@ -89,7 +89,8 @@
             <!--end row-->
         </div>
         <!--end container-->
-    </section>
+    </section> --}}
+<section style="height: 70px;"></section>
 
     <section class="section">
         <div class="container">

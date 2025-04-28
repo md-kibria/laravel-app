@@ -66,7 +66,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/test', function () {
-    return json_decode(Cookie::get('cart', '[]'), true);
+    return view('pages.test');
 });
 
 Route::get('/blogs', [PageController::class, 'blogs']);

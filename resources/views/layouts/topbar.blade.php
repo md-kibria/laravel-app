@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg ecommerce-navbar" id="navbar">
+<nav class="navbar navbar-expand-lg ecommerce-navbar shadow-sm" id="navbar">
     <div class="container">
         <a class="navbar-brand d-none d-lg-block" href="/">
             <div class="logo-dark d-flex align-items-center">
