@@ -86,7 +86,7 @@ class AddToCart extends Component
         }
 
         Cookie::queue('cart', json_encode($cart), 60 * 24 * 7);
-        $this->dispatch('showSuccessToast', 'Added to cart successfully');
+        $this->dispatch('showSuccessToast', session()->get('lang') === 'ro' ? 'Adăugat cu succes în coș' : 'Successfully added to cart');
         $this->dispatch('cartUpdated');
         $this->dispatch('cartCountUpdated', count($cart));
     }
