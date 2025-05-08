@@ -16,6 +16,7 @@ use App\View\Components\Schema\WebPage;
 use Illuminate\Support\ServiceProvider;
 use App\View\Components\Schema\Organization;
 use App\View\Components\Schema\SchemaWrapper;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,6 +36,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (env('APP_ENV') === 'production') {
+            URL::forceScheme('https');
+        }
+        
         Paginator::useBootstrap();
 
         if (!session()->put('lang')) {
