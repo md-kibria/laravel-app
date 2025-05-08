@@ -237,7 +237,7 @@
                                                     <span
                                                         class="float-end">{{ number_format($service->reviews_avg_rating, 1) }}
                                                         <i class="bi bi-star-fill text-warning align-bottom"></i></span>
-                                                    @if ($service->discounted_price > 0)
+                                                    {{-- @if ($service->discounted_price > 0)
                                                         <h5 class="mb-0">
                                                             {{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }}
                                                             lei
@@ -249,7 +249,8 @@
                                                             {{ number_format($service->price - ($service->price * $service->discounted_price) / 100, 2) }}
                                                             lei
                                                         </h5>
-                                                    @endif
+                                                    @endif --}}
+                                                    <h5 class="fs-24 mb-4">{{ $service->price }} lei</h5>
                                                 </div>
                                                 <div class="mt-3">
                                                     {{-- <livewire:add-to-cart :service="$service" /> --}}
