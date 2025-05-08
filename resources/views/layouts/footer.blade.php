@@ -72,9 +72,9 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="text-white text-decoration-none lh-sm lh-lg-md">
+                                    <span class="text-white text-decoration-none lh-sm lh-lg-md">
                                         <i class="bi bi-geo-alt align-middle me-2"></i> {{ config('site_address_street') }}
-                                    </a>
+                                    </span>
                                 </li>
                             </ul>
                            
