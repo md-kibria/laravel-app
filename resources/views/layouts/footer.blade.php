@@ -4,10 +4,8 @@
             <div class="col-lg-3">
                 <div class="footer-info">
                     <div class="logo-dark d-flex align-items-center">
-                        <img src="{{ config('logo') }}" alt="" height="28" class="logo-light"
-                            style="height: 100%">
-                        <img src="{{ config('logo') }}" alt="" height="28" class="logo-dark"
-                            style="height: 100%">
+                        <img src="{{ config('logo') }}" alt="" class="logo-light" style="height: 100%; width: auto;">
+                        <img src="{{ config('logo') }}" alt="" class="logo-dark" style="height: 100%; width: auto;">
                         {{-- <h5 class="px-2 m-0 text-white">{{ config('site_title') }}</h5> --}}
                     </div>
                     <p class="footer-desc mt-4 mb-2 me-3">{{ config('site_description') }}</p>
@@ -125,20 +123,20 @@
                         <ul
                             class="mt-lg-0 mt-4 h-full list-unstyled footer-link mt-3 d-flex gap-2 flex-column justify-content-end">
                             <li>
-                                <a href="https://anpc.ro/ce-este-sal/" target="_blank">
+                                <a href="https://anpc.ro/ce-este-sal/" target="_blank" aria-label="anpc">
                                     <img src="{{ URL::asset('img/payment/sol1.png') }}" alt=""
                                         class="w-100 rounded-4">
                                 </a>
                             </li>
                             <li>
-                                <a href="https://anpc.ro/ce-este-sal/" target="_blank">
+                                <a href="https://anpc.ro/ce-este-sal/" target="_blank" aria-label="anpc online">
                                     <img src="{{ URL::asset('img/payment/sol2.png') }}" alt=""
                                         class="w-100 rounded-4">
                                 </a>
                             </li>
                             <li>
                                 <a href="https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home2.show&lng=RO"
-                                    target="_blank">
+                                    target="_blank" aria-label="netopia">
                                     <img src="{{ URL::asset('img/payment/netopia.png') }}" alt=""
                                         class="w-100 rounded-4">
                                 </a>

@@ -8,7 +8,7 @@
                         <img src="{{ $item->image ? asset('/storage/' . $item->image) : '' }}" alt="" class="avatar-sm">
                     </div>
                     <div class="flex-grow-1">
-                        <h5 class="fs-15">{{ $item->getTranslation('title', session()->get('lang')) }}</h5>
+                        <h2 class="fs-15">{{ $item->getTranslation('title', session()->get('lang')) }}</h2>
                         <p class="text-muted mb-0">{{ $item->getTranslation('description', session()->get('lang')) }}</p>
                     </div>
                 </div>

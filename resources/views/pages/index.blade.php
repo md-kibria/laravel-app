@@ -101,7 +101,7 @@
                                 class="product-banner-1 mt-4 mt-lg-0 rounded overflow-hidden position-relative d-block h-100"
                                 style="min-height: 300px;">
                                 <img src="{{ $item->image ? asset('/storage/' . $item->image) : '' }}"
-                                    class="img-fluid rounded h-100" alt="">
+                                    class="img-fluid rounded h-100 w-auto" alt="">
                                 <div class="bg-overlay blue"></div>
                                 <div class="product-content p-4">
                                     <p class="text-uppercase text-white mb-2">

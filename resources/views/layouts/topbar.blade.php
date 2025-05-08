@@ -2,11 +2,11 @@
     <div class="container">
         <a class="navbar-brand d-none d-lg-block" href="/">
             <div class="logo-dark d-flex align-items-center">
-                <img src="{{ config('logo') }}" alt="{{ config('site_title') }}"  style="height: 80%">
+                <img src="{{ config('logo') }}" alt="{{ config('site_title') }}"  style="height: 80%; width: auto;">
                 {{-- <p class="px-2 m-0">{{ config('site_title') }}</p> --}}
             </div>
             <div class="logo-light">
-                <img src="{{ config('logo') }}" alt="{{ config('site_title') }}" height="25">
+                <img src="{{ config('logo') }}" alt="{{ config('site_title') }}" height="25" width="auto" style="height: 25px; width: auto;">
             </div>
         </a>
         <button class="btn btn-soft-primary btn-icon d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,8 +16,8 @@
             <ul class="navbar-nav mx-lg-auto mb-2 mb-lg-0" id="navigation-menu">
                  <li class="nav-item d-block d-lg-none">
                     <a class="d-block p-3 h-auto text-center" href="/">
-                        <img src="{{ config('logo') }}" alt="{{ config('site_title') }}" height="50" class="card-logo-dark mx-auto">
-                        <img src="{{ config('logo') }}" alt="{{ config('site_title') }}" height="50" class="card-logo-light mx-auto">
+                        <img src="{{ config('logo') }}" alt="{{ config('site_title') }}" height="50" width="auto" class="card-logo-dark mx-auto">
+                        <img src="{{ config('logo') }}" alt="{{ config('site_title') }}" height="50" width="auto" class="card-logo-light mx-auto">
                     </a>
                 </li>
 
